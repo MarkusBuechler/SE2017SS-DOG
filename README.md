@@ -1,11 +1,12 @@
-htwg-scala-seed
+SE2017SS-DOG2
 =========================
 
-This is a seed project to create a basic scala project as used in the
-class Software Engineering at the University of Applied Science HTWG Konstanz
+This is a scala project for the
+class Software Engineering at the University of Applied Science HTWG Konstanz by Markus Buechler
 
 * Has a folder structure prepared for a MVC-style application
 * Has *ScalaTest* and *ScalaMock* at their latest versions as dependencies.
 * Has *sbt-scalariform*, *sbt-scapegoat*, *scalastyle-sbt-plugin* and *sbt-scoverage* sbt plugins
 * Has .gitignore defaults
-# SE2017SS-DOG
+
+# SE2017SS-DOG2
