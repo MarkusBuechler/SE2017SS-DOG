@@ -21,9 +21,13 @@ class DogTui (var cardController: cardController) {
       var continue = true
       input match {
         case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n"); continue = false
-        case "1" => print("1 wurde gedrückt !\n" + cardController.getCardOne.toString +"\n"); continue = true;
-        case "2" => print("2 wurde gedrückt !\n" + cardController.getCardTwo.toString +"\n"); continue = true;
-        case "3" => print("3 wurde gedrückt !\n" + cardController.getCardThree.toString +"\n"); continue = true;
+        case "1" => print("1 wurde gedrückt !\n" + cardController.getCardOne.toString + "\n"); continue = true;
+        case "4" => print("4 wurde gedrückt !\n\n")
+          cardController.shuffleCards
+          print(cardController.cardList)
+          continue = true;
+        case "2" => print("2 wurde gedrückt !\n" + cardController.getCardTwo.toString + "\n"); continue = true;
+        case "3" => print("3 wurde gedrückt !\n" + cardController.getCardThree.toString + "\n"); continue = true;
         case "n" => print("n wurde gedrückt !\nSpiel wird bald gestartet\n"); continue = true
         case "i" => print("i wurde gedrückt !\nInformationen werden bald angezeigt\n"); continue = true;
         case _ => print("False Eingabe\n"); print(info)

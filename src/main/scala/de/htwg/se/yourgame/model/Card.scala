@@ -5,8 +5,11 @@ package de.htwg.se.yourgame.model
   */
 
 
-case class Card(val id: Integer, val color: String, val value: Integer, val property: String, val isPlayed: Boolean) {
+case class Card(id: Integer, color: String, value: Integer, property: String, isPlayed: Boolean) {
 
   def this (id: Int) = this(id, "", 0, "", false)
+
+  //def play card
+  //def
 
 }
