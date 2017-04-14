@@ -5,9 +5,9 @@ package de.htwg.se.yourgame.model
   */
 
 
-case class Card(id: Integer, color: String, value: Integer, property: String, isPlayed: Boolean) {
+case class Card(id: Integer, color: String, description: String, value: Integer, property: String, isPlayed: Boolean) {
 
-  def this (id: Int) = this(id, "", 0, "", false)
+  def this (id: Int) = this(id, "", "", 0, "", false)
 
   //def play card
   //def

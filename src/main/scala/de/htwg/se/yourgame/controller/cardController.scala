@@ -4,6 +4,8 @@ import java.util
 
 import de.htwg.se.yourgame.model.Card
 
+import scala.collection.mutable.ListBuffer
+
 /**
   * Created by margogo on 02.04.17.
   * code will be added in the future
@@ -16,24 +18,45 @@ import de.htwg.se.yourgame.model.Card
   * - tests
   *
   * Add other controllers
-  * todo: read from resource
+  * Note: A normal list in scala is NOT mutable, better use a listbuffer and convert it to a list when you need
+  * or a mutable list (linear seq or other)
   */
-class cardController {
+  class cardController {
 
-  val card1 = Card(1, "Gelb", 1, "Eigeschaft1", false)
-  val card2 = Card(2, "Rot", 1, "Eigeschaft2", true)
-  val card3 = Card(3, "Blau", 1, "Eigeschaft3", true)
-  val card4 = Card(4, "Lila", 1, "Eigeschafts", false)
-  val card5 = Card(5, "Rot", 2, "Eigescasdashaft2", true)
-  val card6 = Card(6, "Blau", 3, "Eigeasdasschaft3", true)
-  val card7 = Card(7, "Gelb", 4, "Eigesasdchaft1", false)
-  val card8 = Card(8, "Rot", 32, "3213", true)
-  val card9 = Card(9, "Blau", 23, "Eigescwerwehaft3", true)
-  val card10 = Card(10, "Schwarz", 111, "ewqee", false)
-  val card11 = Card(11, "Schwarz", 1112, "eqwe", true)
-  val card12 = Card(12, "Blau", 1213, "qwe", true)
+  var cardList = new ListBuffer[Card]
 
-  var cardList = card1 :: card2 :: card3 :: card4 :: card5 :: card6 :: card7 :: card8 :: card9 :: card10 :: card11 :: card12 :: Nil
+
+  def initCards = {
+    val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
+    for (line <- bufferedSource.getLines()) {
+      val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
+      val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
+      cardList += tempCard
+    }
+
+    print(cardList.size)
+
+  }
+
+
+  def readCards = {
+
+  //  for {
+    //  line <- Source.fromFile("CardsSmall.csv").getLines().drop(1).toVector
+     // values = line.split(";").map(_.trim)
+    //} yield cardList(values(0))
+
+  }
+
+
+
+
+  //sample data
+  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", false)
+  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", true)
+  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", true)
+
+  //var cardList = card1 ::
 
 
   // Card after method: is the return type ...
@@ -50,5 +73,7 @@ class cardController {
   def shuffleCards = {
     cardList = scala.util.Random.shuffle(cardList)
   }
+
+
 
 }
