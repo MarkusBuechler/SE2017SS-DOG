@@ -12,8 +12,6 @@ import scala.collection.mutable.ListBuffer
   *
   * Card controller:
   * todo:
-  * - init/add cards
-  * - shuffle cards
   * - prepare decks
   * - tests
   *
@@ -30,17 +28,19 @@ import scala.collection.mutable.ListBuffer
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
-      val bufferCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
-      cardList += bufferCard
+      val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
+      cardList += tempCard
     }
-//    print(cardList.size)
+
+    print(cardList.size)
 
   }
 
   //sample data
-  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigenschaft1", false)
-  val card2 = Card(2, "Rot", "Zwei",1, "Eigenschaft2", true)
-  val card3 = Card(3, "Blau", "Zwei",1, "Eigenschaft3", true)
+  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", false)
+  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", true)
+  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", true)
+
 
 
   // Card after method: is the return type ...
