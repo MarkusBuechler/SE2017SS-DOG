@@ -30,33 +30,17 @@ import scala.collection.mutable.ListBuffer
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
-      val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
-      cardList += tempCard
+      val bufferCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
+      cardList += bufferCard
     }
-
-    print(cardList.size)
-
-  }
-
-
-  def readCards = {
-
-  //  for {
-    //  line <- Source.fromFile("CardsSmall.csv").getLines().drop(1).toVector
-     // values = line.split(";").map(_.trim)
-    //} yield cardList(values(0))
+//    print(cardList.size)
 
   }
-
-
-
 
   //sample data
-  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", false)
-  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", true)
-  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", true)
-
-  //var cardList = card1 ::
+  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigenschaft1", false)
+  val card2 = Card(2, "Rot", "Zwei",1, "Eigenschaft2", true)
+  val card3 = Card(3, "Blau", "Zwei",1, "Eigenschaft3", true)
 
 
   // Card after method: is the return type ...

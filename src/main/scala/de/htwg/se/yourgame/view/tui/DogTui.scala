@@ -1,12 +1,12 @@
 package de.htwg.se.yourgame.view.tui
 
-import de.htwg.se.yourgame.controller.cardController
+import de.htwg.se.yourgame.controller.{cardController, fieldController}
 import de.htwg.se.yourgame.model.Card
 
 /**
   * Created by margogo on 02.04.17.
   */
-class DogTui (var cardController: cardController) {
+class DogTui (var cardController: cardController, var fieldController: fieldController) {
 
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards ; 4 - shuffleCards ; n-New Game ; i-Information\n"
   printTui
@@ -31,7 +31,8 @@ class DogTui (var cardController: cardController) {
         case "n" => print("n wurde gedrückt !\nSpiel wird bald gestartet\n"); continue = true
         case "i" => print("i wurde gedrückt !\nInformationen werden bald angezeigt\n"); continue = true;
         case "g" => print("g wurde gedrückt !\nKarten werden initialisiert\n");
-          cardController.initCards
+//          cardController.initCards
+          fieldController.initFields
           continue = true;
         case _ => print("False Eingabe\n"); print(info)
       }
