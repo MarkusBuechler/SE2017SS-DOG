@@ -8,7 +8,7 @@ import de.htwg.se.yourgame.model.Card
   */
 class DogTui (var cardController: cardController) {
 
-  val info = "Enter command: q-Quit; m - TestCard ;  n-New Game ; i-Information\n"
+  val info = "Enter command: q-Quit; m - TestCard ; g - init cards ; 4 - shuffleCards ; n-New Game ; i-Information\n"
   printTui
 
   def update = printTui
