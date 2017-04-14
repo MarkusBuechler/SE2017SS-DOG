@@ -12,8 +12,6 @@ import scala.collection.mutable.ListBuffer
   *
   * Card controller:
   * todo:
-  * - init/add cards
-  * - shuffle cards
   * - prepare decks
   * - tests
   *
@@ -38,25 +36,11 @@ import scala.collection.mutable.ListBuffer
 
   }
 
-
-  def readCards = {
-
-  //  for {
-    //  line <- Source.fromFile("CardsSmall.csv").getLines().drop(1).toVector
-     // values = line.split(";").map(_.trim)
-    //} yield cardList(values(0))
-
-  }
-
-
-
-
   //sample data
   val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", false)
   val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", true)
   val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", true)
 
-  //var cardList = card1 ::
 
 
   // Card after method: is the return type ...
