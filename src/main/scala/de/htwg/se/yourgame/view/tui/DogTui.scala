@@ -31,7 +31,7 @@ class DogTui (var cardController: cardController, var fieldController: fieldCont
         case "n" => print("n wurde gedrückt !\nSpiel wird bald gestartet\n"); continue = true
         case "i" => print("i wurde gedrückt !\nInformationen werden bald angezeigt\n"); continue = true;
         case "g" => print("g wurde gedrückt !\nKarten werden initialisiert\n");
-//          cardController.initCards
+          cardController.initCards
           fieldController.initFields
           continue = true;
         case _ => print("False Eingabe\n"); print(info)

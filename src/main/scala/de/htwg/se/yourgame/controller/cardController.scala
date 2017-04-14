@@ -29,10 +29,12 @@ import scala.collection.mutable.ListBuffer
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
       val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
+      cardList.distinct
       cardList += tempCard
+
     }
 
-    print(cardList.size)
+    print("CardList: " + cardList.size + "\n");
 
   }
 

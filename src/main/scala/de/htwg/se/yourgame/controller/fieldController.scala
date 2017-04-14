@@ -12,6 +12,8 @@ import scala.collection.mutable.ListBuffer
   * - init field
   * - prepare for player
   * - tests
+  * do not allow double init
+  * 
   */
 class fieldController {
 
@@ -25,21 +27,11 @@ class fieldController {
     for (line <- bufferedSource.getLines()) {
       val Array(id, property, color, isUsed, predecessor, successor) = line.split(";").map(_.trim())
       val bufferField = Field(id.toInt, property, color, isUsed.toBoolean, fieldForInit, fieldForInit2)
+      fieldList.distinct
       fieldList += bufferField
     }
 
-    print(fieldList.size)
-    print(fieldList);
-    //todo: connect fields
-
+    print("Fieldlist: " + fieldList.size + "\n");
   }
-
-
-  //sample data
-  val field1 = Field(1,"String", "red", false, field3, field2)
-  val field2 = Field(2,"String", "red", false, field1, field3)
-  val field3 = Field(2,"String", "red", false, field2, field1)
-
-
 
 }
