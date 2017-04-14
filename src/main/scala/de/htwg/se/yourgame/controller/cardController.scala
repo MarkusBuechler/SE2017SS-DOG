@@ -25,13 +25,12 @@ import scala.collection.mutable.ListBuffer
 
 
   def initCards = {
+    cardList.clear
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
       val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
-      cardList.distinct
       cardList += tempCard
-
     }
 
     print("CardList: " + cardList.size + "\n");
