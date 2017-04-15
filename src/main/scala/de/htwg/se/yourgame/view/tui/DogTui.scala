@@ -1,12 +1,11 @@
 package de.htwg.se.yourgame.view.tui
 
-import de.htwg.se.yourgame.controller.{cardController, fieldController}
-import de.htwg.se.yourgame.model.{Card, CardDeck}
+import de.htwg.se.yourgame.controller.{cardController, fieldController, playerController}
 
 /**
   * Created by margogo on 02.04.17.
   */
-class DogTui (var cardController: cardController, var fieldController: fieldController) {
+class DogTui (var cardController: cardController, var fieldController: fieldController, var playerController: playerController) {
 
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards ; 4 - shuffleCards ; n-New Game ; i-Information\n"
   printTui
