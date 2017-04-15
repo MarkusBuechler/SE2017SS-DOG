@@ -45,17 +45,6 @@ import scala.collection.mutable.ListBuffer
   val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", true)
 
 
-  // Card after method: is the return type ...
-  def getCardOne: Card = {
-    card1
-  }
-  def getCardTwo: Card = {
-    card2
-  }
-  def getCardThree: Card = {
-    card3
-  }
-
   def shuffleCards = {
     cardList = scala.util.Random.shuffle(cardList)
   }
