@@ -29,7 +29,21 @@ class fieldController {
       val bufferField = Field(id.toInt, property, color, isUsed.toBoolean, intArraypredecessorId, intArraySucessorId)
       fieldList += bufferField
     }
-    print("Fieldlist: " + fieldList.size + "\n");
+//    print("Fieldlist: " + fieldList.size + "\n");
+  }
+
+  def printFields() = {
+    var string = "CurrentField: \n"
+    for (x <- 0 to fieldList.size-1) {
+      if (x % 10 == 0) {
+        string += "\n"
+      }
+      string += fieldList.apply(x).id + ": "
+      val fieldIsUsed = if (fieldList.apply(x).isUsed) "[x]" else "[]"
+      string += fieldIsUsed
+      string += ", "
+    }
+    print(string + "\n")
   }
 
 }

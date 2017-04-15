@@ -8,10 +8,15 @@ class gameController  {
   lazy val cardController = new cardController
   lazy val fieldController = new fieldController
 
-  def initGame = {
+  def initGame() = {
     playerController.initPlayer
     cardController.initCards
     fieldController.initFields
+  }
+
+  def showGameStatus() = {
+    fieldController.printFields()
+    cardController.printCardDecks()
   }
 
 }

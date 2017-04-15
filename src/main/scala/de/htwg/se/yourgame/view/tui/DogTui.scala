@@ -11,18 +11,19 @@ class DogTui (var gameController: gameController) {
   gameController.initGame
 
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
-  printTui
 
   def update = printTui
 
   def printTui = {
-    println(info)
+    print(info)
+    gameController.showGameStatus
   }
 
     def processInputLine(input: String) = {
       var continue = true
       input match {
         case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n"); continue = false
+        case "m" => printTui
         case "n" => print("n wurde gedrückt !\nSpiel wird bald gestartet\n"); continue = true
         case "i" => print("i wurde gedrückt !\nInformationen werden bald angezeigt\n"); continue = true;
         case "s" => print("s wurde gedrückt !\n Spieler 1 ist nun s");

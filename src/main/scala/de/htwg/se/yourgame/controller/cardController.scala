@@ -64,14 +64,26 @@ import scala.collection.mutable.ListBuffer
       cardDecks+=filledCardDeck
     }
 
-    print("CardList: " + cardList.size + "\n");
-    print("CardDeck: " + cardDecks.size + "\n");
+//    print("CardList: " + cardList.size + "\n");
+//    print("CardDeck: " + cardDecks.size + "\n");
+//
+//    print("Deck 1: " + cardDecks.apply(0).cards.size + "\n");
+//    print("Deck 2: " + cardDecks.apply(1).cards.size + "\n");
+//    print("Deck 3: " + cardDecks.apply(2).cards.size + "\n");
+//    print("Deck 4: " + cardDecks.apply(3).cards.size + "\n");
 
-    print("Deck 1: " + cardDecks.apply(0).cards.size + "\n");
-    print("Deck 2: " + cardDecks.apply(1).cards.size + "\n");
-    print("Deck 3: " + cardDecks.apply(2).cards.size + "\n");
-    print("Deck 4: " + cardDecks.apply(3).cards.size + "\n");
+  }
 
+  def printCardDecks() = {
+    var string = ""
+    for (x <- 0 to cardDecks.size-1) {
+      string += cardDecks.apply(x).PlayerId + ": "
+      for (y <- 0 to cardDecks.apply(x).cards.size - 1) {
+        string += cardDecks.apply(x).cards.apply(y).mkString(" ")
+      }
+      string += "\n"
+    }
+    print(string + "\n")
   }
 
 
