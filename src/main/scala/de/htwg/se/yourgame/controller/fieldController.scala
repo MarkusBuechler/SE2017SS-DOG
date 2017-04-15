@@ -29,9 +29,7 @@ class fieldController {
       val bufferField = Field(id.toInt, property, color, isUsed.toBoolean, intArraypredecessorId, intArraySucessorId)
       fieldList += bufferField
     }
-
     print("Fieldlist: " + fieldList.size + "\n");
-    print(fieldList)
   }
 
 }

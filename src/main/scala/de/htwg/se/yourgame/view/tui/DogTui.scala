@@ -1,7 +1,7 @@
 package de.htwg.se.yourgame.view.tui
 
 import de.htwg.se.yourgame.controller.{cardController, fieldController}
-import de.htwg.se.yourgame.model.Card
+import de.htwg.se.yourgame.model.{Card, CardDeck}
 
 /**
   * Created by margogo on 02.04.17.
@@ -24,7 +24,6 @@ class DogTui (var cardController: cardController, var fieldController: fieldCont
         case "1" => print("1 wurde gedrückt !\n" + cardController.getCardOne.toString + "\n"); continue = true;
         case "4" => print("4 wurde gedrückt !\n\n")
           cardController.shuffleCards
-          print(cardController.cardList)
           continue = true;
         case "2" => print("2 wurde gedrückt !\n" + cardController.getCardTwo.toString + "\n"); continue = true;
         case "3" => print("3 wurde gedrückt !\n" + cardController.getCardThree.toString + "\n"); continue = true;

@@ -1,5 +1,6 @@
 /**
   * Created by margogo on 02.04.17.
+  * Main Class for the scala application DOG
   */
 
 import de.htwg.se.yourgame.controller.{cardController, fieldController}

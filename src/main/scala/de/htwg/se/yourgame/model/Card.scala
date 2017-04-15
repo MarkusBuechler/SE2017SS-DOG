@@ -13,3 +13,4 @@ case class Card(id: Integer, color: String, description: String, value: Integer,
   //def
 
 }
+
