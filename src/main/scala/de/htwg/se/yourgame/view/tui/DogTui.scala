@@ -8,8 +8,6 @@ import de.htwg.se.yourgame.controller.{gameController}
 class DogTui (var gameController: gameController) {
   var playerController = this.gameController.playerController
 
-  gameController.initGame
-
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
 
   def update = printTui
@@ -18,6 +16,9 @@ class DogTui (var gameController: gameController) {
     print(info)
     gameController.showGameStatus
   }
+
+  gameController.initGame
+  printTui
 
     def processInputLine(input: String) = {
       var continue = true

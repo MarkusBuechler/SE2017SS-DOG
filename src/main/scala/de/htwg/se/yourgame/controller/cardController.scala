@@ -51,7 +51,7 @@ import scala.collection.mutable.ListBuffer
 
   def fillCardDeck = {
 
-    print("CardList: " + cardList.size + "\n");
+//    print("CardList: " + cardList.size + "\n");
     cardDecks.clear
     for (a <- playerList) {
       var cardBuffer = new ListBuffer[Card]
@@ -77,9 +77,10 @@ import scala.collection.mutable.ListBuffer
   def printCardDecks() = {
     var string = ""
     for (x <- 0 to cardDecks.size-1) {
+      string += "Player "
       string += cardDecks.apply(x).PlayerId + ": "
       for (y <- 0 to cardDecks.apply(x).cards.size - 1) {
-        string += cardDecks.apply(x).cards.apply(y).mkString(" ")
+        string += cardDecks.apply(x).cards.apply(y).description.toString + " ,"
       }
       string += "\n"
     }

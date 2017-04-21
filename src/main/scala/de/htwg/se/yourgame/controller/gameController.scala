@@ -17,6 +17,7 @@ class gameController  {
   def showGameStatus() = {
     fieldController.printFields()
     cardController.printCardDecks()
+    playerController.printCurrentPlayer
   }
 
 }

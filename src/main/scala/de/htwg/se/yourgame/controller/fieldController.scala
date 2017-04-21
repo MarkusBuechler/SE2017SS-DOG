@@ -33,9 +33,9 @@ class fieldController {
   }
 
   def printFields() = {
-    var string = "CurrentField: \n"
+    var string = "CurrentField:"
     for (x <- 0 to fieldList.size-1) {
-      if (x % 10 == 0) {
+      if (x % 16 == 0) {
         string += "\n"
       }
       string += fieldList.apply(x).id + ": "

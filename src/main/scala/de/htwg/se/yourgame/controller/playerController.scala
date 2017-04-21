@@ -15,10 +15,11 @@ class playerController {
   def initPlayer = {
 
     for (x <- 1 to numberOfPlayer) {
-      val bufferPlayer = Player("Player " + x , x)
+      val bufferPlayer = Player("Player " + x , x, false)
       playerList += bufferPlayer
     }
-    print(playerList.size)
+    playerList.update(1, Player("Player 1",1, true))
+//    print(playerList.size)
   }
 
   def setPlayerName(inputNumber: Int, inputString: String) = {
@@ -34,12 +35,31 @@ class playerController {
     inputString match {
       case _ => {
         val insertNumber = playerNo + 1
-        val currentPlayer = Player(inputString, insertNumber)
+        val currentPlayer = Player(inputString, insertNumber, false)
         print(inputString + "wurde eingeben und Player " + insertNumber + "zugewiesen")
         playerList.update(playerNo, currentPlayer)
       }
     }
     print(playerList.toString())
+  }
+
+  //Todo: ternary operator verwenden
+  def printCurrentPlayer = {
+    var currentPlayer = ""
+    for ( player  <- playerList) {
+      if (player.isActive)
+        {
+          currentPlayer += player.name
+        }
+    }
+    if (currentPlayer != "") {
+      print(currentPlayer + " ist am Zug")
+    } else {
+      print("Niemand ist am Zug")
+    }
+  }
+
+  def changeCurrentPlayer(currentPlayer : Player)= {
 
   }
 
