@@ -1,7 +1,7 @@
 package de.htwg.se.yourgame.controller
 
 import de.htwg.se.yourgame.model.{Field, Player}
-
+import com.softwaremill.macwire._
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -15,6 +15,7 @@ import scala.collection.mutable.ListBuffer
   */
 class fieldController {
 
+  lazy val fieldController = wire[fieldController]
   var fieldList = new ListBuffer[Field]
 
   def initFields = {
@@ -30,6 +31,10 @@ class fieldController {
       fieldList += bufferField
     }
 //    print("Fieldlist: " + fieldList.size + "\n");
+  }
+
+  def initFigures = {
+
   }
 
   def printFields() = {

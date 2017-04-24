@@ -1,7 +1,8 @@
 package de.htwg.se.yourgame.controller
 
-import de.htwg.se.yourgame.model.Player
+import de.htwg.se.yourgame.model.{Figure, Player}
 import com.softwaremill.macwire._
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -9,17 +10,31 @@ import scala.collection.mutable.ListBuffer
   */
 class playerController {
 
+  lazy val fieldController = wire[fieldController]
+
+  var figureListBuffer = new ListBuffer[Figure]
   var playerList = new ListBuffer[Player]
   val numberOfPlayer = 4
-//  var currentPlayer = playerList.apply(2)
-  def initPlayer = {
 
+  def initPlayer = {
     for (x <- 1 to numberOfPlayer) {
       val bufferPlayer = Player("Player " + x , x, false)
       playerList += bufferPlayer
     }
-    playerList.update(1, Player("Player 1",1, true))
+    playerList.update(0, Player("Player 1",1, true))
+    initFigures
 //    print(playerList.size)
+  }
+
+  def initFigures = {
+    figureListBuffer.clear
+    val bufferedSource = io.Source.fromFile("resources/Figures.csv")
+    for (line <- bufferedSource.getLines()) {
+      val Array(player, playerFigNumber, role, property, position) = line.split(";").map(_.trim())
+      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt)
+      figureListBuffer += bufferFig
+    }
+    applyFigToField
   }
 
   def setPlayerName(inputNumber: Int, inputString: String) = {
@@ -61,6 +76,14 @@ class playerController {
 
   def changeCurrentPlayer(currentPlayer : Player)= {
 
+  }
+
+  //compile time error , try cake pattern
+  def applyFigToField = {
+    for (figure <- figureListBuffer) {
+      val bufferField = fieldController.fieldList.apply(figure.position).copy(isUsed = true)
+      fieldController.fieldList.update(figure.position, bufferField)
+    }
   }
 
 

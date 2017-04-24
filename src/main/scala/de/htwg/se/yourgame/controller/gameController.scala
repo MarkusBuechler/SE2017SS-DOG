@@ -13,9 +13,9 @@ class gameController  {
 
 
   def initGame() = {
-    playerController.initPlayer
-    cardController.initCards
     fieldController.initFields
+    cardController.initCards
+    playerController.initPlayer
   }
 
   def showGameStatus() = {
