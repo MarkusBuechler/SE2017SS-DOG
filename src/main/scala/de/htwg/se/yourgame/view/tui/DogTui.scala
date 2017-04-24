@@ -1,12 +1,12 @@
 package de.htwg.se.yourgame.view.tui
-
-import de.htwg.se.yourgame.controller.{gameController}
+import com.softwaremill.macwire._
+import de.htwg.se.yourgame.controller.{gameController, playerController}
 
 /**
   * Created by margogo on 02.04.17.
   */
 class DogTui (var gameController: gameController) {
-  var playerController = this.gameController.playerController
+  var playerController = wire[playerController]
 
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
 
@@ -15,6 +15,7 @@ class DogTui (var gameController: gameController) {
   def printTui = {
     print(info)
     gameController.showGameStatus
+    print("\nWelche Karte möchtest du spielen?\n")
   }
 
   gameController.initGame

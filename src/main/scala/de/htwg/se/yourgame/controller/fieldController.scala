@@ -1,6 +1,6 @@
 package de.htwg.se.yourgame.controller
 
-import de.htwg.se.yourgame.model.Field
+import de.htwg.se.yourgame.model.{Field, Player}
 
 import scala.collection.mutable.ListBuffer
 
@@ -44,6 +44,11 @@ class fieldController {
       string += ", "
     }
     print(string + "\n")
+  }
+
+  def movePosition(player: Player, fieldId : Int) = {
+    val bufferField = fieldList.apply(fieldId).copy(isUsed = true)
+    fieldList.updated(fieldId, bufferField)
   }
 
 }

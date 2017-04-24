@@ -3,7 +3,7 @@
   * Main Class for the scala application DOG
   */
 
-import de.htwg.se.yourgame.controller.{gameController}
+import de.htwg.se.yourgame.controller.gameController
 import de.htwg.se.yourgame.view.tui.DogTui
 
 import scala.io.StdIn._

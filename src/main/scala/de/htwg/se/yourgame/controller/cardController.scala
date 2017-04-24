@@ -1,7 +1,7 @@
 package de.htwg.se.yourgame.controller
 
-import de.htwg.se.yourgame.model.{Card, CardDeck}
-
+import de.htwg.se.yourgame.model.{Card, CardDeck, Player}
+import com.softwaremill.macwire._
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -18,17 +18,19 @@ import scala.collection.mutable.ListBuffer
   * or a mutable list (linear seq or other)
   */
   class cardController {
-
+  var gameController = wire[gameController]
   var cardList = new ListBuffer[Card]
   var cardDecks = new ListBuffer[CardDeck]
   var a = 0
   val playerList = List (1,2,3,4);
   var numberOfPlayers = 4
   var decksize = 7
+  var playedCards = new ListBuffer[Card]
 
 
   def initCards = {
     cardList.clear
+    playedCards.clear
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
@@ -87,6 +89,12 @@ import scala.collection.mutable.ListBuffer
     print(string + "\n")
   }
 
+  /*
+  def playCard(player : Player, card: Card) = {
+    fieldController.movePlayer(player, card.value)
+
+  }
+  */
 
 
 }

@@ -1,7 +1,7 @@
 package de.htwg.se.yourgame.controller
 
 import de.htwg.se.yourgame.model.Player
-
+import com.softwaremill.macwire._
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -11,7 +11,7 @@ class playerController {
 
   var playerList = new ListBuffer[Player]
   val numberOfPlayer = 4
-
+//  var currentPlayer = playerList.apply(2)
   def initPlayer = {
 
     for (x <- 1 to numberOfPlayer) {
