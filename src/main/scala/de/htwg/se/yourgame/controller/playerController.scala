@@ -1,7 +1,7 @@
 package de.htwg.se.yourgame.controller
 
+import com.google.inject.Inject
 import de.htwg.se.yourgame.model.{Figure, Player}
-import com.softwaremill.macwire._
 
 import scala.collection.mutable.ListBuffer
 
@@ -9,8 +9,6 @@ import scala.collection.mutable.ListBuffer
   * Created by margogo on 15.04.17.
   */
 class playerController {
-
-  lazy val fieldController = wire[fieldController]
 
   var figureListBuffer = new ListBuffer[Figure]
   var playerList = new ListBuffer[Player]
@@ -34,7 +32,7 @@ class playerController {
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt)
       figureListBuffer += bufferFig
     }
-    applyFigToField
+//    applyFigToField
   }
 
   def setPlayerName(inputNumber: Int, inputString: String) = {
@@ -77,15 +75,6 @@ class playerController {
   def changeCurrentPlayer(currentPlayer : Player)= {
 
   }
-
-  //compile time error , try cake pattern
-  def applyFigToField = {
-    for (figure <- figureListBuffer) {
-      val bufferField = fieldController.fieldList.apply(figure.position).copy(isUsed = true)
-      fieldController.fieldList.update(figure.position, bufferField)
-    }
-  }
-
 
 
 }

@@ -1,7 +1,8 @@
 package de.htwg.se.yourgame.controller
 
+import com.google.inject.Inject
 import de.htwg.se.yourgame.model.{Card, CardDeck, Player}
-import com.softwaremill.macwire._
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -18,7 +19,6 @@ import scala.collection.mutable.ListBuffer
   * or a mutable list (linear seq or other)
   */
   class cardController {
-  var gameController = wire[gameController]
   var cardList = new ListBuffer[Card]
   var cardDecks = new ListBuffer[CardDeck]
   var a = 0

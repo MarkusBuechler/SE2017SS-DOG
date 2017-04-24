@@ -17,12 +17,6 @@ libraryDependencies ++= {
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
-libraryDependencies += "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
-
-libraryDependencies += "com.softwaremill.macwire" %% "macrosakka" % "2.3.0" % "provided"
-
-libraryDependencies += "com.softwaremill.macwire" %% "util" % "2.3.0"
-
-libraryDependencies += "com.softwaremill.macwire" %% "proxy" % "2.3.0"
+libraryDependencies +="com.google.inject" % "guice" % "3.0"
 
 

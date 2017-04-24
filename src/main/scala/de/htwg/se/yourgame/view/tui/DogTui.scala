@@ -1,13 +1,11 @@
 package de.htwg.se.yourgame.view.tui
-import com.softwaremill.macwire._
-import de.htwg.se.yourgame.controller.{gameController, playerController}
+import com.google.inject.Inject
+import de.htwg.se.yourgame.controller.{fieldController, gameController, playerController}
 
 /**
   * Created by margogo on 02.04.17.
   */
-class DogTui (var gameController: gameController) {
-  var playerController = wire[playerController]
-
+class DogTui @Inject() (gameController : gameController, playerController : playerController) {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
 
   def update = printTui
