@@ -30,11 +30,13 @@ class gameController @Inject() (playerController : playerController, cardControl
     fieldController.movePosition(player, card.value)
   }
 
-  //compile time error , try cake pattern
   def applyFigToField = {
-        for (figure <- playerController.figureListBuffer) {
-          val bufferField = fieldController.fieldList.apply(figure.position).copy(isUsed = true)
-          fieldController.fieldList.update(figure.position, bufferField)
+        for (figure <-  playerController.figureListBuffer) {
+          print("Size" + playerController.figureListBuffer.size + "\n")
+          print(figure.position)
+          val index = fieldController.fieldList.indexWhere (_.id == figure.position)
+          val bufferField = fieldController.fieldList.apply(index).copy(isUsed = true)
+          fieldController.fieldList.update(index, bufferField)
         }
   }
 
