@@ -12,16 +12,16 @@ class playerController {
   var playerList = new ListBuffer[Player]
   val numberOfPlayer = 4
 
-  def initPlayer = {
+  def initPlayer(): Unit = {
     for (x <- 1 to numberOfPlayer) {
       val bufferPlayer = Player("Player " + x , x, isActive = false)
       playerList += bufferPlayer
     }
     playerList.update(0, Player("Player 1",1, isActive = true))
-    initFigures
+    initFigures()
   }
 
-  def initFigures = {
+  def initFigures(): Unit = {
     figureListBuffer.clear
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
@@ -31,25 +31,24 @@ class playerController {
     }
   }
 
-  def setPlayerName(inputNumber: Int, inputString: String) = {
+  def setPlayerName(inputNumber: Int, inputString: String): Unit = {
     print("Bitte Spieler auswählen [1-4] und einen Namen eingeben\n")
     var playerNo = 0
     inputNumber match {
       case 1 => print("Player 1 wurde ausgewählt !\n"); playerNo = 0
     }
     inputString match {
-      case _ => {
+      case _ =>
         val insertNumber = playerNo + 1
-        val currentPlayer = Player(inputString, insertNumber, false)
+        val currentPlayer = Player(inputString, insertNumber, isActive = false)
         print(inputString + "wurde eingeben und Player " + insertNumber + "zugewiesen")
         playerList.update(playerNo, currentPlayer)
-      }
     }
     print(playerList.toString())
   }
 
   //Todo: ternary operator verwenden
-  def printCurrentPlayer = {
+  def printCurrentPlayer(): Unit = {
     var currentPlayer = ""
     for ( player  <- playerList) {
       if (player.isActive)
@@ -64,7 +63,7 @@ class playerController {
     }
   }
 
-  def changeCurrentPlayer(currentPlayer : Player)= {
+  def changeCurrentPlayer(currentPlayer : Player): Unit = {
 
   }
 

@@ -1,8 +1,6 @@
 package de.htwg.se.yourgame.controller
 
-import com.google.inject.Inject
 import de.htwg.se.yourgame.model.{Field, Player}
-
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -18,7 +16,7 @@ class fieldController  {
 
   var fieldList = new ListBuffer[Field]
 
-  def initFields() = {
+  def initFields(): Unit = {
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
@@ -32,11 +30,11 @@ class fieldController  {
     }
   }
 
-  def initFigures() = {
+  def initFigures(): Unit = {
 
   }
 
-  def printFields() = {
+  def printFields(): Unit = {
     var string = "CurrentField:"
     for (x <-  0 until fieldList.size-1) {
       if (x % 16 == 0) {
@@ -50,7 +48,7 @@ class fieldController  {
     print(string + "\n")
   }
 
-  def movePosition(player: Player, fieldId : Int) = {
+  def movePosition(player: Player, fieldId : Int): ListBuffer[Field] = {
     val bufferField = fieldList.apply(fieldId).copy(isUsed = true)
     fieldList.updated(fieldId, bufferField)
   }

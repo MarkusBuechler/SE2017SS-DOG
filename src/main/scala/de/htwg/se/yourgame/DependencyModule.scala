@@ -7,7 +7,7 @@ import de.htwg.se.yourgame.controller.{cardController, fieldController, gameCont
   */
 class DependencyModule extends Module{
 
-  def configure(binder:Binder) = {
+  def configure(binder:Binder): Unit = {
     binder.bind(classOf[gameController])
     binder.bind(classOf[fieldController])
     binder.bind(classOf[playerController])

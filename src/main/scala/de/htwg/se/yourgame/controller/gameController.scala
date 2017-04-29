@@ -1,6 +1,6 @@
 package de.htwg.se.yourgame.controller
 
-import com.google.inject.{Guice, Inject}
+import com.google.inject.Inject
 import de.htwg.se.yourgame.model.{Card, Field, Player}
 
 import scala.collection.mutable.ListBuffer
@@ -12,24 +12,24 @@ class gameController @Inject() (playerController : playerController, cardControl
 
   var fieldList = new ListBuffer[Field]
 
-  def initGame() = {
-    fieldController.initFields
-    cardController.initCards
-    playerController.initPlayer
-    applyFigToField
+  def initGame(): Unit = {
+    fieldController.initFields()
+    cardController.initCards()
+    playerController.initPlayer()
+    applyFigToField()
   }
 
-  def showGameStatus() = {
+  def showGameStatus(): Unit = {
     fieldController.printFields()
     cardController.printCardDecks()
-    playerController.printCurrentPlayer
+    playerController.printCurrentPlayer()
   }
 
-  def playCard(player : Player, card: Card) = {
+  def playCard(player : Player, card: Card): ListBuffer[Field] = {
     fieldController.movePosition(player, card.value)
   }
 
-  def applyFigToField() = {
+  def applyFigToField(): Unit = {
         for (figure <-  playerController.figureListBuffer) {
           print("Size" + playerController.figureListBuffer.size + "\n")
           print(figure.position)

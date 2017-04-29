@@ -1,7 +1,5 @@
 package de.htwg.se.yourgame.controller
-
-import com.google.inject.Inject
-import de.htwg.se.yourgame.model.{Card, CardDeck, Player}
+import de.htwg.se.yourgame.model.{Card, CardDeck}
 
 import scala.collection.mutable.ListBuffer
 
@@ -28,7 +26,7 @@ import scala.collection.mutable.ListBuffer
   var playedCards = new ListBuffer[Card]
 
 
-  def initCards() = {
+  def initCards(): Unit = {
     cardList.clear
     playedCards.clear
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
@@ -37,8 +35,8 @@ import scala.collection.mutable.ListBuffer
       val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean)
       cardList += tempCard
     }
-    shuffleCards
-    fillCardDeck
+    shuffleCards()
+    fillCardDeck()
   }
 
   //sample data
@@ -47,11 +45,11 @@ import scala.collection.mutable.ListBuffer
   val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", isPlayed = true)
 
 
-  def shuffleCards = {
+  def shuffleCards(): Unit = {
     cardList = scala.util.Random.shuffle(cardList)
   }
 
-  def fillCardDeck = {
+  def fillCardDeck(): Unit = {
 
     cardDecks.clear
     for (a <- playerList) {
@@ -67,7 +65,7 @@ import scala.collection.mutable.ListBuffer
 
   }
 
-  def printCardDecks() = {
+  def printCardDecks(): Unit = {
     var string = ""
     for (x <- 0 until cardDecks.size-1) {
       string += "Player "
