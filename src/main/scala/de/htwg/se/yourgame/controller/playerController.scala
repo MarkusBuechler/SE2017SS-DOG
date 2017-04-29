@@ -32,16 +32,20 @@ class playerController {
   }
 
   def setPlayerName(inputNumber: Int, inputString: String): Unit = {
-    print("Bitte Spieler auswählen [1-4] und einen Namen eingeben\n")
+
     var playerNo = 0
     inputNumber match {
       case 1 => print("Player 1 wurde ausgewählt !\n"); playerNo = 0
+      case 2 => print("Player 2 wurde ausgewählt !\n"); playerNo = 1
+      case 3 => print("Player 3 wurde ausgewählt !\n"); playerNo = 2
+      case 4 => print("Player 4 wurde ausgewählt !\n"); playerNo = 3
+      case _ => print("False Eingabe! Player 1 wurde ausgewählt !\n"); playerNo = 0
     }
     inputString match {
       case _ =>
         val insertNumber = playerNo + 1
         val currentPlayer = Player(inputString, insertNumber, isActive = false)
-        print(inputString + "wurde eingeben und Player " + insertNumber + "zugewiesen")
+        print(inputString + " wurde eingeben und Player " + insertNumber + " zugewiesen ")
         playerList.update(playerNo, currentPlayer)
     }
     print(playerList.toString())

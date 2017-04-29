@@ -31,8 +31,6 @@ class gameController @Inject() (playerController : playerController, cardControl
 
   def applyFigToField(): Unit = {
         for (figure <-  playerController.figureListBuffer) {
-          print("Size" + playerController.figureListBuffer.size + "\n")
-          print(figure.position)
           val index = fieldController.fieldList.indexWhere (_.id == figure.position)
           val bufferField = fieldController.fieldList.apply(index).copy(isUsed = true)
           fieldController.fieldList.update(index, bufferField)

@@ -13,7 +13,7 @@ class DogTui @Inject() (gameController : gameController, playerController : play
   def printTui(): Unit = {
     print(info)
     gameController.showGameStatus()
-    print("\nWelche Karte möchtest du spielen?\n")
+
   }
 
   gameController.initGame()
@@ -23,13 +23,27 @@ class DogTui @Inject() (gameController : gameController, playerController : play
       var continue = true
       input match {
         case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n"); continue = false
-        case "m" => printTui()
-        case "n" => print("n wurde gedrückt !\nSpiel wird bald gestartet\n"); continue = true
+        case "m" => printTui(); continue = true
+        case "n" =>
+          print("n wurde gedrückt !\nSpiel wird gestartet\n");
+          print("\nWelche Karte möchtest du spielen?\n")
+          gameController.showGameStatus()
+          continue = true
         case "i" => print("i wurde gedrückt !\nInformationen werden bald angezeigt\n"); continue = true;
-        case "s" => print("s wurde gedrückt !\n Spieler 1 ist nun s")
-          //todo: eingabe richtig einlesen
-          playerController.setPlayerName(1,input : String)
+        case "s" =>
+          print("Bitte Spieler auswählen [1-4] und einen Namen eingeben\n")
+          val input = scala.io.StdIn.readLine()
+          val tokens = input.split(" ")
+          if (tokens.length != 2)
+            {
+              print("Falsche Eingabe!\n")
+              print(info)
+            }
+          else {
+            playerController.setPlayerName(tokens(0).toInt, tokens(1))
+          }
           continue = true;
+          printTui()
         case _ => print("False Eingabe\n"); print(info)
       }
       continue
