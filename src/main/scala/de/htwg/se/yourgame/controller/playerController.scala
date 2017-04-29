@@ -1,8 +1,6 @@
 package de.htwg.se.yourgame.controller
 
-import com.google.inject.Inject
 import de.htwg.se.yourgame.model.{Figure, Player}
-
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -16,12 +14,11 @@ class playerController {
 
   def initPlayer = {
     for (x <- 1 to numberOfPlayer) {
-      val bufferPlayer = Player("Player " + x , x, false)
+      val bufferPlayer = Player("Player " + x , x, isActive = false)
       playerList += bufferPlayer
     }
-    playerList.update(0, Player("Player 1",1, true))
+    playerList.update(0, Player("Player 1",1, isActive = true))
     initFigures
-//    print(playerList.size)
   }
 
   def initFigures = {
@@ -32,7 +29,6 @@ class playerController {
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt)
       figureListBuffer += bufferFig
     }
-//    applyFigToField
   }
 
   def setPlayerName(inputNumber: Int, inputString: String) = {
@@ -40,10 +36,6 @@ class playerController {
     var playerNo = 0
     inputNumber match {
       case 1 => print("Player 1 wurde ausgewählt !\n"); playerNo = 0
-//      case 2 => print("Player 2 wurde ausgewählt !\n"); playerNo = 1
-//      case 3 => print("Player 3 wurde ausgewählt !\n"); playerNo = 2
-//      case 4 => print("Player 4 wurde ausgewählt !\n"); playerNo = 3
-//      case _ => print("Falsche Eingabe !\nPlayer 1 wurde standardmäßig ausgewählt\n"); playerNo = 0
     }
     inputString match {
       case _ => {

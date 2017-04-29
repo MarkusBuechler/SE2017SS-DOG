@@ -22,19 +22,19 @@ import scala.collection.mutable.ListBuffer
   var cardList = new ListBuffer[Card]
   var cardDecks = new ListBuffer[CardDeck]
   var a = 0
-  val playerList = List (1,2,3,4);
+  val playerList = List (1,2,3,4)
   var numberOfPlayers = 4
   var decksize = 7
   var playedCards = new ListBuffer[Card]
 
 
-  def initCards = {
+  def initCards() = {
     cardList.clear
     playedCards.clear
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
-      val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean);
+      val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean)
       cardList += tempCard
     }
     shuffleCards
@@ -42,9 +42,9 @@ import scala.collection.mutable.ListBuffer
   }
 
   //sample data
-  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", false)
-  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", true)
-  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", true)
+  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", isPlayed = false)
+  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", isPlayed = true)
+  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", isPlayed = true)
 
 
   def shuffleCards = {
@@ -53,7 +53,6 @@ import scala.collection.mutable.ListBuffer
 
   def fillCardDeck = {
 
-//    print("CardList: " + cardList.size + "\n");
     cardDecks.clear
     for (a <- playerList) {
       var cardBuffer = new ListBuffer[Card]
@@ -62,39 +61,23 @@ import scala.collection.mutable.ListBuffer
         cardList-=cardList.head
       }
       val cardBufferList = cardBuffer.toList
-      val filledCardDeck = new CardDeck(a,decksize,cardBufferList)
+      val filledCardDeck = CardDeck(a,decksize,cardBufferList)
       cardDecks+=filledCardDeck
     }
-
-//    print("CardList: " + cardList.size + "\n");
-//    print("CardDeck: " + cardDecks.size + "\n");
-//
-//    print("Deck 1: " + cardDecks.apply(0).cards.size + "\n");
-//    print("Deck 2: " + cardDecks.apply(1).cards.size + "\n");
-//    print("Deck 3: " + cardDecks.apply(2).cards.size + "\n");
-//    print("Deck 4: " + cardDecks.apply(3).cards.size + "\n");
 
   }
 
   def printCardDecks() = {
     var string = ""
-    for (x <- 0 to cardDecks.size-1) {
+    for (x <- 0 until cardDecks.size-1) {
       string += "Player "
       string += cardDecks.apply(x).PlayerId + ": "
-      for (y <- 0 to cardDecks.apply(x).cards.size - 1) {
+      for (y <- 0 until cardDecks.apply(x).cards.size - 1) {
         string += cardDecks.apply(x).cards.apply(y).description.toString + " ,"
       }
       string += "\n"
     }
     print(string + "\n")
   }
-
-  /*
-  def playCard(player : Player, card: Card) = {
-    fieldController.movePlayer(player, card.value)
-
-  }
-  */
-
 
 }

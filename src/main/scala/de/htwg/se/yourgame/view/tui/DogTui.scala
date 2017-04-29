@@ -1,6 +1,6 @@
 package de.htwg.se.yourgame.view.tui
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{fieldController, gameController, playerController}
+import de.htwg.se.yourgame.controller.{gameController, playerController}
 
 /**
   * Created by margogo on 02.04.17.

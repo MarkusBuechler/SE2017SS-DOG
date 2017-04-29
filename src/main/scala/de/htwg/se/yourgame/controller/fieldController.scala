@@ -16,10 +16,9 @@ import scala.collection.mutable.ListBuffer
   */
 class fieldController  {
 
-//  lazy val fieldController = wire[fieldController]
   var fieldList = new ListBuffer[Field]
 
-  def initFields = {
+  def initFields() = {
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
@@ -31,16 +30,15 @@ class fieldController  {
       val bufferField = Field(id.toInt, property, color, isUsed.toBoolean, intArraypredecessorId, intArraySucessorId)
       fieldList += bufferField
     }
-//    print("Fieldlist: " + fieldList.size + "\n");
   }
 
-  def initFigures = {
+  def initFigures() = {
 
   }
 
   def printFields() = {
     var string = "CurrentField:"
-    for (x <- 0 to fieldList.size-1) {
+    for (x <-  0 until fieldList.size-1) {
       if (x % 16 == 0) {
         string += "\n"
       }

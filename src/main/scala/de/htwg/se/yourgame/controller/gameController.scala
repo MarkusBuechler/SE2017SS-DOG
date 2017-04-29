@@ -1,7 +1,6 @@
 package de.htwg.se.yourgame.controller
 
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.yourgame.DependencyModule
 import de.htwg.se.yourgame.model.{Card, Field, Player}
 
 import scala.collection.mutable.ListBuffer
@@ -30,7 +29,7 @@ class gameController @Inject() (playerController : playerController, cardControl
     fieldController.movePosition(player, card.value)
   }
 
-  def applyFigToField = {
+  def applyFigToField() = {
         for (figure <-  playerController.figureListBuffer) {
           print("Size" + playerController.figureListBuffer.size + "\n")
           print(figure.position)

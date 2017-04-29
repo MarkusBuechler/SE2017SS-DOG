@@ -13,9 +13,9 @@ import scala.io.StdIn._
 object DogMain {
 
   val injector = Guice.createInjector(new DependencyModule)
-    val playerController = injector.getInstance(classOf[playerController])
-    val cardController = injector.getInstance(classOf[cardController])
-    val fieldController = injector.getInstance(classOf[fieldController])
+  val playerController = injector.getInstance(classOf[playerController])
+  val cardController = injector.getInstance(classOf[cardController])
+  val fieldController = injector.getInstance(classOf[fieldController])
 
   val gameController = new gameController(playerController, cardController, fieldController)
   val tui = new DogTui(gameController, playerController)
