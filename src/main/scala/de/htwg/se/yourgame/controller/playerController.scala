@@ -8,19 +8,20 @@ import scala.collection.mutable.ListBuffer
   */
 class playerController {
 
+  val emptyPlayer = Player("", 100, isActive = false)
   var figureListBuffer = new ListBuffer[Figure]
   var playerList = new ListBuffer[Player]
-  val numberOfPlayer = 4
-  var currentPlayer = new Player("",0,isActive = false)
+  val numberOfPlayer = 3 // 3+1 regulär
+  var currentPlayer = Player("Player 1",0,isActive = true)
+
 
   def initPlayer(): Unit = {
-    for (x <- 1 to numberOfPlayer) {
-      val bufferPlayer = Player("Player " + x , x, isActive = false)
+    for (x <- 0 to numberOfPlayer) {
+      val bufferPlayer = Player("Player " + (x + 1) , x, isActive = false)
       playerList += bufferPlayer
     }
-    playerList.update(0, Player("Player 1",1, isActive = true))
+    playerList.update(0, Player("Player 1",0, isActive = true))
     initFigures()
-    currentPlayer = playerList.apply(0)
   }
 
   def initFigures(): Unit = {
@@ -55,23 +56,30 @@ class playerController {
 
   //Todo: ternary operator verwenden
   def printCurrentPlayer(): Unit = {
-    var currentPlayer = ""
-    for ( player  <- playerList) {
-      if (player.isActive)
-        {
-          currentPlayer += player.name
-        }
-    }
+//    for ( player  <- playerList) {
+//      if (player.isActive)
+//        {
+//          currentPlayer += player.name
+//        }
+//    }
     if (currentPlayer != "") {
-      print(currentPlayer + " ist am Zug")
+      print(currentPlayer.name + " ist am Zug")
     } else {
       print("Niemand ist am Zug")
     }
   }
 
   def changeCurrentPlayer() = {
-    val nextPlayerNumber = if (currentPlayer.playerId == 4) 1 else currentPlayer.playerId + 1
-    currentPlayer = playerList.apply(nextPlayerNumber)
+    val lastPlayer = playerList.apply(currentPlayer.playerId).copy(isActive = false)
+    val nextPlayerNumber = if (currentPlayer.playerId == 3) 0 else currentPlayer.playerId + 1
+
+    playerList.update(lastPlayer.playerId, lastPlayer)
+
+    val nextPlayer = playerList.apply(nextPlayerNumber).copy(isActive = true)
+    playerList.update(nextPlayerNumber, nextPlayer)
+
+    val currentPlayerIndex = playerList.indexWhere(_.isActive == true)
+    currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
   }
 
 

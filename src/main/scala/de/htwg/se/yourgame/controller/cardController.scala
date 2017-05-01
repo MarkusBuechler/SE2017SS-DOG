@@ -67,15 +67,16 @@ import scala.collection.mutable.ListBuffer
 
   def printCardDecks(): Unit = {
     var string = ""
-    for (x <- 0 until cardDecks.size-1) {
-      string += "Player "
+    for (x <- 0 until cardDecks.size) {
+      string += "Player [" + cardDecks.apply(x).cards.size + "] "
       string += cardDecks.apply(x).PlayerId + ": "
-      for (y <- 0 until cardDecks.apply(x).cards.size - 1) {
+      for (y <- 0 until cardDecks.apply(x).cards.size) {
         string += cardDecks.apply(x).cards.apply(y).description.toString + " ,"
       }
       string += "\n"
     }
     print(string + "\n")
   }
+
 
 }

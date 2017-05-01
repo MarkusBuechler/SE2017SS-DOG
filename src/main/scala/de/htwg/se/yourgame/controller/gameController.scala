@@ -26,7 +26,7 @@ class gameController @Inject() (playerController : playerController, cardControl
   }
 
   def playerAction(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
-    fieldController.movePosition(cardFromDeckNumber, figureNumber)
+//    fieldController.movePosition(cardFromDeckNumber, figureNumber)
     cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.remove(cardFromDeckNumber + 1)
     // add removed card to playedCards
     playerController.changeCurrentPlayer()

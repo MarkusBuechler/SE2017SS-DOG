@@ -26,7 +26,7 @@ class fieldController @Inject() (playerController : playerController, cardContro
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
-      val tempFigure = Figure(playerController.currentPlayer, 100, "EmptyRole", "EmptyProp", 0)
+      val tempFigure = Figure(playerController.emptyPlayer, 100, "EmptyRole", "EmptyProp", 0)
 
       val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId)
       fieldList += bufferField
@@ -41,7 +41,7 @@ class fieldController @Inject() (playerController : playerController, cardContro
       }
       string += fieldList.apply(x).id + ": "
       val figInField = if (fieldList.apply(x).figure.playerFigNumber != 100) ", Figur " + fieldList.apply(x).figure.playerFigNumber else ""
-      val playerInField = if(fieldList.apply(x).figure.player.name != null)  "[" + fieldList.apply(x).figure.player.name + figInField + "] "  else "[ ]"
+      val playerInField = if(fieldList.apply(x).figure.player.name != null)  "[" + fieldList.apply(x).figure.player.name + figInField + "] "  else "[  ]"
       string += playerInField
 
       string += ", "
