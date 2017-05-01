@@ -27,7 +27,8 @@ class gameController @Inject() (playerController : playerController, cardControl
 
   def playerAction(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
 //    fieldController.movePosition(cardFromDeckNumber, figureNumber)
-    cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.remove(cardFromDeckNumber + 1)
+    val playedCard = cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
+    removeCard(playedCard)
     // add removed card to playedCards
     playerController.changeCurrentPlayer()
   }
@@ -38,6 +39,12 @@ class gameController @Inject() (playerController : playerController, cardControl
           val bufferField = fieldController.fieldList.apply(index).copy(figure = figure)
           fieldController.fieldList.update(index, bufferField)
         }
+  }
+
+  def removeCard(card: Card) = {
+    val cardInSet = cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.indexWhere(_.id == card.id)
+    cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.remove(cardInSet)
+    cardController.playedCards += card
   }
 
 }

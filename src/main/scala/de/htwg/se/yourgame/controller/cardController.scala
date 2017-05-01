@@ -76,7 +76,7 @@ import scala.collection.mutable.ListBuffer
       string += "\n"
     }
     print(string + "\n")
+    print("Gespielte Karten :" + playedCards + "\n")
   }
-
 
 }
