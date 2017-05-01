@@ -1,4 +1,4 @@
-0;„default“;„red“;false;63,70,71,72,73;1,74,75,76,77
+0;„default“;„red“;false;63,70,71,72,73;1,74
 1;„default“;„default“;false;0;2
 2;„default“;„default“;false;1;3
 3;„default“;„default“;false;2;4
@@ -14,7 +14,7 @@
 13;„default“;„default“;false;12;14
 14;„default“;„default“;false;13;15
 15;„default“;„default“;false;14;16
-16;„default“;„default“;false;15,80,81,82,83;17,84,85,86,87
+16;„default“;„default“;false;15,80,81,82,83;17,84
 17;„default“;„default“;false;16;18
 18;„default“;„default“;false;17;19
 19;„default“;„default“;false;18;20
@@ -30,7 +30,7 @@
 29;„default“;„default“;false;28;30
 30;„default“;„default“;false;29;31
 31;„default“;„default“;false;30;32
-32;„default“;„default“;false;31,90,91,92,93;33,94,95,96,97
+32;„default“;„default“;false;31,90,91,92,93;33,94
 33;„default“;„default“;false;32;34
 34;„default“;„default“;false;33;35
 35;„default“;„default“;false;34;36
@@ -46,7 +46,7 @@
 45;„default“;„default“;false;44;46
 46;„default“;„default“;false;45;47
 47;„default“;„default“;false;46;48
-48;„default“;„default“;false;47,100,101,102,103;49,104,105,106,107
+48;„default“;„default“;false;47,100,101,102,103;49,104
 49;„default“;„default“;false;48;50
 50;„default“;„default“;false;49;51
 51;„default“;„default“;false;50;52

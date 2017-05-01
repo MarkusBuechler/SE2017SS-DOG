@@ -97,4 +97,14 @@ class fieldController @Inject() (playerController : playerController, cardContro
 //    //    fieldList.updated(oldPosition + cardValue, newBufferField)
 //  }
 
+  def findNextField(fieldId: Int): ListBuffer[Field] = {
+    val field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
+    var NextFields = new ListBuffer[Field]
+    for (x <- field.successorIds)
+      {
+        NextFields += fieldList.apply(fieldList.indexWhere(_.id == x))
+      }
+   NextFields
+  }
+
 }

@@ -23,7 +23,6 @@ class DogTui @Inject() (gameController : gameController, playerController : play
       var continue = true
       input match {
         case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n"); continue = false
-        case "m" => printTui(); continue = true
         case "n" =>
           print("n wurde gedrückt !\nSpiel wird gestartet\n");
           print("\nWelche Karte möchtest du spielen?\n")
@@ -58,6 +57,8 @@ class DogTui @Inject() (gameController : gameController, playerController : play
             gameController.playerAction(tokens(0).toInt, tokens(1).toInt)
             printTui()
           }
+        case "g" =>
+          gameController.test
 
 
 
