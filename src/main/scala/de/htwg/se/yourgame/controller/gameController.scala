@@ -1,12 +1,16 @@
 package de.htwg.se.yourgame.controller
 
 import com.google.inject.Inject
-import de.htwg.se.yourgame.model.{Card, Player}
+import de.htwg.se.yourgame.model.{Card, Field, Player}
+
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by margogo on 15.04.17.
   */
 class gameController @Inject() (playerController : playerController, cardController : cardController, fieldController : fieldController) {
+
+  var fieldList = new ListBuffer[Field]
 
   def initGame(): Unit = {
     fieldController.initFields()

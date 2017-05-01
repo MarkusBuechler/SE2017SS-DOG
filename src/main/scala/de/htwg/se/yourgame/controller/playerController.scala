@@ -70,7 +70,7 @@ class playerController {
   }
 
   def changeCurrentPlayer() = {
-    val nextPlayerNumber = if (currentPlayer.playerId == 3) 1 else currentPlayer.playerId + 1
+    val nextPlayerNumber = if (currentPlayer.playerId == 4) 1 else currentPlayer.playerId + 1
     currentPlayer = playerList.apply(nextPlayerNumber)
   }
 

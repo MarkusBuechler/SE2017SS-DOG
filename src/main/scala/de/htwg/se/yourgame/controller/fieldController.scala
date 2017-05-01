@@ -49,14 +49,17 @@ class fieldController @Inject() (playerController : playerController, cardContro
     print(string + "\n")
   }
 
-  /**
-    * check vllt später einbauen
-    * @param cardFromDeckNumber
-    * @return
-    */
-  def movePosition(cardFromDeckNumber: Int, figureNumber: Int): ListBuffer[Field] = {
-    val currentPlayer = playerController.currentPlayer
-    val oldPosition = playerController.figureListBuffer.apply(figureNumber).position
+
+  def movePosition(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
+
+    // größeres problem
+    // inject lädt leere listen
+
+//    print(cardController.cardList)
+//    val currentPlayer = playerController2.currentPlayer
+//    print(currentPlayer)
+//    val oldPosition = playerController2.figureListBuffer.apply(figureNumber)
+//    print(oldPosition)
 //    fieldList.update(position, ) update old field
 
 //    val oldPosition = 1
@@ -65,10 +68,33 @@ class fieldController @Inject() (playerController : playerController, cardContro
 //
 //    // eventuell fehler bei lücken der ids
 //    val newBufferField = fieldList.apply(oldPosition).copy(isUsed = true, id = cardValue + oldCardId)
-    val oldBufferField = fieldList.apply(oldPosition).copy()
-//
-    fieldList.updated(oldPosition, oldBufferField)
+//    val oldBufferField = fieldList.apply(oldPosition).copy()
+////
+//    fieldList.updated(oldPosition, oldBufferField)
 //    fieldList.updated(oldPosition + cardValue, newBufferField)
   }
+
+//  /**
+//    * check vllt später einbauen
+//    * @param cardFromDeckNumber
+//    * @return
+//    */
+//  def movePosition(cardFromDeckNumber: Int, figureNumber: Int): ListBuffer[Field] = {
+//    val currentPlayer = playerController.currentPlayer
+//    val oldPosition = playerController.figureListBuffer.apply(figureNumber).position
+//    print(oldPosition)
+//    //    fieldList.update(position, ) update old field
+//
+//    //    val oldPosition = 1
+//    //    val oldCardId = cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.apply(cardFromDeckNumber).id
+//    //    val cardValue = cardController.cardDecks.apply(player.playerId).cards.apply(cardFromDeckNumber).value
+//    //
+//    //    // eventuell fehler bei lücken der ids
+//    //    val newBufferField = fieldList.apply(oldPosition).copy(isUsed = true, id = cardValue + oldCardId)
+//    val oldBufferField = fieldList.apply(oldPosition).copy()
+//    //
+//    fieldList.updated(oldPosition, oldBufferField)
+//    //    fieldList.updated(oldPosition + cardValue, newBufferField)
+//  }
 
 }
