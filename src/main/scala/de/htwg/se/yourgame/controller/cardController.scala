@@ -58,8 +58,8 @@ import scala.collection.mutable.ListBuffer
         cardBuffer+=cardList.head
         cardList-=cardList.head
       }
-      val cardBufferList = cardBuffer.toList
-      val filledCardDeck = CardDeck(a,decksize,cardBufferList)
+//      val cardBufferList = cardBuffer.toList
+      val filledCardDeck = CardDeck(a,decksize,cardBuffer)
       cardDecks+=filledCardDeck
     }
 

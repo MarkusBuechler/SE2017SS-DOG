@@ -1,16 +1,12 @@
 package de.htwg.se.yourgame.controller
 
 import com.google.inject.Inject
-import de.htwg.se.yourgame.model.{Card, Field, Player}
-
-import scala.collection.mutable.ListBuffer
+import de.htwg.se.yourgame.model.{Card, Player}
 
 /**
   * Created by margogo on 15.04.17.
   */
 class gameController @Inject() (playerController : playerController, cardController : cardController, fieldController : fieldController) {
-
-  var fieldList = new ListBuffer[Field]
 
   def initGame(): Unit = {
     fieldController.initFields()
@@ -25,14 +21,17 @@ class gameController @Inject() (playerController : playerController, cardControl
     playerController.printCurrentPlayer()
   }
 
-  def playCard(player : Player, card: Card): ListBuffer[Field] = {
-    fieldController.movePosition(player, card.value)
+  def playerAction(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
+    fieldController.movePosition(cardFromDeckNumber, figureNumber)
+    cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.remove(cardFromDeckNumber + 1)
+    // add removed card to playedCards
+    playerController.changeCurrentPlayer()
   }
 
   def applyFigToField(): Unit = {
         for (figure <-  playerController.figureListBuffer) {
           val index = fieldController.fieldList.indexWhere (_.id == figure.position)
-          val bufferField = fieldController.fieldList.apply(index).copy(isUsed = true)
+          val bufferField = fieldController.fieldList.apply(index).copy(figure = figure)
           fieldController.fieldList.update(index, bufferField)
         }
   }

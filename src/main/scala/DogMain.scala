@@ -18,7 +18,7 @@ object DogMain {
   val fieldController: fieldController = injector.getInstance(classOf[fieldController])
 
   val gameController = new gameController(playerController, cardController, fieldController)
-  val tui = new DogTui(gameController, playerController)
+  val tui = new DogTui(gameController, playerController, cardController)
 
   def main(args: Array[String]): Unit = {
     while (tui.processInputLine(readLine())) {}

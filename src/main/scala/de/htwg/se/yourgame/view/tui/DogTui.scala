@@ -1,11 +1,11 @@
 package de.htwg.se.yourgame.view.tui
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{gameController, playerController}
+import de.htwg.se.yourgame.controller.{gameController, playerController, cardController}
 
 /**
   * Created by margogo on 02.04.17.
   */
-class DogTui @Inject() (gameController : gameController, playerController : playerController) {
+class DogTui @Inject() (gameController : gameController, playerController : playerController, cardController : cardController) {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
 
   def update(): Unit = printTui()
@@ -44,6 +44,22 @@ class DogTui @Inject() (gameController : gameController, playerController : play
           }
           continue = true;
           printTui()
+        case "y" =>
+          print("Welche Karte soll mit welcher Figur gespielt werden?\n")
+          val input = scala.io.StdIn.readLine()
+          val tokens = input.split(" ")
+          if (tokens.length != 2)
+          {
+            print("Falsche Eingabe!\n")
+            print(info)
+          }
+          else {
+            gameController.playerAction(tokens(0).toInt, tokens(1).toInt)
+            printTui()
+          }
+
+
+
         case _ => print("False Eingabe\n"); print(info)
       }
       continue

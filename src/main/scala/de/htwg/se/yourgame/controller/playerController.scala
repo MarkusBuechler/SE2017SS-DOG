@@ -11,6 +11,7 @@ class playerController {
   var figureListBuffer = new ListBuffer[Figure]
   var playerList = new ListBuffer[Player]
   val numberOfPlayer = 4
+  var currentPlayer = new Player("",0,isActive = false)
 
   def initPlayer(): Unit = {
     for (x <- 1 to numberOfPlayer) {
@@ -19,6 +20,7 @@ class playerController {
     }
     playerList.update(0, Player("Player 1",1, isActive = true))
     initFigures()
+    currentPlayer = playerList.apply(0)
   }
 
   def initFigures(): Unit = {
@@ -67,8 +69,9 @@ class playerController {
     }
   }
 
-  def changeCurrentPlayer(currentPlayer : Player): Unit = {
-
+  def changeCurrentPlayer() = {
+    val nextPlayerNumber = if (currentPlayer.playerId == 3) 1 else currentPlayer.playerId + 1
+    currentPlayer = playerList.apply(nextPlayerNumber)
   }
 
 
