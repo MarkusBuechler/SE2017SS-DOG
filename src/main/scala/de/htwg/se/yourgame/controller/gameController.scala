@@ -33,7 +33,7 @@ class gameController @Inject() (playerController : playerController, cardControl
   }
 
   def applyFigToField(): Unit = {
-        for (figure <-  playerController.figureListBuffer) {
+        for (figure <-  playerController.figureList) {
           val index = fieldController.fieldList.indexWhere (_.id == figure.position)
           val bufferField = fieldController.fieldList.apply(index).copy(figure = figure)
           fieldController.fieldList.update(index, bufferField)
@@ -47,10 +47,14 @@ class gameController @Inject() (playerController : playerController, cardControl
   }
 
   def test = {
-    val bufferFig = playerController.figureListBuffer.apply(0)
-    val bufferFigPos = playerController.figureListBuffer.apply(0).position
+    val bufferFig = playerController.figureList.apply(0)
+    val bufferFigPos = playerController.figureList.apply(0).position
 
     print(fieldController.findNextField(bufferFigPos))
+  }
+
+  def test2 = {
+    fieldController.updateFigField(fieldController.findNextField(playerController.figureList.apply(0).position).head.id,playerController.figureList.apply(1))
   }
 
 

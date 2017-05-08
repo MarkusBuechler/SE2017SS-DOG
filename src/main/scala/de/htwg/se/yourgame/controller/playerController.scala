@@ -9,10 +9,12 @@ import scala.collection.mutable.ListBuffer
 class playerController {
 
   val emptyPlayer = Player("", 100, isActive = false)
-  var figureListBuffer = new ListBuffer[Figure]
+  val emptyFig = Figure(emptyPlayer, 100, "","",170)
+  var figureList = new ListBuffer[Figure]
   var playerList = new ListBuffer[Player]
   val numberOfPlayer = 3 // 3+1 regulär
   var currentPlayer = Player("Player 1",0,isActive = true)
+  var currentFig =  Figure(player = emptyPlayer, 0,"BufferFig", "EmptyProp", 0)
 
 
   def initPlayer(): Unit = {
@@ -25,13 +27,14 @@ class playerController {
   }
 
   def initFigures(): Unit = {
-    figureListBuffer.clear
+    figureList.clear
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(player, playerFigNumber, role, property, position) = line.split(";").map(_.trim())
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt)
-      figureListBuffer += bufferFig
+      figureList += bufferFig
     }
+    figureList.update(0, Figure(playerList.apply(0),0,"defaultRole","default",70))
   }
 
   def setPlayerName(inputNumber: Int, inputString: String): Unit = {

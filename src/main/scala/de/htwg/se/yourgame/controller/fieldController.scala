@@ -107,4 +107,15 @@ class fieldController @Inject() (playerController : playerController, cardContro
    NextFields
   }
 
+  def updateFigField(fieldId: Int, figure: Figure) = {
+    // check noch einbauen
+    val test1 = figure.position // 71
+    val test2 = fieldList.indexWhere(_.id == figure.position) //65
+    val oldField = fieldList.apply(test2).copy(figure = playerController.emptyFig)
+    val newField = fieldList.apply(fieldList.indexWhere(_.id == fieldId)).copy(figure = figure)
+//    newField.figure = figure
+    fieldList.update(test2, oldField)
+    fieldList.update(fieldId, newField)
+  }
+
 }

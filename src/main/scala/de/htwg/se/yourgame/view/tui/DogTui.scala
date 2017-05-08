@@ -59,7 +59,9 @@ class DogTui @Inject() (gameController : gameController, playerController : play
           }
         case "g" =>
           gameController.test
-
+          print("Standardmäßig wird die erste Figur genommen")
+          gameController.test2
+          printTui()
 
 
         case _ => print("False Eingabe\n"); print(info)
