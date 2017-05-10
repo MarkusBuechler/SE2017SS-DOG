@@ -1,7 +1,7 @@
-package de.htwg.se.yourgame.model
+package de.htwg.se.yourgame.model.SpecTest
 
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest._
+
 import scala.collection.mutable
 
 /**

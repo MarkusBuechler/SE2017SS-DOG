@@ -1,8 +1,9 @@
-package de.htwg.se.yourgame.model
+package de.htwg.se.yourgame.model.SpecTest
 
-import org.scalatest._
+import de.htwg.se.yourgame.model.{Figure, Player}
 import org.junit.runner.RunWith
 import org.scalamock.scalatest.MockFactory
+import org.scalatest._
 import org.scalatest.junit.JUnitRunner
 
 import scala.collection.mutable.ListBuffer

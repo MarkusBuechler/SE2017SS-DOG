@@ -1,0 +1,31 @@
+package de.htwg.se.yourgame.model.ScalaTest
+
+import com.google.inject.Guice
+import de.htwg.se.yourgame.DependencyModule
+import de.htwg.se.yourgame.controller.playerController
+import org.scalatest.{FlatSpec, Matchers}
+
+/**
+  * Created by margogo on 10.05.17.
+  */
+class playerControllerTest extends FlatSpec with Matchers {
+
+  val injector = Guice.createInjector(new DependencyModule)
+
+
+  var playerController = injector.getInstance(classOf[playerController])
+
+  playerController.initPlayer()
+
+  val playerSize = playerController.playerList.size
+  playerSize should be > 0
+
+  assert(playerSize == 4)
+
+  val playerA = playerController.currentPlayer
+  playerController.changeCurrentPlayer()
+  val playerB = playerController.currentPlayer
+
+  assert(playerA != playerB)
+
+}
