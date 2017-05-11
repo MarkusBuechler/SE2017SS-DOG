@@ -1,8 +1,4 @@
 package de.htwg.se.yourgame.controller
-import de.htwg.se.yourgame.model.{Card, CardDeck}
-
-import scala.collection.mutable.ListBuffer
-
 /**
   * Created by margogo on 02.04.17.
   * code will be added in the future
@@ -17,66 +13,6 @@ import scala.collection.mutable.ListBuffer
   * or a mutable list (linear seq or other)
   */
   class cardController {
-  var cardList = new ListBuffer[Card]
-  var cardDecks = new ListBuffer[CardDeck]
-  var a = 0
-  val playerList = List (1,2,3,4)
-  var numberOfPlayers = 4
-  var decksize = 7
-  var playedCards = new ListBuffer[Card]
 
-
-  def initCards(): Unit = {
-    cardList.clear
-    playedCards.clear
-    val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
-    for (line <- bufferedSource.getLines()) {
-      val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
-      val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean)
-      cardList += tempCard
-    }
-    shuffleCards()
-    fillCardDeck()
-  }
-
-  //sample data
-  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", isPlayed = false)
-  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", isPlayed = true)
-  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", isPlayed = true)
-
-
-  def shuffleCards(): Unit = {
-    cardList = scala.util.Random.shuffle(cardList)
-  }
-
-  def fillCardDeck(): Unit = {
-
-    cardDecks.clear
-    for (a <- playerList) {
-      var cardBuffer = new ListBuffer[Card]
-      for (i <- 1 to decksize) {
-        cardBuffer+=cardList.head
-        cardList-=cardList.head
-      }
-//      val cardBufferList = cardBuffer.toList
-      val filledCardDeck = CardDeck(a,decksize,cardBuffer)
-      cardDecks+=filledCardDeck
-    }
-
-  }
-
-  def printCardDecks(): Unit = {
-    var string = ""
-    for (x <- 0 until cardDecks.size) {
-      string += "Player [" + cardDecks.apply(x).cards.size + "] "
-      string += cardDecks.apply(x).PlayerId + ": "
-      for (y <- 0 until cardDecks.apply(x).cards.size) {
-        string += cardDecks.apply(x).cards.apply(y).description.toString + " ,"
-      }
-      string += "\n"
-    }
-    print(string + "\n")
-    print("Gespielte Karten :" + playedCards + "\n")
-  }
 
 }

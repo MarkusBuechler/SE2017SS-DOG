@@ -9,8 +9,5 @@ class DependencyModule extends Module{
 
   def configure(binder:Binder): Unit = {
     binder.bind(classOf[gameController])
-    binder.bind(classOf[fieldController])
-    binder.bind(classOf[playerController])
-    binder.bind(classOf[cardController])
   }
 }

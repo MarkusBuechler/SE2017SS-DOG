@@ -2,7 +2,7 @@ package de.htwg.se.yourgame.model.SpecTest
 
 import com.google.inject.Guice
 import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.cardController
+import de.htwg.se.yourgame.controller.{cardController, gameController}
 import org.scalatest.WordSpec
 
 /**
@@ -13,7 +13,7 @@ class cardControllerSpecTest extends WordSpec {
   val injector = Guice.createInjector(new DependencyModule)
 
 
-  var cardController = injector.getInstance(classOf[cardController])
+  var cardController = injector.getInstance(classOf[gameController])
 
   print(cardController)
 

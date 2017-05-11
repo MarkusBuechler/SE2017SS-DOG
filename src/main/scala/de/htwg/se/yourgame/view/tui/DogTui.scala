@@ -5,7 +5,7 @@ import de.htwg.se.yourgame.controller.{gameController, playerController, cardCon
 /**
   * Created by margogo on 02.04.17.
   */
-class DogTui @Inject() (gameController : gameController, playerController : playerController, cardController : cardController) {
+class DogTui @Inject() (gameController : gameController) {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
 
   def update(): Unit = printTui()
@@ -39,7 +39,7 @@ class DogTui @Inject() (gameController : gameController, playerController : play
               print(info)
             }
           else {
-            playerController.setPlayerName(tokens(0).toInt, tokens(1))
+            gameController.setPlayerName(tokens(0).toInt, tokens(1))
           }
           continue = true;
           printTui()

@@ -2,7 +2,7 @@ package de.htwg.se.yourgame.model.ScalaTest
 
 import com.google.inject.Guice
 import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.cardController
+import de.htwg.se.yourgame.controller.{cardController, gameController}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -13,7 +13,7 @@ class cardControllerTest extends FlatSpec with Matchers {
   val injector = Guice.createInjector(new DependencyModule)
 
 
-  var cardController = injector.getInstance(classOf[cardController])
+  var cardController = injector.getInstance(classOf[gameController])
 
   cardController.initCards()
   val decksize = cardController.cardList.size

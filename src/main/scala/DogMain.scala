@@ -13,12 +13,9 @@ import scala.io.StdIn._
 object DogMain {
 
   val injector: Injector = Guice.createInjector(new DependencyModule)
-  val playerController: playerController = injector.getInstance(classOf[playerController])
-  val cardController: cardController = injector.getInstance(classOf[cardController])
-  val fieldController: fieldController = injector.getInstance(classOf[fieldController])
 
-  val gameController = new gameController(playerController, cardController, fieldController)
-  val tui = new DogTui(gameController, playerController, cardController)
+  val gameController = new gameController()
+  val tui = new DogTui(gameController)
 
   def main(args: Array[String]): Unit = {
     while (tui.processInputLine(readLine())) {}
