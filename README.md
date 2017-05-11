@@ -1,5 +1,6 @@
 SE2017SS-DOG2
 =========================
+# CI Status [![build status](https://travis-ci.org/MarkusBuechler/SE2017SS-DOG.svg?branch=development)](https://github.com/MarkusBuechler/SE2017SS-DOG/tree/development)
 
 This is a scala project for the
 class Software Engineering at the University of Applied Science HTWG Konstanz by Markus Buechler
