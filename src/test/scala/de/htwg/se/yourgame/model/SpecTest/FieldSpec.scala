@@ -19,5 +19,4 @@ class FieldSpec extends FlatSpec with MockFactory {
   var playerList = new ListBuffer[Player]
 
 
-
 }

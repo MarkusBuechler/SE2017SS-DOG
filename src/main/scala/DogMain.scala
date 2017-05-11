@@ -5,7 +5,7 @@
 
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.{cardController, fieldController, gameController, playerController}
+import de.htwg.se.yourgame.controller.gameController
 import de.htwg.se.yourgame.view.tui.DogTui
 
 import scala.io.StdIn._

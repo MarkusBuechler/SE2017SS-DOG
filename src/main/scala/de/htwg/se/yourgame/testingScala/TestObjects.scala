@@ -9,12 +9,14 @@ class TestObjects {
     input
       .toUpperCase()
   }
+
   def toLower(input: String) = {
     input
       .toLowerCase
   }
+
   def reverseString(input1: String, input2: String, input3: String) = {
-      input3.concat(input2).concat(input1)
+    input3.concat(input2).concat(input1)
   }
 
 }

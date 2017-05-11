@@ -2,7 +2,7 @@ package de.htwg.se.yourgame.model.ScalaTest
 
 import com.google.inject.Guice
 import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.{gameController, playerController}
+import de.htwg.se.yourgame.controller.gameController
 import org.scalatest.{FlatSpec, Matchers}
 
 /**

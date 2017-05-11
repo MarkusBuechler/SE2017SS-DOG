@@ -2,7 +2,7 @@ package de.htwg.se.yourgame.model.SpecTest
 
 import com.google.inject.Guice
 import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.{cardController, gameController}
+import de.htwg.se.yourgame.controller.gameController
 import org.scalatest.WordSpec
 
 /**
@@ -22,13 +22,13 @@ class cardControllerSpecTest extends WordSpec {
     }
   }
 
-//  cardController.initCards()
+  //  cardController.initCards()
 
   /* wie soll man denn gescheit testen ? */
   "Decksize" should {
     "be greater than" in (
       1000
-    )
+      )
   }
 
 }

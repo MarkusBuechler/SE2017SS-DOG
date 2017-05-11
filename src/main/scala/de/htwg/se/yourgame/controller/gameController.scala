@@ -7,7 +7,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by margogo on 15.04.17.
   */
-class gameController () {
+class gameController() {
+
+  // change current fig
 
   /** Val and Vars **/
 
@@ -19,18 +21,17 @@ class gameController () {
   var cardDecks = new ListBuffer[CardDeck]
   var playedCards = new ListBuffer[Card]
 
-  /** Vars **/
-  var currentPlayer = Player("Player 1",0,isActive = true)
-  var currentFig =  Figure(player = emptyPlayer, 0,"BufferFig", "EmptyProp", 0)
-  var decksize = initDeckSize
-
   /** Buffer Vals **/
   val highNumber = 200
   val initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
-  val emptyFig = Figure(emptyPlayer, highNumber, "","",highNumber)
+  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber)
 
 
+  /** Vars **/
+  var currentPlayer = Player("Player 1", 0, isActive = true)
+  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70)
+  var decksize = initDeckSize
 
   def initGame(): Unit = {
     initFields()
@@ -47,18 +48,24 @@ class gameController () {
   }
 
   def playerAction(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
-//    fieldController.movePosition(cardFromDeckNumber, figureNumber)
+
+    //    fieldController.movePosition(cardFromDeckNumber, figureNumber)
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
+    val valueOfCard = playedCard.value
+
+    for (x <- 0 to valueOfCard) {
+      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
+    }
     removeCard(playedCard)
     changeCurrentPlayer()
   }
 
   def applyFigToField(): Unit = {
-        for (figure <-  figureList) {
-          val index = fieldList.indexWhere (_.id == figure.position)
-          val bufferField = fieldList.apply(index).copy(figure = figure)
-          fieldList.update(index, bufferField)
-        }
+    for (figure <- figureList) {
+      val index = fieldList.indexWhere(_.id == figure.position)
+      val bufferField = fieldList.apply(index).copy(figure = figure)
+      fieldList.update(index, bufferField)
+    }
   }
 
   def removeCard(card: Card) = {
@@ -75,18 +82,17 @@ class gameController () {
   }
 
   def test2 = {
-    updateFigField(findNextField(figureList.apply(0).position).head.id,figureList.apply(0))
+    updateFigField(findNextField(figureList.apply(0).position).head.id, figureList.apply(0))
   }
-
 
 
   /** PlayerStuff **/
   def initPlayer(): Unit = {
     for (x <- 0 to 3) {
-      val bufferPlayer = Player("Player " + (x + 1) , x, isActive = false)
+      val bufferPlayer = Player("Player " + (x + 1), x, isActive = false)
       playerList += bufferPlayer
     }
-    playerList.update(0, Player("Player 1",0, isActive = true))
+    playerList.update(0, Player("Player 1", 0, isActive = true))
     initFigures()
   }
 
@@ -98,7 +104,7 @@ class gameController () {
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt)
       figureList += bufferFig
     }
-    figureList.update(0, Figure(playerList.apply(0),0,"defaultRole","default",70))
+    figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70))
   }
 
   def setPlayerName(inputNumber: Int, inputString: String): Unit = {
@@ -139,8 +145,7 @@ class gameController () {
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
   }
 
-  def updateFigPos(figure : Figure, newId : Int) = {
-    print(figureList)
+  def updateFigPos(figure: Figure, newId: Int) = {
     val oldPos = figure.position
     val figNr = figure.playerFigNumber
     val bufferFig = figureList.apply(figureList.indexWhere(_.position == oldPos)).copy(position = newId)
@@ -157,7 +162,7 @@ class gameController () {
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
-      val tempFigure = Figure(emptyPlayer, 100, "EmptyRole", "EmptyProp", 0)
+      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0)
 
       val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId)
       fieldList += bufferField
@@ -166,13 +171,13 @@ class gameController () {
 
   def printFields(): Unit = {
     var string = "CurrentField:"
-    for (x <-  0 until fieldList.size-1) {
+    for (x <- 0 until fieldList.size - 1) {
       if (x % 16 == 0) {
         string += "\n"
       }
       string += fieldList.apply(x).id + ": "
-      val figInField = if (fieldList.apply(x).figure.playerFigNumber != 100) ", Figur " + fieldList.apply(x).figure.playerFigNumber else ""
-      val playerInField = if(fieldList.apply(x).figure.player.name != null)  "[" + fieldList.apply(x).figure.player.name + figInField + "] "  else "[  ]"
+      val figInField = if (fieldList.apply(x).figure.playerFigNumber != highNumber) ", Figur " + fieldList.apply(x).figure.playerFigNumber else ""
+      val playerInField = if (fieldList.apply(x).figure.player.name != null) "[" + fieldList.apply(x).figure.player.name + figInField + "] " else "[  ]"
       string += playerInField
 
       string += ", "
@@ -180,59 +185,10 @@ class gameController () {
     print(string + "\n")
   }
 
-
-  def movePosition(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
-
-    // größeres problem
-    // inject lädt leere listen
-
-    //    print(cardController.cardList)
-    //    val currentPlayer = playerController2.currentPlayer
-    //    print(currentPlayer)
-    //    val oldPosition = playerController2.figureListBuffer.apply(figureNumber)
-    //    print(oldPosition)
-    //    fieldList.update(position, ) update old field
-
-    //    val oldPosition = 1
-    //    val oldCardId = cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.apply(cardFromDeckNumber).id
-    //    val cardValue = cardController.cardDecks.apply(player.playerId).cards.apply(cardFromDeckNumber).value
-    //
-    //    // eventuell fehler bei lücken der ids
-    //    val newBufferField = fieldList.apply(oldPosition).copy(isUsed = true, id = cardValue + oldCardId)
-    //    val oldBufferField = fieldList.apply(oldPosition).copy()
-    ////
-    //    fieldList.updated(oldPosition, oldBufferField)
-    //    fieldList.updated(oldPosition + cardValue, newBufferField)
-  }
-
-  //  /**
-  //    * check vllt später einbauen
-  //    * @param cardFromDeckNumber
-  //    * @return
-  //    */
-  //  def movePosition(cardFromDeckNumber: Int, figureNumber: Int): ListBuffer[Field] = {
-  //    val currentPlayer = playerController.currentPlayer
-  //    val oldPosition = playerController.figureListBuffer.apply(figureNumber).position
-  //    print(oldPosition)
-  //    //    fieldList.update(position, ) update old field
-  //
-  //    //    val oldPosition = 1
-  //    //    val oldCardId = cardController.cardDecks.apply(playerController.currentPlayer.playerId).cards.apply(cardFromDeckNumber).id
-  //    //    val cardValue = cardController.cardDecks.apply(player.playerId).cards.apply(cardFromDeckNumber).value
-  //    //
-  //    //    // eventuell fehler bei lücken der ids
-  //    //    val newBufferField = fieldList.apply(oldPosition).copy(isUsed = true, id = cardValue + oldCardId)
-  //    val oldBufferField = fieldList.apply(oldPosition).copy()
-  //    //
-  //    fieldList.updated(oldPosition, oldBufferField)
-  //    //    fieldList.updated(oldPosition + cardValue, newBufferField)
-  //  }
-
   def findNextField(fieldId: Int): ListBuffer[Field] = {
     val field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
     var NextFields = new ListBuffer[Field]
-    for (x <- field.successorIds)
-    {
+    for (x <- field.successorIds) {
       NextFields += fieldList.apply(fieldList.indexWhere(_.id == x))
     }
     NextFields
@@ -240,8 +196,8 @@ class gameController () {
 
   def updateFigField(fieldId: Int, figure: Figure) = {
     // check noch einbauen
-    val test1 = figure.position // 71
-    val test2 = fieldList.indexWhere(_.id == figure.position) //65
+    val test1 = figure.position
+    val test2 = fieldList.indexWhere(_.id == figure.position)
     val oldField = fieldList.apply(test2).copy(figure = emptyFig)
     val newField = fieldList.apply(fieldId).copy(figure = figure)
     updateFigPos(figure, newField.id)
@@ -268,8 +224,8 @@ class gameController () {
 
   //sample data
   val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", isPlayed = false)
-  val card2 = Card(2, "Rot", "Zwei",1, "Eigeschaft2", isPlayed = true)
-  val card3 = Card(3, "Blau", "Zwei",1, "Eigeschaft3", isPlayed = true)
+  val card2 = Card(2, "Rot", "Zwei", 1, "Eigeschaft2", isPlayed = true)
+  val card3 = Card(3, "Blau", "Zwei", 1, "Eigeschaft3", isPlayed = true)
 
 
   def shuffleCards(): Unit = {
@@ -282,12 +238,12 @@ class gameController () {
     for (a <- 1 to 4) {
       var cardBuffer = new ListBuffer[Card]
       for (i <- 1 to decksize) {
-        cardBuffer+=cardList.head
-        cardList-=cardList.head
+        cardBuffer += cardList.head
+        cardList -= cardList.head
       }
       //      val cardBufferList = cardBuffer.toList
-      val filledCardDeck = CardDeck(a,decksize,cardBuffer)
-      cardDecks+=filledCardDeck
+      val filledCardDeck = CardDeck(a, decksize, cardBuffer)
+      cardDecks += filledCardDeck
     }
 
   }
@@ -305,7 +261,6 @@ class gameController () {
     print(string + "\n")
     print("Gespielte Karten :" + playedCards + "\n")
   }
-
 
 
 }
