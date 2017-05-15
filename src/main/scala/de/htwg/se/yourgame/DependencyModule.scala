@@ -1,6 +1,6 @@
 package de.htwg.se.yourgame
 
-import com.google.inject.{AbstractModule, Binder, Module}
+import com.google.inject.{AbstractModule}
 import de.htwg.se.yourgame.controller.{TGameController, gameController}
 import net.codingwell.scalaguice.ScalaModule
 

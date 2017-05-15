@@ -21,3 +21,5 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
 libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
 
+
+
