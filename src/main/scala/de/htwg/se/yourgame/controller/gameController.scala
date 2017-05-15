@@ -1,5 +1,6 @@
 package de.htwg.se.yourgame.controller
 
+import com.google.inject.Singleton
 import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
@@ -7,7 +8,8 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by margogo on 15.04.17.
   */
-class gameController() {
+@Singleton
+class gameController() extends  TGameController {
 
   // change current fig
 
@@ -31,6 +33,7 @@ class gameController() {
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)
   var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70)
+//  var currentFigNr =
   var decksize = initDeckSize
 
   def initGame(): Unit = {
@@ -52,10 +55,13 @@ class gameController() {
     //    fieldController.movePosition(cardFromDeckNumber, figureNumber)
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
     val valueOfCard = playedCard.value
-
-    for (x <- 0 to valueOfCard) {
-      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
+    var possibleField = findNextField(figureList.apply((figureNumber)).position).head.id
+    for (x <- 1 to valueOfCard) {
+      possibleField = findNextField(figureList.apply((figureNumber)).position).head.id
+//      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
     }
+    print("Mögliches Feld ist " + possibleField + "Willst du da hin ?")
+    updateFigField(possibleField, figureList.apply(figureNumber))
     removeCard(playedCard)
     changeCurrentPlayer()
   }
@@ -151,6 +157,11 @@ class gameController() {
     val bufferFig = figureList.apply(figureList.indexWhere(_.position == oldPos)).copy(position = newId)
     figureList.update(figNr, bufferFig)
   }
+
+//  def changeCurrentFigureToNextPlayer() = {
+//    val currentFigure = currentPlayer.playerId
+//
+//  }
 
   /** Field stuff **/
 

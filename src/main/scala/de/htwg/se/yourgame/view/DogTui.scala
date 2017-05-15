@@ -1,4 +1,4 @@
-package de.htwg.se.yourgame.view.tui
+package de.htwg.se.yourgame.view
 
 import com.google.inject.Inject
 import de.htwg.se.yourgame.controller.gameController

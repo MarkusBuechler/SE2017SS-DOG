@@ -17,6 +17,7 @@ libraryDependencies ++= {
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
-libraryDependencies += "com.google.inject" % "guice" % "3.0"
+libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
+libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
 
