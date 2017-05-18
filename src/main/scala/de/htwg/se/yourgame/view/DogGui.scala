@@ -3,7 +3,6 @@ package de.htwg.se.yourgame.view
 import com.google.inject.Inject
 import de.htwg.se.yourgame.controller.gameController
 
-import scala.collection.mutable.ListBuffer
 import scalafx.application.JFXApp
 import scalafx.scene.Scene
 import scalafx.geometry.{Insets, Pos}
@@ -30,30 +29,39 @@ class DogGui @Inject()(gameController: gameController)  {
       root = {
 
         val label = Label("Players:")
-        val flow1 = new FlowPane(10, 10)
-        flow1.setPrefWrapLength(300);
-        for ( i <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
-          flow1.children.add(new Label(gameController.cardDecks.apply(0).cards.apply(i).toString));
+        val flow1 = new FlowPane(10,10)
+//        flow1.setPrefWrapLength(Double.MaxValue);
+        flow1.setPrefHeight(150);
+        flow1.setMinHeight(150);
+        flow1.setMaxHeight(150);
+//        flow1.setPrefWidth(800);
+//        flow1.setMinWidth(800);
+//        flow1.setMaxWidth(800);
+//        flow1.setMaxWidth(500);
+//        flow1.setMaxHeight(120);
+//        flow1.margin = Insets(-50);
+        for (i <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
+          flow1.children.add(new ImageView(new Image("de/htwg/se/yourgame/view/" + gameController.cardDecks.apply(0).cards.apply(i).value + ".png")));
         }
         val flow2 = new FlowPane(10, 10)
-        flow2.setPrefWrapLength(300);
-        for ( i <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
-          flow2.children.add(new Label(gameController.cardDecks.apply(1).cards.apply(i).toString));
+//        flow2.setPrefWrapLength(300);
+        for (i <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
+          flow1.children.add(new ImageView(new Image("de/htwg/se/yourgame/view/" + gameController.cardDecks.apply(1).cards.apply(i).value + ".png")));
         }
         val flow3 = new FlowPane(10, 10)
-        flow3.setPrefWrapLength(300);
-        for ( i <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
-          flow3.children.add(new Label(gameController.cardDecks.apply(2).cards.apply(i).toString));
+//        flow3.setPrefWrapLength(300);
+        for (i <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
+          flow1.children.add(new ImageView(new Image("de/htwg/se/yourgame/view/" + gameController.cardDecks.apply(2).cards.apply(i).value + ".png")));
         }
         val flow4 = new FlowPane(10, 10)
-        flow4.setPrefWrapLength(300);
-        for ( i <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
-          flow4.children.add(new Label(gameController.cardDecks.apply(3).cards.apply(i).toString));
+//        flow4.setPrefWrapLength(300);
+        for (i <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
+          flow1.children.add(new ImageView(new Image("de/htwg/se/yourgame/view/" + gameController.cardDecks.apply(3).cards.apply(i).value + ".png")));
         }
 
         val player1 = new HBox {
           spacing = 10
-          children = List(Label(gameController.playerList.apply(0).toString), flow1)
+          children = List(Label(gameController.playerList.apply(0).toString),flow1)
         }
         val player2 = new HBox {
           spacing = 10
@@ -136,11 +144,12 @@ class DogGui @Inject()(gameController: gameController)  {
         // Left content using VBox
         val leftVBox = new VBox {
           spacing = 10
+          maxWidth = 1000
           alignment = Pos.TopLeft
           children = Seq(
             label,
             new VBox {
-              spacing = 5
+              spacing = 10
               children = List(player1, player2, player3, player4)
             }
           )
