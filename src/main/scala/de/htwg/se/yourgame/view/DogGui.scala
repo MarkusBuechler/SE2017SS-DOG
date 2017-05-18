@@ -2,13 +2,15 @@ package de.htwg.se.yourgame.view
 
 import com.google.inject.Inject
 import de.htwg.se.yourgame.controller.gameController
+
+import scala.collection.mutable.ListBuffer
 import scalafx.application.JFXApp
 import scalafx.scene.Scene
-import scalafx.geometry.Insets
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control._
 import scalafx.scene.image.Image
 import scalafx.scene.image.ImageView
-import scalafx.scene.layout.{AnchorPane, BorderPane, VBox}
+import scalafx.scene.layout._
 
 
 
@@ -26,6 +28,47 @@ class DogGui @Inject()(gameController: gameController)  {
     resizable = true
     scene = new Scene {
       root = {
+
+        val label = Label("Players:")
+        val flow1 = new FlowPane(10, 10)
+        flow1.setPrefWrapLength(300);
+        for ( i <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
+          flow1.children.add(new Label(gameController.cardDecks.apply(0).cards.apply(i).toString));
+        }
+        val flow2 = new FlowPane(10, 10)
+        flow2.setPrefWrapLength(300);
+        for ( i <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
+          flow2.children.add(new Label(gameController.cardDecks.apply(1).cards.apply(i).toString));
+        }
+        val flow3 = new FlowPane(10, 10)
+        flow3.setPrefWrapLength(300);
+        for ( i <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
+          flow3.children.add(new Label(gameController.cardDecks.apply(2).cards.apply(i).toString));
+        }
+        val flow4 = new FlowPane(10, 10)
+        flow4.setPrefWrapLength(300);
+        for ( i <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
+          flow4.children.add(new Label(gameController.cardDecks.apply(3).cards.apply(i).toString));
+        }
+
+        val player1 = new HBox {
+          spacing = 10
+          children = List(Label(gameController.playerList.apply(0).toString), flow1)
+        }
+        val player2 = new HBox {
+          spacing = 10
+          children = List(Label(gameController.playerList.apply(1).toString), flow2)
+        }
+        val player3 = new HBox {
+          spacing = 10
+          children = List(Label(gameController.playerList.apply(2).toString), flow3)
+        }
+        val player4 = new HBox
+        {
+          spacing = 10
+          children = List(Label(gameController.playerList.apply(3).toString), flow4)
+        }
+
         // Top content using a rectangle
         val topRectangle = new MenuBar {
           useSystemMenuBar = false
@@ -93,18 +136,25 @@ class DogGui @Inject()(gameController: gameController)  {
         // Left content using VBox
         val leftVBox = new VBox {
           spacing = 10
-          children = List(Label("Left Hand"), Label("Choice One"), Label("Choice Two"), Label("Choice Three"))
+          alignment = Pos.TopLeft
+          children = Seq(
+            label,
+            new VBox {
+              spacing = 5
+              children = List(player1, player2, player3, player4)
+            }
+          )
         }
 
         // Center content using Anchor Pane
-        val centerLabel = Label("We're in the center area.")
+        val centerLabel = Label("Player "+ gameController.currentPlayer.toString + "ist am Zug")
         val imageButton = new ImageView {
           image = new Image(this.getClass.getResourceAsStream("map600p.png"))
 
         }
         AnchorPane.setTopAnchor(centerLabel, 10.0)
         AnchorPane.setTopAnchor(imageButton, 40.0)
-        AnchorPane.setLeftAnchor(centerLabel, 80.0)
+        AnchorPane.setRightAnchor(centerLabel, 80.0)
         AnchorPane.setLeftAnchor(imageButton, 80.0)
         val centerAnchorPane = new AnchorPane {
           children = List(centerLabel, imageButton)
@@ -113,11 +163,11 @@ class DogGui @Inject()(gameController: gameController)  {
         // Right content using VBox
         val rightVBox = new VBox {
           spacing = 10
-          children = List(Label("Right Hand"), Label("Thing A"), Label("Thing B"), Label("Thing C"))
+          children = List(Label("Right Hand"), Label("Nothing A"), Label("Nothing B"), Label("Nothing C"))
         }
 
         // Right content
-        val bottomLabel = Label("I am a status message. I am at the bottom")
+        val bottomLabel = Label("I am a status message. Use me!")
 
         new BorderPane {
           maxWidth = 1920
