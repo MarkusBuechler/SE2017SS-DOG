@@ -3,6 +3,7 @@ organization := "de.htwg.se"
 version := "0.0.1"
 scalaVersion := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+//sbtPlugin := true
 
 resolvers += Resolver.jcenterRepo
 
@@ -21,5 +22,12 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
 libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
 
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
+libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.3"
 
+libraryDependencies += "org.scalafx" % "scalafxml-core_2.10" % "0.2.1"
+
+//jfxSettings
+
+//JFX.mainClass := Some("DogMain.scala")
