@@ -1,8 +1,10 @@
-name := "htwg-scala-seed"
-organization := "de.htwg.se"
-version := "0.0.1"
-scalaVersion := "2.11.8"
-scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+lazy val commonSettings =
+  Seq( name := "htwg-scala-seed",
+    organization := "de.htwg.se",
+    version := "0.0.1",
+    scalaVersion := "2.11.8",
+    scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+  )
 //sbtPlugin := true
 
 resolvers += Resolver.jcenterRepo
@@ -27,6 +29,29 @@ addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.fu
 libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.3"
 
 libraryDependencies += "org.scalafx" % "scalafxml-core_2.10" % "0.2.1"
+
+lazy val core = Project("scalafxml-core-sfx8", file("core"),
+  settings = commonSettings ++ Seq(
+    description := "ScalaFXML core module"
+  ))
+  .dependsOn(coreMacros)
+
+lazy val guiceSettings = commonSettings ++ Seq(
+  description := "Guice based dependency resolver for ScalaFXML",
+  libraryDependencies += "com.google.inject" % "guice" % "4.1.0"
+)
+
+lazy val guice = Project("scalafxml-guice-sfx8", file("guice"),
+  settings = guiceSettings)
+  .aggregate(core)
+  .dependsOn(core)
+
+lazy val coreMacros = Project("dog2-build", file("core-macros"),
+  settings = commonSettings ++ Seq(
+    description := "ScalaFXML macros",
+    libraryDependencies += scalaVersion("org.scala-lang" % "scala-reflect" % _).value
+  ))
+
 
 //jfxSettings
 

@@ -1,5 +1,8 @@
 package de.htwg.se.yourgame.controller
 
+import com.google.inject.Inject
+import de.htwg.se.yourgame.DependencyModule
+
 import scalafx.event.ActionEvent
 import scalafx.scene.control.{Alert, ButtonType, Label}
 import scalafx.scene.control.Alert.AlertType
@@ -10,7 +13,7 @@ import scalafxml.core.macros.sfxml
   * Created by margogo on 19.05.17.
   */
 @sfxml
-class guiController(val vboxMain : VBox,
+class guiController (val vboxMain : VBox,
                     val hBoxPlayer2 : HBox,
                     val pic2_1 : ImageView,
                     val pic2_2 : ImageView,
@@ -19,9 +22,9 @@ class guiController(val vboxMain : VBox,
                     val pic2_5 : ImageView,
                     val pic2_6 : ImageView,
                     val pic2_7 : ImageView,
-                    val label2 : Label
+                    val label2 : Label,
+                     testDep: DependencyModule
                    ) extends gameController {
-
 
   val picCard1 = new Image("/de/htwg/se/yourgame/view/1.png")
   val picCard2 = new Image("/de/htwg/se/yourgame/view/2.png")
@@ -37,53 +40,40 @@ class guiController(val vboxMain : VBox,
   val picCard13 = new Image("/de/htwg/se/yourgame/view/13.png")
   val picCardidk = new Image("/de/htwg/se/yourgame/view/idk.png")
 
+  val picList = List(picCard1, picCard2, picCard3, picCard4, picCard5, picCard6, picCard7, picCard8, picCard9, picCard10, picCard12, picCard12, picCardidk)
 
-  def picChoser(input: Int): Image = {
-    val i = input
-    i match {
-      case 1 => picCard1
-      case 2 => picCard2
-      case 3 => picCard3
-      case 4 => picCard4
-      case 5 => picCard5
-      case 6 => picCard6
-      case 7 => picCard7
-      case 8 => picCard8
-      case 9 => picCard9
-      case 10 => picCard10
-      case 11 => picCard12
-      case 12 => picCard13
-      case _ => picCardidk
-    }
-  }
 
   // event handlers are simple public methods:
   def onCreate(event: ActionEvent) {
-//    pic2_1.setImage(picChoser(cardDecks.apply(1).cards.apply(0).value.toInt))
-//    pic2_2.setImage(picChoser(cardDecks.apply(1).cards.apply(1).value))
-//    pic2_3.setImage(picChoser(cardDecks.apply(1).cards.apply(2).value))
-//    pic2_4.setImage(picChoser(cardDecks.apply(1).cards.apply(3).value))
-//    pic2_5.setImage(picChoser(cardDecks.apply(1).cards.apply(4).value))
-//    pic2_6.setImage(picChoser(cardDecks.apply(1).cards.apply(5).value))
-//    pic2_7.setImage(picChoser(cardDecks.apply(1).cards.apply(6).value))
+    pic2_1.setImage(picList.apply(cardDecks.apply(1).cards.apply(0).value))
+    pic2_2.setImage(picList.apply(cardDecks.apply(1).cards.apply(1).value))
+    pic2_3.setImage(picList.apply(cardDecks.apply(1).cards.apply(2).value))
+    pic2_4.setImage(picList.apply(cardDecks.apply(1).cards.apply(3).value))
+    pic2_5.setImage(picList.apply(cardDecks.apply(1).cards.apply(4).value))
+    pic2_6.setImage(picList.apply(cardDecks.apply(1).cards.apply(5).value))
+    pic2_7.setImage(picList.apply(cardDecks.apply(1).cards.apply(6).value))
+
+
 //    for (i <- 0 to cardDecks.apply(1).cards.size - 1) {
     //      hBoxPlayer2.children.listIterator().
     //      hBoxPlayer2.children.add(new ImageView(new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(i).value + ".png")));
     //              }
 
-    pic2_1.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(0).value + ".png")
-    pic2_2.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(1).value + ".png")
-    pic2_3.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(2).value + ".png")
-    pic2_4.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(3).value + ".png")
-    pic2_5.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(4).value + ".png")
-    pic2_6.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(5).value + ".png")
-    pic2_7.image = new Image("de/htwg/se/yourgame/view/" + cardDecks.apply(1).cards.apply(6).value + ".png")
   }
 
   @javafx.fxml.FXML override def test {
 
 
     pic2_1.setImage(picCard1)
+
+    print(cardDecks.size)
+//    pic2_1.setImage(picList.apply(cardDecks.apply(1).cards.apply(1).value))
+//    pic2_2.setImage(picList.apply(cardDecks.apply(1).cards.apply(1).value))
+//    pic2_3.setImage(picList.apply(cardDecks.apply(1).cards.apply(2).value))
+//    pic2_4.setImage(picList.apply(cardDecks.apply(1).cards.apply(3).value))
+//    pic2_5.setImage(picList.apply(cardDecks.apply(1).cards.apply(4).value))
+//    pic2_6.setImage(picList.apply(cardDecks.apply(1).cards.apply(5).value))
+//    pic2_7.setImage(picList.apply(cardDecks.apply(1).cards.apply(6).value))
 //    print("Test erfolgreich\n")
 ////    label2.setText("Test??")
 //
