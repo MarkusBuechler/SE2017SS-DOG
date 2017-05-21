@@ -5,10 +5,9 @@ import de.htwg.se.yourgame.model._
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Created by margogo on 15.05.17.
-  */
+ * Created by margogo on 15.05.17.
+ */
 trait TGameController {
-
 
   // change current fig
 
@@ -27,7 +26,6 @@ trait TGameController {
   val initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
   val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber)
-
 
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)

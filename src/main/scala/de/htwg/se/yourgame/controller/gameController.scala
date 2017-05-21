@@ -6,8 +6,8 @@ import de.htwg.se.yourgame.model._
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Created by margogo on 15.04.17.
-  */
+ * Created by margogo on 15.04.17.
+ */
 @Singleton
 class gameController() extends TGameController {
 
@@ -34,7 +34,7 @@ class gameController() extends TGameController {
     var possibleField = findNextField(figureList.apply((figureNumber)).position).head.id
     for (x <- 1 to valueOfCard) {
       possibleField = findNextField(figureList.apply((figureNumber)).position).head.id
-//      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
+      //      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
     }
     print("Mögliches Feld ist " + possibleField + "Willst du da hin ?")
     updateFigField(possibleField, figureList.apply(figureNumber))
@@ -67,7 +67,6 @@ class gameController() extends TGameController {
     updateFigField(findNextField(figureList.apply(0).position).head.id, figureList.apply(0))
   }
 
-
   /** PlayerStuff **/
   def initPlayer(): Unit = {
     for (x <- 0 to 3) {
@@ -93,10 +92,14 @@ class gameController() extends TGameController {
 
     var playerNo = 0
     inputNumber match {
-      case 1 => print("Player 1 wurde ausgewählt !\n"); playerNo = 0
-      case 2 => print("Player 2 wurde ausgewählt !\n"); playerNo = 1
-      case 3 => print("Player 3 wurde ausgewählt !\n"); playerNo = 2
-      case 4 => print("Player 4 wurde ausgewählt !\n"); playerNo = 3
+      case 1 =>
+        print("Player 1 wurde ausgewählt !\n"); playerNo = 0
+      case 2 =>
+        print("Player 2 wurde ausgewählt !\n"); playerNo = 1
+      case 3 =>
+        print("Player 3 wurde ausgewählt !\n"); playerNo = 2
+      case 4 =>
+        print("Player 4 wurde ausgewählt !\n"); playerNo = 3
       case _ => print("False Eingabe! Player 1 wurde ausgewählt !\n"); playerNo = 0
     }
     inputString match {
@@ -108,7 +111,6 @@ class gameController() extends TGameController {
     }
     print(playerList.toString())
   }
-
 
   def printCurrentPlayer(): Unit = {
     print(currentPlayer.name + " ist am Zug")
@@ -134,10 +136,10 @@ class gameController() extends TGameController {
     figureList.update(figNr, bufferFig)
   }
 
-//  def changeCurrentFigureToNextPlayer() = {
-//    val currentFigure = currentPlayer.playerId
-//
-//  }
+  //  def changeCurrentFigureToNextPlayer() = {
+  //    val currentFigure = currentPlayer.playerId
+  //
+  //  }
 
   /** Field stuff **/
 
@@ -192,9 +194,7 @@ class gameController() extends TGameController {
     fieldList.update(fieldId, newField)
   }
 
-
   /** Card Stuff **/
-
 
   def initCards(): Unit = {
     cardList.clear
@@ -213,7 +213,6 @@ class gameController() extends TGameController {
   val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", isPlayed = false)
   val card2 = Card(2, "Rot", "Zwei", 1, "Eigeschaft2", isPlayed = true)
   val card3 = Card(3, "Blau", "Zwei", 1, "Eigeschaft3", isPlayed = true)
-
 
   def shuffleCards(): Unit = {
     cardList = scala.util.Random.shuffle(cardList)
@@ -249,12 +248,11 @@ class gameController() extends TGameController {
     print("Gespielte Karten :" + playedCards + "\n")
   }
 
-  def refresh() : Unit = {
+  def refresh(): Unit = {
   }
 
   def quitGame(): Unit = {
     sys.exit()
   }
-
 
 }

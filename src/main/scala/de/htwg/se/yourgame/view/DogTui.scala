@@ -4,9 +4,9 @@ import com.google.inject.Inject
 import de.htwg.se.yourgame.controller.gameController
 
 /**
-  * Created by margogo on 02.04.17.
-  */
-class DogTui @Inject()(gameController: gameController) {
+ * Created by margogo on 02.04.17.
+ */
+class DogTui @Inject() (gameController: gameController) {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
   var continue = true
   def update(): Unit = printTui()
@@ -17,15 +17,16 @@ class DogTui @Inject()(gameController: gameController) {
 
   }
 
-//  gameController.initGame()
+  //  gameController.initGame()
   printTui()
 
   def processInputLine(input: String): Boolean = {
     continue = true
     input match {
-      case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n");
+      case "q" =>
+        print("q wurde gedrückt !\nSpiel wird bald verlassen\n");
         gameController.quitGame
-        /*continue = false*/
+      /*continue = false*/
       case "n" =>
         print("n wurde gedrückt !\nSpiel wird gestartet\n");
         print("\nWelche Karte möchtest du spielen?\n")
@@ -39,8 +40,7 @@ class DogTui @Inject()(gameController: gameController) {
         if (tokens.length != 2) {
           print("Falsche Eingabe!\n")
           print(info)
-        }
-        else {
+        } else {
           gameController.setPlayerName(tokens(0).toInt, tokens(1))
         }
         continue = true;
@@ -53,8 +53,7 @@ class DogTui @Inject()(gameController: gameController) {
         if (tokens.length != 2) {
           print("Falsche Eingabe!\n")
           print(info)
-        }
-        else {
+        } else {
           gameController.playerAction(tokens(0).toInt, tokens(1).toInt)
           printTui()
         }
@@ -63,7 +62,6 @@ class DogTui @Inject()(gameController: gameController) {
         print("Standardmäßig wird die erste Figur genommen")
         gameController.test2
         printTui()
-
 
       case _ => print("False Eingabe\n"); print(info)
     }

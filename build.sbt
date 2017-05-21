@@ -21,6 +21,6 @@ libraryDependencies += "junit" % "junit" % "4.8" % "test"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
 libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
-//
+
 libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.3"
 

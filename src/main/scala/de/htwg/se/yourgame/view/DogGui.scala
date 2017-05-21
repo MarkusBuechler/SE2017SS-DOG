@@ -3,30 +3,27 @@ import com.google.inject.Inject
 import de.htwg.se.yourgame.controller.gameController
 
 import scalafx.application.JFXApp
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.{ Insets, Pos }
 import scalafx.scene.Scene
 import scalafx.scene.control._
-import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.layout._
 
-
 /**
-  * Created by margogo on 15.05.17.
-  */
-class DogGui @Inject()(gameController: gameController) {
+ * Created by margogo on 15.05.17.
+ */
+class DogGui @Inject() (gameController: gameController) {
 
   val stage = new JFXApp.PrimaryStage {
     title = "DOG - THE GAME"
-    minHeight = 600
-    minWidth = 800
-    maxHeight = 1080
-    maxWidth = 1920
-    resizable = true
+    minHeight = 800
+    minWidth = 1024
+    resizable = false
     scene = new Scene {
       root = {
 
         val label = Label("Players:")
-        val flow1 = new FlowPane(10,10)
+        val flow1 = new FlowPane(10, 10)
         flow1.setPrefHeight(150);
         flow1.setMinHeight(150);
         flow1.setMaxHeight(150);
@@ -51,7 +48,7 @@ class DogGui @Inject()(gameController: gameController) {
 
         val player1 = new HBox {
           spacing = 10
-          children = List(Label(gameController.playerList.apply(0).toString),flow1)
+          children = List(Label(gameController.playerList.apply(0).toString), flow1)
         }
         val player2 = new HBox {
           spacing = 10
@@ -61,8 +58,7 @@ class DogGui @Inject()(gameController: gameController) {
           spacing = 10
           children = List(Label(gameController.playerList.apply(2).toString), flow3)
         }
-        val player4 = new HBox
-        {
+        val player4 = new HBox {
           spacing = 10
           children = List(Label(gameController.playerList.apply(3).toString), flow4)
         }
@@ -89,11 +85,11 @@ class DogGui @Inject()(gameController: gameController) {
                     new MenuItem("Object Oriented"),
                     new MenuItem("Functional"),
                     fooMenuItem,
-                    new CheckMenuItem( """Show "foo" item""") {
+                    new CheckMenuItem("""Show "foo" item""") {
                       selected = true
                       selected.onInvalidate {
                         fooMenuItem.setVisible(selected())
-                        println( """Menu item "foo" is now """ + (if (fooMenuItem.visible()) "" else "not") + " visible")
+                        println("""Menu item "foo" is now """ + (if (fooMenuItem.visible()) "" else "not") + " visible")
                       }
                     }
                   )
@@ -101,10 +97,10 @@ class DogGui @Inject()(gameController: gameController) {
                 new MenuItem("ScalaFX")
               )
             }, new Menu("Menu 2") {
-              items = List (
+              items = List(
                 new Menu("Author Info") {
                   graphic = new ImageView {
-//                    image = new Image(this.getClass.getResourceAsStream("crumb-selected-focused.png"))
+                    //                    image = new Image(this.getClass.getResourceAsStream("crumb-selected-focused.png"))
                     margin = Insets(0, 0, 0, 5)
                   }
                   items = List(
@@ -117,11 +113,11 @@ class DogGui @Inject()(gameController: gameController) {
                     new MenuItem("Object Oriented"),
                     new MenuItem("Functional"),
                     fooMenuItem,
-                    new CheckMenuItem( """Show "foo" item""") {
+                    new CheckMenuItem("""Show "foo" item""") {
                       selected = true
                       selected.onInvalidate {
                         fooMenuItem.setVisible(selected())
-                        println( """Menu item "foo" is now """ + (if (fooMenuItem.visible()) "" else "not") + " visible")
+                        println("""Menu item "foo" is now """ + (if (fooMenuItem.visible()) "" else "not") + " visible")
                       }
                     }
                   )
@@ -146,9 +142,9 @@ class DogGui @Inject()(gameController: gameController) {
         }
 
         // Center content using Anchor Pane
-        val centerLabel = Label("Player "+ gameController.currentPlayer.toString + "ist am Zug")
+        val centerLabel = Label("Player " + gameController.currentPlayer.toString + "ist am Zug")
         val imageButton = new ImageView {
-//          image = new Image(this.getClass.getResourceAsStream("map600p.png"))
+          //          image = new Image(this.getClass.getResourceAsStream("map600p.png"))
 
         }
         AnchorPane.setTopAnchor(centerLabel, 10.0)
