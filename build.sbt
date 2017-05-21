@@ -20,7 +20,8 @@ libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
-libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
+// Add dependency on ScalaFX library
+libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.102-R11"
 
-libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.3"
-
+// Fork a new JVM for 'run' and 'test:run', to avoid JavaFX double initialization problems
+fork := true
