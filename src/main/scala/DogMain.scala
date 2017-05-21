@@ -4,27 +4,22 @@
   */
 
 import de.htwg.se.yourgame.DependencyModule
+import com.google.inject.{Guice, Injector}
 import java.io.IOException
 
-import com.google.inject.{AbstractModule, Guice}
-import de.htwg.se.yourgame.fxml.GuiceDependencyResolver
-import de.htwg.se.yourgame.view.{DogGui, DogTui, DogTuiT}
+import de.htwg.se.yourgame.view.DogTui
 
-import scalafx.application.JFXApp.PrimaryStage
 import scalafx.Includes._
 import scalafx.application.JFXApp
+import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import scalafxml.core.FXMLView
+import scalafxml.core.{FXMLView, NoDependencyResolver}
+import net.codingwell.scalaguice.InjectorExtensions._
 
 
 object DogApplication extends JFXApp {
 
-val module = new AbstractModule {
-  def configure() {
-    bind(classOf[DependencyModule]).toInstance(new DependencyModule())
-  }
-}
-implicit val injector = Guice.createInjector(module)
+  val injector: Injector = Guice.createInjector(new DependencyModule)
 
   val resource = getClass.getResource("/de/htwg/se/yourgame/fxml/main.fxml")
 
@@ -32,38 +27,17 @@ implicit val injector = Guice.createInjector(module)
     throw new IOException("Cannot load resource: main.fxml")
   }
 
-  val root = FXMLView(resource, new GuiceDependencyResolver())
+  val root = FXMLView(resource, NoDependencyResolver)
 
   stage = new PrimaryStage() {
-    title = "DOG - THE GAME"
+    title = "FXML GridPane Demo"
     scene = new Scene(root)
   }
-  injector.instance[DogTuiT]
-//  var tui = injector.getInstance[DogTuiT]
+
+  var tui = injector.instance[DogTui]
 }
 
-//
-//import scalafx.Includes._
-//import scalafx.application.JFXApp
-//import scalafx.scene.Scene
-//import scalafxml.core.FXMLView
-//import scalafxml.guice.GuiceDependencyResolver
-//import com.google.inject.{AbstractModule, Guice}
-//
-//object GuiceDemo extends JFXApp {
-//
-//  val module = new AbstractModule {
-//    def configure() {
-//      bind(classOf[TestDependency]).toInstance(new TestDependency("guice dependency"))
-//    }
-//  }
-//  implicit val injector = Guice.createInjector(module)
-//
-//  stage = new JFXApp.PrimaryStage() {
-//    title = "Hello world"
-//    scene = new Scene(FXMLView(getClass.getResource("startscreen.fxml"), new GuiceDependencyResolver()))
-//
-//  }
-//}
-//
+
+
+
 

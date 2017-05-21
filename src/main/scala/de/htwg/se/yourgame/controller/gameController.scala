@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
   * Created by margogo on 15.04.17.
   */
 @Singleton
-class gameController() extends TGameController {
+class gameController() extends  TGameController {
 
   // change current fig
 
