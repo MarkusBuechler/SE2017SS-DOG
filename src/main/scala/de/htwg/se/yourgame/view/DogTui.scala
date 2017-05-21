@@ -8,7 +8,7 @@ import de.htwg.se.yourgame.controller.gameController
   */
 class DogTui @Inject()(gameController: gameController) {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
-
+  var continue = true
   def update(): Unit = printTui()
 
   def printTui(): Unit = {
@@ -21,9 +21,11 @@ class DogTui @Inject()(gameController: gameController) {
   printTui()
 
   def processInputLine(input: String): Boolean = {
-    var continue = true
+    continue = true
     input match {
-      case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n"); continue = false
+      case "q" => print("q wurde gedrückt !\nSpiel wird bald verlassen\n");
+        gameController.quitGame
+        /*continue = false*/
       case "n" =>
         print("n wurde gedrückt !\nSpiel wird gestartet\n");
         print("\nWelche Karte möchtest du spielen?\n")

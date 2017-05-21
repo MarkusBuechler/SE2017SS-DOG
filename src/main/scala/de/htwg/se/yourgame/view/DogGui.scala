@@ -3,22 +3,52 @@ package de.htwg.se.yourgame.view
 import com.google.inject.Inject
 import de.htwg.se.yourgame.controller.gameController
 
+import scalafxml.core.{DependenciesByType, FXMLView}
+
+
+import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.scene.Scene
-import scalafx.geometry.{Insets, Pos}
-import scalafx.scene.control._
-import scalafx.scene.image.Image
-import scalafx.scene.image.ImageView
-import scalafx.scene.layout._
-
 
 
 /**
   * Created by margogo on 15.05.17.
   */
-class DogGui @Inject()(gameController: gameController)  {
+class DogGui @Inject()(gameController: gameController) extends JFXApp {
+//
 
-//  val stage = new JFXApp.PrimaryStage {
+  val root = FXMLView(getClass.getResource("de/htwg/se/yourgame/fxml/main.fxml"),
+    new DependenciesByType(Map()))
+
+  stage = new JFXApp.PrimaryStage() {
+    title = "DOG - THE GAME"
+    scene = new Scene(root)
+  }
+//  val root = FXMLView(getClass.getResource("de/htwg/se/yourgame/fxml/main.fxml"),
+//    new DependenciesByType(Map()))
+//
+//  if (root == null)
+//    print("Shit")
+//
+//  stage = new JFXApp.PrimaryStage() {
+//    title = "DOG - THE GAME"
+//    scene = new Scene(root)
+//  }
+//
+//  val resource = getClass.getResource("/de/htwg/se/yourgame/fxml/main.fxml")
+//  if (resource == null) {
+//    throw new IOException("Cannot load resource: main.fxml")
+//  }
+//
+//  val root: jfxs.Parent = jfxf.FXMLLoader.load(resource)
+//
+//  stage = new PrimaryStage() {
+//    title = "FXML GridPane Demo"
+//    scene = new Scene(root)
+//  }
+
+
+  //  val stage = new JFXApp.PrimaryStage {
 //    title = "DOG - THE GAME"
 //    minHeight = 600
 //    minWidth = 800

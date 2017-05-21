@@ -42,6 +42,7 @@ class gameController() extends  TGameController {
     initPlayer()
     applyFigToField()
     print(playerList)
+
   }
 
   def showGameStatus(): Unit = {
@@ -271,6 +272,16 @@ class gameController() extends  TGameController {
     }
     print(string + "\n")
     print("Gespielte Karten :" + playedCards + "\n")
+  }
+
+  def quitGame(): Unit = {
+    sys.exit()
+  }
+
+  def refresh() : Unit = {
+
+
+
   }
 
 
