@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vboxMain" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#test" prefHeight="725.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.htwg.se.yourgame.controller.guiController">
+<VBox fx:id="vboxMain" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#test" prefHeight="725.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.htwg.se.yourgame.controller.guiController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -238,7 +238,7 @@
             </HBox>
             <HBox fx:id="hBoxPlayer2" layoutX="1.0" layoutY="298.0" prefHeight="100.0" prefWidth="450.0" rotate="-90.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="55.0" text="Player 2">
+                  <Label fx:id="label2" alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="55.0" text="Player 2">
                      <HBox.margin>
                         <Insets bottom="5.0" right="10.0" top="5.0" />
                      </HBox.margin>
@@ -251,7 +251,7 @@
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="103.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pic2_2" fitHeight="103.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
@@ -259,7 +259,7 @@
                         <Insets bottom="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pic2_3" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
@@ -267,7 +267,7 @@
                         <Insets bottom="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pic2_4" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
@@ -275,7 +275,7 @@
                         <Insets bottom="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pic2_5" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
@@ -283,7 +283,7 @@
                         <Insets bottom="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pic2_6" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
@@ -291,7 +291,7 @@
                         <Insets bottom="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pic2_7" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../resources/pictures/idk.png" />
                      </image>
