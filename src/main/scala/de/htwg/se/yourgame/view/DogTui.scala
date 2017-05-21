@@ -17,7 +17,7 @@ class DogTui @Inject()(gameController: gameController) {
 
   }
 
-  gameController.initGame()
+//  gameController.initGame()
   printTui()
 
   def processInputLine(input: String): Boolean = {

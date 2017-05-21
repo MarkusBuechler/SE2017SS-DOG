@@ -5,36 +5,25 @@
 
 import de.htwg.se.yourgame.DependencyModule
 import com.google.inject.{Guice, Injector}
-import java.io.IOException
-
-import de.htwg.se.yourgame.view.DogTui
-
-import scalafx.Includes._
-import scalafx.application.JFXApp
-import scalafx.application.JFXApp.PrimaryStage
-import scalafx.scene.Scene
-import scalafxml.core.{FXMLView, NoDependencyResolver}
+import de.htwg.se.yourgame.controller.TGameController
+import de.htwg.se.yourgame.view.{DogGui, DogTui}
 import net.codingwell.scalaguice.InjectorExtensions._
+
+import scalafx.application.JFXApp
 
 
 object DogApplication extends JFXApp {
 
   val injector: Injector = Guice.createInjector(new DependencyModule)
+  val gameController = injector.instance[TGameController]
+  gameController.initGame()
 
-  val resource = getClass.getResource("/de/htwg/se/yourgame/fxml/main.fxml")
-
-  if (resource == null) {
-    throw new IOException("Cannot load resource: main.fxml")
-  }
-
-  val root = FXMLView(resource, NoDependencyResolver)
-
-  stage = new PrimaryStage() {
-    title = "FXML GridPane Demo"
-    scene = new Scene(root)
-  }
-
+  var gui = injector.instance[DogGui]
   var tui = injector.instance[DogTui]
+
+
+
+
 }
 
 
