@@ -10,21 +10,21 @@ import org.scalatest.{ FlatSpec, Matchers }
  */
 class playerControllerTest extends FlatSpec with Matchers {
 
-  //  val injector = Guice.createInjector(new DependencyModule)
-  //
-  //  var playerController = injector.getInstance(classOf[gameController])
-  //
-  //  playerController.initPlayer()
-  //
-  //  val playerSize = playerController.playerList.size
-  //  playerSize should be > 0
-  //
-  //  assert(playerSize == 4)
-  //
-  //  val playerA = playerController.currentPlayer
-  //  playerController.changeCurrentPlayer()
-  //  val playerB = playerController.currentPlayer
-  //
-  //  assert(playerA != playerB)
+  val injector = Guice.createInjector(new DependencyModule)
+
+  var playerController = injector.getInstance(classOf[gameController])
+
+  playerController.initPlayer()
+
+  val playerSize = playerController.playerList.size
+  playerSize should be > 0
+
+  assert(playerSize == 4)
+
+  val playerA = playerController.currentPlayer
+  playerController.changeCurrentPlayer()
+  val playerB = playerController.currentPlayer
+
+  assert(playerA != playerB)
 
 }

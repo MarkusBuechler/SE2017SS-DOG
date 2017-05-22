@@ -10,20 +10,20 @@ import org.scalatest.{ FlatSpec, Matchers }
  */
 class cardControllerTest extends FlatSpec with Matchers {
 
-  //  val injector = Guice.createInjector(new DependencyModule)
-  //
-  //  var cardController = injector.getInstance(classOf[gameController])
-  //
-  //  cardController.initCards()
-  //  val decksize = cardController.cardList.size
-  //  decksize should be > 0
-  //
-  //  assert(cardController.cardList.size > 1);
-  //
-  //  val cardA = cardController.cardList.apply(0)
-  //  cardController.shuffleCards()
-  //  val cardB = cardController.cardList.apply(0)
-  //
-  //  assert(cardA != cardB)
+  val injector = Guice.createInjector(new DependencyModule)
+
+  var cardController = injector.getInstance(classOf[gameController])
+
+  cardController.initCards()
+  val decksize = cardController.cardList.size
+  decksize should be > 0
+
+  assert(cardController.cardList.size > 1);
+
+  val cardA = cardController.cardList.apply(0)
+  cardController.shuffleCards()
+  val cardB = cardController.cardList.apply(0)
+
+  assert(cardA != cardB)
 
 }

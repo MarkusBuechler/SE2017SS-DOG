@@ -14,7 +14,7 @@ import scala.collection.mutable.ListBuffer
 @RunWith(classOf[JUnitRunner])
 class FieldSpec extends FlatSpec with MockFactory {
 
-  //  var figureList = new ListBuffer[Figure]
-  //  var playerList = new ListBuffer[Player]
+  var figureList = new ListBuffer[Figure]
+  var playerList = new ListBuffer[Player]
 
 }

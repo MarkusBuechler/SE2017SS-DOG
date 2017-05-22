@@ -5,7 +5,9 @@ SE2017SS-DOG2
 | Branch      |  Status  |
 | ----------  | -------- |
 | development | [![build status](https://travis-ci.org/MarkusBuechler/SE2017SS-DOG.svg?branch=development)](https://github.com/MarkusBuechler/SE2017SS-DOG/tree/development) |
-| master      | [![build status](https://travis-ci.org/MarkusBuechler/SE2017SS-DOG.svg?branch=master)](https://github.com/MarkusBuechler/SE2017SS-DOG/tree/master) |
+| master      | [![build status](https://travis-ci.org/MarkusBuechler/SE2017SS-DOG.svg?branch=master)](https://github.com/MarkusBuechler/SE2017SS-DOG/tree/master)
+
+
 
 
 This is a scala project for the
