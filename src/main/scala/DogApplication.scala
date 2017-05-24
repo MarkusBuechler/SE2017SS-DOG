@@ -4,10 +4,11 @@
  */
 
 import de.htwg.se.yourgame.DependencyModule
-import com.google.inject.{ Guice, Injector }
+import com.google.inject.{Guice, Injector}
 import de.htwg.se.yourgame.controller.gameController
-import de.htwg.se.yourgame.view.{ DogGui, DogTui }
+import de.htwg.se.yourgame.view.{DogGui, DogTui}
 import net.codingwell.scalaguice.InjectorExtensions._
+
 
 object DogApplication {
 
@@ -31,5 +32,6 @@ object DogApplication {
       }
     }).start()
   }
+
 }
 

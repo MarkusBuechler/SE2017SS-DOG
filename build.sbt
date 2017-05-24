@@ -12,7 +12,8 @@ libraryDependencies ++= {
   val scalaMockV = "3.2.2"
   Seq(
     "org.scalatest" %% "scalatest" % scalaTestV % "test",
-    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % "test"
+    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % "test",
+    "org.scala-lang" % "scala-swing" % "2.11.0-M7"
   )
 }
 

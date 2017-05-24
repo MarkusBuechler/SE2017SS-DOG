@@ -4,12 +4,19 @@ import com.google.inject.Singleton
 import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
+import scala.swing.Publisher
+import scalafx.application.Platform
+//import scala.swing.Event
+import scala.swing.event.Event
 
 /**
  * Created by margogo on 15.04.17.
  */
-@Singleton
-class gameController() extends TGameController {
+
+class UpdatePlayerLabels() extends Event
+
+class gameController() extends TGameController with Publisher {
+
 
   def initGame(): Unit = {
     initFields()
@@ -127,6 +134,12 @@ class gameController() extends TGameController {
 
     val currentPlayerIndex = playerList.indexWhere(_.isActive == true)
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
+//    scalafx.event.Event.fireEvent()
+
+
+    publish(new UpdatePlayerLabels)
+
+
   }
 
   def updateFigPos(figure: Figure, newId: Int) = {
@@ -172,6 +185,7 @@ class gameController() extends TGameController {
       string += ", "
     }
     print(string + "\n")
+    publish(new UpdatePlayerLabels)
   }
 
   def findNextField(fieldId: Int): ListBuffer[Field] = {
@@ -246,6 +260,8 @@ class gameController() extends TGameController {
     }
     print(string + "\n")
     print("Gespielte Karten :" + playedCards + "\n")
+    publish(new UpdatePlayerLabels)
+
   }
 
   def refresh(): Unit = {
