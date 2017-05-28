@@ -19,7 +19,6 @@ class UpdatePlayerCards() extends Event
 @Singleton
 class gameController() extends TGameController with Publisher {
 
-
   def initGame(): Unit = {
     initFields()
     initCards()
@@ -137,11 +136,9 @@ class gameController() extends TGameController with Publisher {
 
     val currentPlayerIndex = playerList.indexWhere(_.isActive == true)
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
-//    scalafx.event.Event.fireEvent()
-
+    //    scalafx.event.Event.fireEvent()
 
     publish(new UpdatePlayerLabels)
-
 
   }
 

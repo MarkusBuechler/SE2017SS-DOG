@@ -6,9 +6,7 @@ import javax.swing.ImageIcon
 
 import scala.swing._
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{UpdatePlayerCards, UpdatePlayerLabels, gameController}
-import de.htwg.se.yourgame.model.Player
-
+import de.htwg.se.yourgame.controller.{ UpdatePlayerCards, UpdatePlayerLabels, gameController }
 
 /**
  * Created by margogo on 15.05.17.
@@ -74,7 +72,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   }
 
   //noinspection ScalaStyle
-  def cardPic(int: Int) : Label = {
+  def cardPic(int: Int): Label = {
     val card = new Label {
       int match {
         case 1 => icon = new ImageIcon("resources/pictures/1.png")
@@ -96,11 +94,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     card
   }
 
-
   updateCardPics
-
-
-
 
   contents = new BorderPanel {
     add(player2, BorderPanel.Position.North)
@@ -112,14 +106,11 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   visible = true
 
-
-
-
-//  contents = new BoxPanel(Orientation.Horizontal) {
-//    contents += menuBar
-//    contents += label
-//    Dialog.showMessage(contents.head, "Welcome to DOG - The Game \nPress enter to start the game!")
-//  }
+  //  contents = new BoxPanel(Orientation.Horizontal) {
+  //    contents += menuBar
+  //    contents += label
+  //    Dialog.showMessage(contents.head, "Welcome to DOG - The Game \nPress enter to start the game!")
+  //  }
 
   menuBar = new MenuBar {
     contents += new Menu("File") {
@@ -127,35 +118,38 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       contents += new MenuItem(Action("Quit") { closeApplication() })
     }
     contents += new Menu("Game") {
-      contents += new MenuItem(Action("Undo") { notYetImplemted()})
+      contents += new MenuItem(Action("Undo") { notYetImplemted() })
       contents += new MenuItem(Action("New Game") { notYetImplemted() })
     }
   }
 
   def closeApplication() {
-    val res = Dialog.showConfirmation(contents.head,
+    val res = Dialog.showConfirmation(
+      contents.head,
       "Do you really want to quit?",
-      optionType=Dialog.Options.YesNo,
-      title=title)
+      optionType = Dialog.Options.YesNo,
+      title = title
+    )
     if (res == Dialog.Result.Ok) {
       sys.exit(0)
     }
   }
 
   def notYetImplemted() {
-    val res = Dialog.showConfirmation(contents.head,
+    val res = Dialog.showConfirmation(
+      contents.head,
       "Function is not yet implemented",
-      optionType=Dialog.Options.Default,
-      title=title)
+      optionType = Dialog.Options.Default,
+      title = title
+    )
   }
 
   var map = ImageIO.read(new File("resources/pictures/map600p.png"))
 
-
-//  contents = new BoxPanel(Orientation.Horizontal) {
-//    contents += menuBar
-//    contents += label
-//  }
+  //  contents = new BoxPanel(Orientation.Horizontal) {
+  //    contents += menuBar
+  //    contents += label
+  //  }
 
   // specify which Components produce events of interest
   listenTo(gameController)
@@ -177,37 +171,56 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   private def updateCardPics = {
     /* Init Player */
     player1.contents.clear()
+    player2.contents.clear()
+    player3.contents.clear()
+    player4.contents.clear()
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
       player1.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
     }
 
-
-    player2 = new BoxPanel(Orientation.Horizontal) {
-
-      for (x <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
-        contents += cardPic(gameController.cardDecks.apply(1).cards.apply(x).value)
-      }
+    for (x <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
+      player2.contents += cardPic(gameController.cardDecks.apply(1).cards.apply(x).value)
     }
 
-    player3 = new BoxPanel(Orientation.Vertical) {
-
-      for (x <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
-        contents += cardPic(gameController.cardDecks.apply(2).cards.apply(x).value)
-      }
+    for (x <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
+      player3.contents += cardPic(gameController.cardDecks.apply(2).cards.apply(x).value)
     }
 
-    player4 = new BoxPanel(Orientation.Horizontal) {
-
-      for (x <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
-        contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
-      }
+    for (x <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
+      player4.contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
     }
+
+    refresh
+
   }
 
+  /**
+   * Helper function to refresh and revalidate the playerCards
+   */
+  private def refresh = {
+    player1.repaint()
+    player2.repaint()
+    player3.repaint()
+    player4.repaint()
+
+    player1.revalidate()
+    player2.revalidate()
+    player3.revalidate()
+    player4.revalidate()
+  }
 
   visible = true
 
+  /*TODO:
+  click auf karten ermöglichen
+  current player in extra label anzeigen ? VBox hervorheben
+  HoverListener auf die Karten
+  Gui verschönern
 
+  Later:
+  Figuren auf Map anzeigen und anklickbar machen
+  Allgemeine Funktionalität erhöhen
+  */
 
 }

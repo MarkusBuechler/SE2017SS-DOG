@@ -1,7 +1,7 @@
 package de.htwg.se.yourgame.view
 
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{TGameController, gameController}
+import de.htwg.se.yourgame.controller.{ TGameController, gameController }
 
 import scala.swing.Reactor
 
@@ -72,10 +72,10 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
 
   def gameLogic() = {
     if (false) {
-//      logger.info("Mister X won the game!")
+      //      logger.info("Mister X won the game!")
       sys.exit()
     }
-//    turn()
+    //    turn()
   }
 
 }
