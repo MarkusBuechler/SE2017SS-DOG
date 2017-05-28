@@ -14,6 +14,7 @@ import scala.swing.event.Event
  */
 
 class UpdatePlayerLabels() extends Event
+class UpdatePlayerCards() extends Event
 
 @Singleton
 class gameController() extends TGameController with Publisher {
@@ -62,6 +63,7 @@ class gameController() extends TGameController with Publisher {
     val cardInSet = cardDecks.apply(currentPlayer.playerId).cards.indexWhere(_.id == card.id)
     cardDecks.apply(currentPlayer.playerId).cards.remove(cardInSet)
     playedCards += card
+    publish(new UpdatePlayerCards)
   }
 
   def test = {

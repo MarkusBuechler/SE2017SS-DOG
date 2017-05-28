@@ -2,12 +2,12 @@ package de.htwg.se.yourgame.view
 
 import java.io.File
 import javax.imageio.ImageIO
-
 import javax.swing.ImageIcon
-import scala.swing._
 
+import scala.swing._
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{UpdatePlayerLabels, gameController}
+import de.htwg.se.yourgame.controller.{UpdatePlayerCards, UpdatePlayerLabels, gameController}
+import de.htwg.se.yourgame.model.Player
 
 
 /**
@@ -17,6 +17,11 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   val SizeHeight = 700
   val SizeWidth = 900
+
+  var player1 = new BoxPanel(Orientation.Vertical)
+  var player2 = new BoxPanel(Orientation.Horizontal)
+  var player3 = new BoxPanel(Orientation.Vertical)
+  var player4 = new BoxPanel(Orientation.Horizontal)
 
   title = "DOG - THE GAME"
   preferredSize = new Dimension(SizeWidth, SizeHeight)
@@ -68,29 +73,41 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     icon = new ImageIcon("resources/pictures/13.png")
   }
 
+  //noinspection ScalaStyle
+  def cardPic(int: Int) : Label = {
+    val card = new Label {
+      int match {
+        case 1 => icon = new ImageIcon("resources/pictures/1.png")
+        case 2 => icon = new ImageIcon("resources/pictures/2.png")
+        case 3 => icon = new ImageIcon("resources/pictures/3.png")
+        case 4 => icon = new ImageIcon("resources/pictures/4.png")
+        case 5 => icon = new ImageIcon("resources/pictures/5.png")
+        case 6 => icon = new ImageIcon("resources/pictures/6.png")
+        case 7 => icon = new ImageIcon("resources/pictures/7.png")
+        case 8 => icon = new ImageIcon("resources/pictures/8.png")
+        case 9 => icon = new ImageIcon("resources/pictures/9.png")
+        case 10 => icon = new ImageIcon("resources/pictures/10.png")
+        case 12 => icon = new ImageIcon("resources/pictures/12.png")
+        case 13 => icon = new ImageIcon("resources/pictures/13.png")
+        case _ => icon = new ImageIcon("resources/pictures/idk.png")
+      }
 
-
-  val player1 = new BoxPanel(Orientation.Vertical) {
-    contents += card1
-    contents += card2
-    contents += card6
-    contents += card1
-    contents += card1
-    contents += card3
-    contents += card7
+    }
+    card
   }
 
 
-  //  var mapPanel = new DogMap(gameController)
+  updateCardPics
+
+
+
 
   contents = new BorderPanel {
-    add(new Button("North"), BorderPanel.Position.North)
+    add(player2, BorderPanel.Position.North)
     add(mapPicture, BorderPanel.Position.Center)
-    add(new Button("East"), BorderPanel.Position.East)
+    add(player3, BorderPanel.Position.East)
     add(player1, BorderPanel.Position.West)
-    add(Button("South: Close") {
-      sys.exit(0)
-    }, BorderPanel.Position.South)
+    add(player4, BorderPanel.Position.South)
   }
 
   visible = true
@@ -101,7 +118,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 //  contents = new BoxPanel(Orientation.Horizontal) {
 //    contents += menuBar
 //    contents += label
-//    Dialog.showMessage(contents.head, "Welcome to Scotland Yard \nMisterX starts the game!")
+//    Dialog.showMessage(contents.head, "Welcome to DOG - The Game \nPress enter to start the game!")
 //  }
 
   menuBar = new MenuBar {
@@ -147,12 +164,50 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   reactions += {
     case e: UpdatePlayerLabels => {
       label.text = gameController.currentPlayer.name
-      print("Event fired")
+      print("Event Update Label fired")
+    }
+    case e: UpdatePlayerCards => {
+      updateCardPics
+      print("Event Update Cards fired")
     }
 
   }
 
+  /* Helper functions */
+  private def updateCardPics = {
+    /* Init Player */
+    player1.contents.clear()
+
+    for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
+      player1.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
+    }
+
+
+    player2 = new BoxPanel(Orientation.Horizontal) {
+
+      for (x <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
+        contents += cardPic(gameController.cardDecks.apply(1).cards.apply(x).value)
+      }
+    }
+
+    player3 = new BoxPanel(Orientation.Vertical) {
+
+      for (x <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
+        contents += cardPic(gameController.cardDecks.apply(2).cards.apply(x).value)
+      }
+    }
+
+    player4 = new BoxPanel(Orientation.Horizontal) {
+
+      for (x <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
+        contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
+      }
+    }
+  }
+
 
   visible = true
+
+
 
 }
