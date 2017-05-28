@@ -1,12 +1,14 @@
 package de.htwg.se.yourgame.view
 
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.gameController
+import de.htwg.se.yourgame.controller.{TGameController, gameController}
+
+import scala.swing.Reactor
 
 /**
  * Created by margogo on 02.04.17.
  */
-class DogTui @Inject() (gameController: gameController) {
+class DogTui @Inject() (var gameController: gameController) extends Reactor {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
   var continue = true
   def update(): Unit = printTui()
@@ -67,4 +69,13 @@ class DogTui @Inject() (gameController: gameController) {
     }
     continue
   }
+
+  def gameLogic() = {
+    if (false) {
+//      logger.info("Mister X won the game!")
+      sys.exit()
+    }
+//    turn()
+  }
+
 }

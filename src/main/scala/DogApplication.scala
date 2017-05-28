@@ -3,35 +3,28 @@
  * Main Class for the scala application DOG
  */
 
+import com.google.inject.Guice
 import de.htwg.se.yourgame.DependencyModule
-import com.google.inject.{Guice, Injector}
 import de.htwg.se.yourgame.controller.gameController
 import de.htwg.se.yourgame.view.{DogGui, DogTui}
 import net.codingwell.scalaguice.InjectorExtensions._
 
+import scalafx.application.Platform
 
-object DogApplication {
 
-  val injector: Injector = Guice.createInjector(new DependencyModule)
-  val gameController: gameController = injector.instance[gameController]
+object DogApplication extends App {
+
+  val injector = Guice.createInjector(new DependencyModule)
+
+  var gameController = injector.instance[gameController]
   gameController.initGame()
 
-  var gui = new DogGui(gameController)
-  var tui = new DogTui(gameController)
 
-  def main(args: Array[String]): Unit = {
-    startJFXGui(gui)
-    while (tui.processInputLine(scala.io.StdIn.readLine())) {}
-    System.exit(0)
-  }
+  var gui = injector.instance[DogGui]
+  var tui = injector.instance[DogTui]
 
-  def startJFXGui(gui: DogGui): Unit = {
-    new Thread(new Runnable {
-      def run() {
-        gui.main(Array())
-      }
-    }).start()
-  }
+  while (tui.processInputLine(scala.io.StdIn.readLine()))
+    {}
 
 }
 

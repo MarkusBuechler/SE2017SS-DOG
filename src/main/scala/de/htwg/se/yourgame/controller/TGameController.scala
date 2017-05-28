@@ -3,12 +3,13 @@ package de.htwg.se.yourgame.controller
 import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
+import scala.swing.Publisher
 import scala.swing.event.Event
 
 /**
  * Created by margogo on 15.05.17.
  */
-trait TGameController {
+trait TGameController extends Publisher {
 
   // change current fig
 

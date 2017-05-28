@@ -15,6 +15,7 @@ import scala.swing.event.Event
 
 class UpdatePlayerLabels() extends Event
 
+@Singleton
 class gameController() extends TGameController with Publisher {
 
 
