@@ -1,12 +1,16 @@
 package de.htwg.se.yourgame.view
 
+import java.awt.Color
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 
-import scala.swing._
+import scala.swing.{Color, _}
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{ UpdatePlayerCards, UpdatePlayerLabels, gameController }
+import de.htwg.se.yourgame.controller.{UpdatePlayerCards, gameController}
+
+import scalafx.scene.paint.Color
+
 
 /**
  * Created by margogo on 15.05.17.
@@ -14,24 +18,51 @@ import de.htwg.se.yourgame.controller.{ UpdatePlayerCards, UpdatePlayerLabels, g
 class DogGui @Inject() (gameController: gameController) extends MainFrame with Reactor {
 
   val SizeHeight = 700
-  val SizeWidth = 900
+  val SizeWidth = 1200
 
-  var player1 = new BoxPanel(Orientation.Vertical)
-  var player2 = new BoxPanel(Orientation.Horizontal)
-  var player3 = new BoxPanel(Orientation.Vertical)
-  var player4 = new BoxPanel(Orientation.Horizontal)
+  val darkRed = new java.awt.Color(0,0,0)
+  val brightRed = new java.awt.Color(196, 102, 113)
+
+  private val normalBorder = Swing.BeveledBorder(Swing.Lowered)
+  private val highlightedBorder = Swing.BeveledBorder(Swing.Lowered, brightRed, brightRed, brightRed, brightRed)
+
+  var player1 = new FlowPanel() {
+    border = normalBorder
+  }
+  var player2 = new FlowPanel() {
+    border = normalBorder
+  }
+  var player3 = new FlowPanel() {
+    border = normalBorder
+  }
+  var player4 = new FlowPanel() {
+    border = normalBorder
+  }
 
   title = "DOG - THE GAME"
   preferredSize = new Dimension(SizeWidth, SizeHeight)
   resizable = false
 
   // declare Components here, except menubar ...
-  var label = new Label {
-    text = "TEst"
+  var labelPlayer1 = new Label {
+    text = "Player1"
+  }
+
+  var labelPlayer2 = new Label {
+    text = "Player2"
+  }
+
+  var labelPlayer3 = new Label {
+    text = "Player3"
+  }
+
+  var labelPlayer4 = new Label {
+    text = "Player4"
   }
 
   val mapPicture = new Label {
     icon = new ImageIcon("resources/pictures/map600p.png")
+    border = normalBorder
   }
 
   val card1 = new Label {
@@ -96,12 +127,16 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   updateCardPics
 
-  contents = new BorderPanel {
-    add(player2, BorderPanel.Position.North)
-    add(mapPicture, BorderPanel.Position.Center)
-    add(player3, BorderPanel.Position.East)
-    add(player1, BorderPanel.Position.West)
-    add(player4, BorderPanel.Position.South)
+  var playerVBox = new BoxPanel(Orientation.Vertical) {
+    contents += player1
+    contents += player2
+    contents += player3
+    contents += player4
+  }
+
+  contents = new BoxPanel(Orientation.Horizontal) {
+    contents += playerVBox
+    contents += mapPicture
   }
 
   visible = true
@@ -156,10 +191,10 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   // react to events
   reactions += {
-    case e: UpdatePlayerLabels => {
-      label.text = gameController.currentPlayer.name
-      print("Event Update Label fired")
-    }
+//    case e: UpdatePlayerLabels => {
+//      labelPlayer1.text = gameController.currentPlayer.name
+//      print("Event Update Label fired")
+//    }
     case e: UpdatePlayerCards => {
       updateCardPics
       print("Event Update Cards fired")
@@ -174,6 +209,12 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player2.contents.clear()
     player3.contents.clear()
     player4.contents.clear()
+
+    player1.contents += labelPlayer1
+    player2.contents += labelPlayer2
+    player3.contents += labelPlayer3
+    player4.contents += labelPlayer4
+
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
       player1.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
@@ -191,6 +232,10 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       player4.contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
     }
 
+    player1.border = if (gameController.currentPlayer.playerId.equals(0)) highlightedBorder else normalBorder
+    player2.border = if (gameController.currentPlayer.playerId.equals(1)) highlightedBorder else normalBorder
+    player3.border = if (gameController.currentPlayer.playerId.equals(2)) highlightedBorder else normalBorder
+    player4.border = if (gameController.currentPlayer.playerId.equals(3)) highlightedBorder else normalBorder
     refresh
 
   }
@@ -203,7 +248,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player2.repaint()
     player3.repaint()
     player4.repaint()
-
+    // switch them
     player1.revalidate()
     player2.revalidate()
     player3.revalidate()
