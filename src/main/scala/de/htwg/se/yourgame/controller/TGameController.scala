@@ -1,5 +1,7 @@
 package de.htwg.se.yourgame.controller
 
+import java.awt.Color
+
 import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
@@ -27,11 +29,11 @@ trait TGameController extends Publisher {
   val highNumber = 200
   val initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
-  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber)
+  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0,0, Color.BLACK)
 
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)
-  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70)
+  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
   //  var currentFigNr =
   var decksize = initDeckSize
 

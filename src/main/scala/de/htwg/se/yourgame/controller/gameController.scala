@@ -1,5 +1,7 @@
 package de.htwg.se.yourgame.controller
 
+import java.awt.Color
+
 import com.google.inject.Singleton
 import de.htwg.se.yourgame.model._
 
@@ -24,8 +26,6 @@ class gameController() extends TGameController with Publisher {
     initCards()
     initPlayer()
     applyFigToField()
-    print(playerList)
-
   }
 
   def showGameStatus(): Unit = {
@@ -48,6 +48,7 @@ class gameController() extends TGameController with Publisher {
     updateFigField(possibleField, figureList.apply(figureNumber))
     removeCard(playedCard)
     changeCurrentPlayer()
+    publish(new UpdatePlayerCards)
   }
 
   def applyFigToField(): Unit = {
@@ -90,11 +91,24 @@ class gameController() extends TGameController with Publisher {
     figureList.clear
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
-      val Array(player, playerFigNumber, role, property, position) = line.split(";").map(_.trim())
-      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt)
+      val Array(player, playerFigNumber, role, property, position,x,y) = line.split(";").map(_.trim())
+      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, Color.BLACK)
       figureList += bufferFig
     }
-    figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70))
+    figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70, 476, 467, Color.BLACK))
+    colorFigures()
+  }
+
+  def colorFigures() : Unit = {
+    for (figur <- figureList) {
+      val playerID = figur.player.playerId
+      playerID match {
+        case 0 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.BLUE))
+        case 1 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.GREEN))
+        case 2 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.YELLOW))
+        case 3 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.RED))
+      }
+    }
   }
 
   def setPlayerName(inputNumber: Int, inputString: String): Unit = {
@@ -125,6 +139,10 @@ class gameController() extends TGameController with Publisher {
     print(currentPlayer.name + " ist am Zug")
   }
 
+//  def printCurrentFigure(): Unit = {
+//    print("Figur " + currentFig.playerFigNumber + " von " + currentFig.player.name + " ist am Zug")
+//  }
+
   def changeCurrentPlayer() = {
     val lastPlayer = playerList.apply(currentPlayer.playerId).copy(isActive = false)
     val nextPlayerNumber = if (currentPlayer.playerId == 3) 0 else currentPlayer.playerId + 1
@@ -135,17 +153,35 @@ class gameController() extends TGameController with Publisher {
     playerList.update(nextPlayerNumber, nextPlayer)
 
     val currentPlayerIndex = playerList.indexWhere(_.isActive == true)
-    currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
-    //    scalafx.event.Event.fireEvent()
 
+    currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
+
+    currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
+
+//    printCurrentFigure
+
+//    changeCurrentFigure()
     publish(new UpdatePlayerLabels)
+
+
+  }
+
+  def changeCurrentFigure(playerFigNumber : Int) : Unit = {
+    if (playerFigNumber <= 3 && playerFigNumber >= 0)
+    { // position stimmt nicht, vllt copy probieren oder alles neu setzen
+      currentFig = Figure(currentPlayer, playerFigNumber, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
+    }
+    else {
+      print("Error! Could not update current Figure")
+    }
 
   }
 
   def updateFigPos(figure: Figure, newId: Int) = {
     val oldPos = figure.position
     val figNr = figure.playerFigNumber
-    val bufferFig = figureList.apply(figureList.indexWhere(_.position == oldPos)).copy(position = newId)
+    val field = fieldList.apply(newId)
+    val bufferFig = figureList.apply(figureList.indexWhere(_.position == oldPos)).copy(position = newId, x = field.x, y = field.y)
     figureList.update(figNr, bufferFig)
   }
 
@@ -160,13 +196,13 @@ class gameController() extends TGameController with Publisher {
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
-      val Array(id, property, color, figure, predecessorIds, successorIds) = line.split(";").map(_.trim())
+      val Array(id, property, color, figure, predecessorIds, successorIds, x , y) = line.split(";").map(_.trim())
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
-      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0)
+      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0, 0, 0, Color.BLACK)
 
-      val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId)
+      val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId, x.toInt, y.toInt)
       fieldList += bufferField
     }
   }

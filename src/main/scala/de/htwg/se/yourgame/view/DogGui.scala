@@ -7,9 +7,8 @@ import javax.swing.ImageIcon
 
 import scala.swing.{Color, _}
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller.{UpdatePlayerCards, gameController}
-
-import scalafx.scene.paint.Color
+import de.htwg.se.yourgame.controller._
+import de.htwg.se.yourgame.model.{Field, Figure}
 
 
 /**
@@ -18,7 +17,7 @@ import scalafx.scene.paint.Color
 class DogGui @Inject() (gameController: gameController) extends MainFrame with Reactor {
 
   val SizeHeight = 700
-  val SizeWidth = 1200
+  val SizeWidth = 1100
 
   val darkRed = new java.awt.Color(0,0,0)
   val brightRed = new java.awt.Color(196, 102, 113)
@@ -63,6 +62,10 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   val mapPicture = new Label {
     icon = new ImageIcon("resources/pictures/map600p.png")
     border = normalBorder
+    opaque = false
+  }
+
+  val canvas = new Canvas(gameController = gameController) {
   }
 
   val card1 = new Label {
@@ -102,6 +105,19 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     icon = new ImageIcon("resources/pictures/13.png")
   }
 
+  val blueCircle = new Label {
+    icon = new ImageIcon("resources/pictures/blueCircle.png")
+  }
+  val greenCircle = new Label {
+    icon = new ImageIcon("resources/pictures/greenCircle.png")
+  }
+  val redCircle = new Label {
+    icon = new ImageIcon("resources/pictures/redCircle.png")
+  }
+  val yellowCircle = new Label {
+    icon = new ImageIcon("resources/pictures/yellowCircle.png")
+  }
+
   //noinspection ScalaStyle
   def cardPic(int: Int): Label = {
     val card = new Label {
@@ -136,7 +152,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   contents = new BoxPanel(Orientation.Horizontal) {
     contents += playerVBox
-    contents += mapPicture
+    contents += canvas
   }
 
   visible = true
@@ -181,11 +197,6 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   var map = ImageIO.read(new File("resources/pictures/map600p.png"))
 
-  //  contents = new BoxPanel(Orientation.Horizontal) {
-  //    contents += menuBar
-  //    contents += label
-  //  }
-
   // specify which Components produce events of interest
   listenTo(gameController)
 
@@ -199,8 +210,9 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       updateCardPics
       print("Event Update Cards fired")
     }
-
   }
+
+
 
   /* Helper functions */
   private def updateCardPics = {
@@ -214,6 +226,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player2.contents += labelPlayer2
     player3.contents += labelPlayer3
     player4.contents += labelPlayer4
+
+    title = gameController.currentFig.toString
 
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
@@ -268,4 +282,45 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   Allgemeine Funktionalität erhöhen
   */
 
+}
+
+case class Dart(val x: Int, val y: Int, val color: java.awt.Color)
+
+class Canvas  @Inject() (gameController: gameController) extends Panel {
+  var centerColor = Color.yellow
+  var map = ImageIO.read(new File("resources/pictures/map600p.png"))
+
+  preferredSize = new Dimension(map.getWidth, map.getHeight)
+
+  var darts = gameController.figureList
+//    List[Figure]()
+
+  override def paintComponent(g: Graphics2D) {
+
+    // Start by erasing this Canvas
+    g.clearRect(0, 0, size.width, size.height)
+    g.drawImage(map,0,0,map.getWidth, map.getHeight, 0, 0, map.getWidth, map.getHeight, null)
+
+    // Draw things that change on top of background
+    for (dart <- darts) {
+      g.setColor(dart.color)
+      g.fillOval(dart.x-13, dart.y-13, 25, 25)
+    }
+    initDraw()
+    repaint()
+  }
+
+
+  /** Add a "dart" to list of things to display */
+  def throwDart(dart: Figure) {
+    darts = darts :+ dart.copy(x = dart.x, y = dart.y)
+  }
+
+  /** Init Figures on map **/
+  def initDraw() : Unit  = {
+    for (dart <- darts)
+      {
+        throwDart(dart)
+      }
+  }
 }
