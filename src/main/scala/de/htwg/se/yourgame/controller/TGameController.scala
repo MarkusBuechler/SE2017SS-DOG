@@ -33,6 +33,7 @@ trait TGameController extends Publisher {
 
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)
+  var currentFigNr = 0
   var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
   //  var currentFigNr =
   var decksize = initDeckSize

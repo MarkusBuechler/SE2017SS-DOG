@@ -8,11 +8,12 @@ import javax.swing.ImageIcon
 import scala.swing.{Color, _}
 import com.google.inject.Inject
 import de.htwg.se.yourgame.controller._
-import de.htwg.se.yourgame.model.{Field, Figure}
+import de.htwg.se.yourgame.model.Figure
 
 
 /**
  * Created by margogo on 15.05.17.
+  * Dog Gui
  */
 class DogGui @Inject() (gameController: gameController) extends MainFrame with Reactor {
 
@@ -22,8 +23,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   val darkRed = new java.awt.Color(0,0,0)
   val brightRed = new java.awt.Color(196, 102, 113)
 
-  private val normalBorder = Swing.BeveledBorder(Swing.Lowered)
-  private val highlightedBorder = Swing.BeveledBorder(Swing.Lowered, brightRed, brightRed, brightRed, brightRed)
+  val normalBorder = Swing.BeveledBorder(Swing.Lowered)
+  val highlightedBorder = Swing.BeveledBorder(Swing.Lowered, brightRed, brightRed, brightRed, brightRed)
 
   var player1 = new FlowPanel() {
     border = normalBorder
@@ -65,7 +66,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     opaque = false
   }
 
-  val canvas = new Canvas(gameController = gameController) {
+  val canvas = new Canvas(gameController) {
   }
 
   val card1 = new Label {
@@ -103,19 +104,6 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   }
   val card13 = new Label {
     icon = new ImageIcon("resources/pictures/13.png")
-  }
-
-  val blueCircle = new Label {
-    icon = new ImageIcon("resources/pictures/blueCircle.png")
-  }
-  val greenCircle = new Label {
-    icon = new ImageIcon("resources/pictures/greenCircle.png")
-  }
-  val redCircle = new Label {
-    icon = new ImageIcon("resources/pictures/redCircle.png")
-  }
-  val yellowCircle = new Label {
-    icon = new ImageIcon("resources/pictures/yellowCircle.png")
   }
 
   //noinspection ScalaStyle
@@ -227,7 +215,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player3.contents += labelPlayer3
     player4.contents += labelPlayer4
 
-    title = gameController.currentFig.toString
+//    title = gameController.currentFig.toString
 
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
@@ -257,16 +245,17 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   /**
    * Helper function to refresh and revalidate the playerCards
    */
-  private def refresh = {
-    player1.repaint()
-    player2.repaint()
-    player3.repaint()
-    player4.repaint()
-    // switch them
+  private def refresh : Unit = {
+
     player1.revalidate()
     player2.revalidate()
     player3.revalidate()
     player4.revalidate()
+
+    player1.repaint()
+    player2.repaint()
+    player3.repaint()
+    player4.repaint()
   }
 
   visible = true
@@ -286,13 +275,14 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
 case class Dart(val x: Int, val y: Int, val color: java.awt.Color)
 
-class Canvas  @Inject() (gameController: gameController) extends Panel {
-  var centerColor = Color.yellow
-  var map = ImageIO.read(new File("resources/pictures/map600p.png"))
+class Canvas  @Inject() (gameController: gameController) extends Panel with Reactor {
 
-  preferredSize = new Dimension(map.getWidth, map.getHeight)
+  val map = ImageIO.read(new File("resources/pictures/map600p.png"))
+  preferredSize = new Dimension(600, 600)
 
+//  resizable = false
   var darts = gameController.figureList
+  var currentFigur = gameController.currentFig
 //    List[Figure]()
 
   override def paintComponent(g: Graphics2D) {
@@ -303,10 +293,18 @@ class Canvas  @Inject() (gameController: gameController) extends Panel {
 
     // Draw things that change on top of background
     for (dart <- darts) {
+
       g.setColor(dart.color)
+
+      if (dart.playerFigNumber.equals(gameController.currentFigNr))
+        {
+          g.setColor(Color.ORANGE)
+        }
+
       g.fillOval(dart.x-13, dart.y-13, 25, 25)
     }
-    initDraw()
+
+    revalidate()
     repaint()
   }
 
@@ -317,10 +315,11 @@ class Canvas  @Inject() (gameController: gameController) extends Panel {
   }
 
   /** Init Figures on map **/
-  def initDraw() : Unit  = {
+  def throwAllDarts() : Unit  = {
     for (dart <- darts)
       {
         throwDart(dart)
       }
   }
+
 }

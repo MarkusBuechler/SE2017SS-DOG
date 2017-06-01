@@ -7,8 +7,6 @@ import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
-import scalafx.application.Platform
-//import scala.swing.Event
 import scala.swing.event.Event
 
 /**
@@ -17,6 +15,7 @@ import scala.swing.event.Event
 
 class UpdatePlayerLabels() extends Event
 class UpdatePlayerCards() extends Event
+
 
 @Singleton
 class gameController() extends TGameController with Publisher {
@@ -63,7 +62,6 @@ class gameController() extends TGameController with Publisher {
     val cardInSet = cardDecks.apply(currentPlayer.playerId).cards.indexWhere(_.id == card.id)
     cardDecks.apply(currentPlayer.playerId).cards.remove(cardInSet)
     playedCards += card
-    publish(new UpdatePlayerCards)
   }
 
   def test = {
@@ -96,6 +94,7 @@ class gameController() extends TGameController with Publisher {
       figureList += bufferFig
     }
     figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70, 476, 467, Color.BLACK))
+    currentFigNr = 0
     colorFigures()
   }
 
@@ -156,23 +155,22 @@ class gameController() extends TGameController with Publisher {
 
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
 
-    currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
+//    currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
 
-//    printCurrentFigure
 
-//    changeCurrentFigure()
+    changeCurrentFigureNr()
     publish(new UpdatePlayerLabels)
 
 
   }
+  //noinspection ScalaStyle
+  def changeCurrentFigureNr() : Unit = {
 
-  def changeCurrentFigure(playerFigNumber : Int) : Unit = {
-    if (playerFigNumber <= 3 && playerFigNumber >= 0)
-    { // position stimmt nicht, vllt copy probieren oder alles neu setzen
-      currentFig = Figure(currentPlayer, playerFigNumber, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
-    }
-    else {
-      print("Error! Could not update current Figure")
+    currentFigNr match {
+      case 0 | 1 | 2 | 3 => currentFigNr = 4
+      case 4 | 5 | 6 | 7 => currentFigNr = 8
+      case 8 | 9 | 10 | 11 => currentFigNr = 12
+      case 12 | 13 | 14 | 15 => currentFigNr = 0
     }
 
   }
@@ -297,6 +295,8 @@ class gameController() extends TGameController with Publisher {
     print(string + "\n")
     print("Gespielte Karten :" + playedCards + "\n")
     publish(new UpdatePlayerLabels)
+    print("Current Player:" + currentPlayer + "\n")
+    print("Current Figur :" + figureList.apply(currentFigNr) + "\n")
 
   }
 
