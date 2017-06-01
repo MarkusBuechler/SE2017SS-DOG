@@ -282,8 +282,7 @@ class Canvas  @Inject() (gameController: gameController) extends Panel with Reac
 
 //  resizable = false
   var darts = gameController.figureList
-  var currentFigur = gameController.currentFig
-//    List[Figure]()
+//  var currentFigur = gameController.currentFig
 
   override def paintComponent(g: Graphics2D) {
 

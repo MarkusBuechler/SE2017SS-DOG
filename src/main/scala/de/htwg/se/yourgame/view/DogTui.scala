@@ -52,11 +52,11 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
         // todo: prüfungen einbauen
         val input = scala.io.StdIn.readLine()
         val tokens = input.split(" ")
-        if (tokens.length != 2) {
+        if (tokens.length != 1) {
           print("Falsche Eingabe!\n")
           print(info)
         } else {
-          gameController.playerAction(tokens(0).toInt, tokens(1).toInt)
+          gameController.playerAction(tokens(0).toInt)
           printTui()
         }
       case "g" =>

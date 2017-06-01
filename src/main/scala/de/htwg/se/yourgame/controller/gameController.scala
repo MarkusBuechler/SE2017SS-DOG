@@ -33,18 +33,18 @@ class gameController() extends TGameController with Publisher {
     printCurrentPlayer()
   }
 
-  def playerAction(cardFromDeckNumber: Int, figureNumber: Int): Unit = {
+  def playerAction(cardFromDeckNumber: Int): Unit = {
 
     //    fieldController.movePosition(cardFromDeckNumber, figureNumber)
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
     val valueOfCard = playedCard.value
-    var possibleField = findNextField(figureList.apply((figureNumber)).position).head.id
+    var possibleField = findNextField(figureList.apply((currentFigNr)).position).head.id
     for (x <- 1 to valueOfCard) {
-      possibleField = findNextField(figureList.apply((figureNumber)).position).head.id
+      possibleField = findNextField(figureList.apply((currentFigNr)).position).head.id
       //      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
     }
     print("Mögliches Feld ist " + possibleField + "Willst du da hin ?")
-    updateFigField(possibleField, figureList.apply(figureNumber))
+    updateFigField(possibleField, figureList.apply(currentFigNr))
     removeCard(playedCard)
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
