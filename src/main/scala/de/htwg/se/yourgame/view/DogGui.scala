@@ -1,14 +1,17 @@
 package de.htwg.se.yourgame.view
 
 import java.awt.Color
+import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 
-import scala.swing.{Color, _}
+import scala.swing._
 import com.google.inject.Inject
 import de.htwg.se.yourgame.controller._
 import de.htwg.se.yourgame.model.Figure
+
+import scala.collection.mutable.ListBuffer
 
 
 /**
@@ -19,6 +22,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   val SizeHeight = 700
   val SizeWidth = 1100
+
+  val myDimension = new Dimension(SizeWidth, SizeHeight)
 
   val darkRed = new java.awt.Color(0,0,0)
   val brightRed = new java.awt.Color(196, 102, 113)
@@ -40,7 +45,9 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   }
 
   title = "DOG - THE GAME"
-  preferredSize = new Dimension(SizeWidth, SizeHeight)
+  preferredSize = myDimension
+  minimumSize = myDimension
+  maximumSize = myDimension
   resizable = false
 
   // declare Components here, except menubar ...
@@ -69,73 +76,53 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   val canvas = new Canvas(gameController) {
   }
 
-  val card1 = new Label {
-    icon = new ImageIcon("resources/pictures/1.png")
-  }
-  val card2 = new Label {
-    icon = new ImageIcon("resources/pictures/2.png")
-  }
-  val card3 = new Label {
-    icon = new ImageIcon("resources/pictures/3.png")
-  }
-  val card4 = new Label {
-    icon = new ImageIcon("resources/pictures/4.png")
-  }
-  val card5 = new Label {
-    icon = new ImageIcon("resources/pictures/5.png")
-  }
-  val card6 = new Label {
-    icon = new ImageIcon("resources/pictures/6.png")
-  }
-  val card7 = new Label {
-    icon = new ImageIcon("resources/pictures/7.png")
-  }
-  val card8 = new Label {
-    icon = new ImageIcon("resources/pictures/8.png")
-  }
-  val card9 = new Label {
-    icon = new ImageIcon("resources/pictures/9.png")
-  }
-  val card10 = new Label {
-    icon = new ImageIcon("resources/pictures/10.png")
-  }
-  val card12 = new Label {
-    icon = new ImageIcon("resources/pictures/12.png")
-  }
-  val card13 = new Label {
-    icon = new ImageIcon("resources/pictures/13.png")
-  }
+//  val map = new ImageIcon("resources/pictures/map600p.png")
+  lazy val pic1 : ImageIcon = new ImageIcon("resources/pictures/1.png")
+  lazy val pic2 : ImageIcon = new ImageIcon("resources/pictures/2.png")
+  lazy val pic3 : ImageIcon = new ImageIcon("resources/pictures/3.png")
+  lazy val pic4 : ImageIcon = new ImageIcon("resources/pictures/4.png")
+  lazy val pic5 : ImageIcon = new ImageIcon("resources/pictures/5.png")
+  lazy val pic6 : ImageIcon = new ImageIcon("resources/pictures/6.png")
+  lazy val pic7 : ImageIcon = new ImageIcon("resources/pictures/7.png")
+  lazy val pic8 : ImageIcon = new ImageIcon("resources/pictures/8.png")
+  lazy val pic9 : ImageIcon = new ImageIcon("resources/pictures/9.png")
+  lazy val pic10 : ImageIcon = new ImageIcon("resources/pictures/10.png")
+  lazy val pic12 : ImageIcon = new ImageIcon("resources/pictures/12.png")
+  lazy val pic13 : ImageIcon = new ImageIcon("resources/pictures/13.png")
+  lazy val picIdk : ImageIcon = new ImageIcon("resources/pictures/idk.png")
+
 
   //noinspection ScalaStyle
   def cardPic(int: Int): Label = {
     val card = new Label {
       int match {
-        case 1 => icon = new ImageIcon("resources/pictures/1.png")
-        case 2 => icon = new ImageIcon("resources/pictures/2.png")
-        case 3 => icon = new ImageIcon("resources/pictures/3.png")
-        case 4 => icon = new ImageIcon("resources/pictures/4.png")
-        case 5 => icon = new ImageIcon("resources/pictures/5.png")
-        case 6 => icon = new ImageIcon("resources/pictures/6.png")
-        case 7 => icon = new ImageIcon("resources/pictures/7.png")
-        case 8 => icon = new ImageIcon("resources/pictures/8.png")
-        case 9 => icon = new ImageIcon("resources/pictures/9.png")
-        case 10 => icon = new ImageIcon("resources/pictures/10.png")
-        case 12 => icon = new ImageIcon("resources/pictures/12.png")
-        case 13 => icon = new ImageIcon("resources/pictures/13.png")
-        case _ => icon = new ImageIcon("resources/pictures/idk.png")
+        case 1 => icon = pic1
+        case 2 => icon = pic2
+        case 3 => icon = pic3
+        case 4 => icon = pic4
+        case 5 => icon = pic5
+        case 6 => icon = pic6
+        case 7 => icon = pic7
+        case 8 => icon = pic8
+        case 9 => icon = pic9
+        case 10 => icon = pic10
+        case 12 => icon = pic12
+        case 13 => icon = pic13
+        case _ => icon = picIdk
       }
 
     }
     card
   }
 
-  updateCardPics
+  updateCardPics()
 
   var playerVBox = new BoxPanel(Orientation.Vertical) {
     contents += player1
     contents += player2
     contents += player3
     contents += player4
+    resizable = false
   }
 
   contents = new BoxPanel(Orientation.Horizontal) {
@@ -175,7 +162,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   }
 
   def notYetImplemted() {
-    val res = Dialog.showConfirmation(
+    Dialog.showConfirmation(
       contents.head,
       "Function is not yet implemented",
       optionType = Dialog.Options.Default,
@@ -183,27 +170,20 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     )
   }
 
-  var map = ImageIO.read(new File("resources/pictures/map600p.png"))
-
   // specify which Components produce events of interest
   listenTo(gameController)
 
   // react to events
   reactions += {
-//    case e: UpdatePlayerLabels => {
-//      labelPlayer1.text = gameController.currentPlayer.name
-//      print("Event Update Label fired")
-//    }
-    case e: UpdatePlayerCards => {
-      updateCardPics
+    case e: UpdatePlayerCards =>
+      updateCardPics()
       print("Event Update Cards fired")
-    }
   }
 
 
 
   /* Helper functions */
-  private def updateCardPics = {
+  private def updateCardPics() : Unit = {
     /* Init Player */
     player1.contents.clear()
     player2.contents.clear()
@@ -214,8 +194,6 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player2.contents += labelPlayer2
     player3.contents += labelPlayer3
     player4.contents += labelPlayer4
-
-//    title = gameController.currentFig.toString
 
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
@@ -238,14 +216,14 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player2.border = if (gameController.currentPlayer.playerId.equals(1)) highlightedBorder else normalBorder
     player3.border = if (gameController.currentPlayer.playerId.equals(2)) highlightedBorder else normalBorder
     player4.border = if (gameController.currentPlayer.playerId.equals(3)) highlightedBorder else normalBorder
-    refresh
+    refresh()
 
   }
 
   /**
    * Helper function to refresh and revalidate the playerCards
    */
-  private def refresh : Unit = {
+  private def refresh() : Unit = {
 
     player1.revalidate()
     player2.revalidate()
@@ -262,26 +240,32 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   /*TODO:
   click auf karten ermöglichen
-  current player in extra label anzeigen ? VBox hervorheben
   HoverListener auf die Karten
   Gui verschönern
 
   Later:
+  Figuren wechseln innerhalb player
   Figuren auf Map anzeigen und anklickbar machen
   Allgemeine Funktionalität erhöhen
   */
 
 }
 
-case class Dart(val x: Int, val y: Int, val color: java.awt.Color)
+case class FigureDraw(x: Int, y: Int, color: java.awt.Color)
 
 class Canvas  @Inject() (gameController: gameController) extends Panel with Reactor {
 
-  val map = ImageIO.read(new File("resources/pictures/map600p.png"))
-  preferredSize = new Dimension(600, 600)
+
+  val map: BufferedImage = ImageIO.read(new File("resources/pictures/map600p.png"))
+  val deviation = 13
+  val figureRadius = 25
+  val dimSize = 600
+  val myDimension = new Dimension(dimSize,dimSize)
+
+  preferredSize = myDimension
 
 //  resizable = false
-  var darts = gameController.figureList
+  var figures: ListBuffer[Figure] = gameController.figureList
 //  var currentFigur = gameController.currentFig
 
   override def paintComponent(g: Graphics2D) {
@@ -291,31 +275,33 @@ class Canvas  @Inject() (gameController: gameController) extends Panel with Reac
     g.drawImage(map,0,0,map.getWidth, map.getHeight, 0, 0, map.getWidth, map.getHeight, null)
 
     // Draw things that change on top of background
-    for (dart <- darts) {
+    for (figure <- figures) {
 
-      g.setColor(dart.color)
+      g.setColor(figure.color)
 
-      if (dart.playerFigNumber.equals(gameController.currentFigNr))
+      if (figure.playerFigNumber.equals(gameController.currentFigNr))
         {
           g.setColor(Color.ORANGE)
         }
 
-      g.fillOval(dart.x-13, dart.y-13, 25, 25)
+      g.fillOval(figure.x-deviation, figure.y-deviation, figureRadius, figureRadius)
     }
 
-    revalidate()
-    repaint()
+
   }
+  // Do this outside to avoid huge performance issues
+  this.revalidate()
+  this.repaint()
 
 
   /** Add a "dart" to list of things to display */
-  def throwDart(dart: Figure) {
-    darts = darts :+ dart.copy(x = dart.x, y = dart.y)
+  def throwDart(dart: Figure) : Unit = {
+    figures = figures :+ dart.copy(x = dart.x, y = dart.y)
   }
 
   /** Init Figures on map **/
   def throwAllDarts() : Unit  = {
-    for (dart <- darts)
+    for (dart <- figures)
       {
         throwDart(dart)
       }

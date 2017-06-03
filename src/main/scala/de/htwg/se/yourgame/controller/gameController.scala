@@ -6,12 +6,12 @@ import com.google.inject.Singleton
 import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
-import scala.reflect.internal.util.Statistics.Counter
 import scala.swing.Publisher
 import scala.swing.event.Event
 
 /**
  * Created by margogo on 15.04.17.
+  * GameController
  */
 
 class UpdatePlayerLabels() extends Event
@@ -48,33 +48,20 @@ class gameController() extends TGameController with Publisher {
 
   def playerActionPrep(cardFromDeckNumber: Int): Unit = {
 
-    //    fieldController.movePosition(cardFromDeckNumber, figureNumber)
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
     val valueOfCard = playedCard.value
-    var possibleField = new ListBuffer[Integer]
-//    possibleField += findNextField(figureList.apply((currentFigNr)).position).head.id
-//    for (x <- 0 to valueOfCard) {
-//      possibleField += findNextField(figureList.apply(currentFigNr).position).head.id
-////            updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
-//    }
-    val a = findNextField(figureList(currentFigNr).position, valueOfCard)
+    val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
+    val selectedField = fieldList.apply(fieldList.indexWhere(_.id == possibleField.head)).id
 
-//    print("Mögliches Felder sind " + a + "Willst du da hin ?")
-//    val input = scala.io.StdIn.readLine()
-//    val selectedField = fieldList.apply(fieldList.indexWhere(_.id == a.apply(input.toInt))).id
-    val selectedField = fieldList.apply(fieldList.indexWhere(_.id == a.head)).id
     print(selectedField)
     updateFigField(fieldList.apply(selectedField).id, figureList.apply(currentFigNr))
     removeCard(playedCard)
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
-  }
-
-  def playerActionAfterDecision() : Unit = {
 
   }
 
-  def applyFigToField(): Unit = {
+  def applyFigToField() : Unit = {
     for (figure <- figureList) {
       val index = fieldList.indexWhere(_.id == figure.position)
       val bufferField = fieldList.apply(index).copy(figure = figure)
@@ -82,22 +69,11 @@ class gameController() extends TGameController with Publisher {
     }
   }
 
-  def removeCard(card: Card) = {
+  def removeCard(card: Card) : Unit = {
     val cardInSet = cardDecks.apply(currentPlayer.playerId).cards.indexWhere(_.id == card.id)
     cardDecks.apply(currentPlayer.playerId).cards.remove(cardInSet)
     playedCards += card
   }
-
-//  def test = {
-//    val bufferFig = figureList.apply(0)
-//    val bufferFigPos = figureList.apply(0).position
-//
-//    print(findNextField(bufferFigPos))
-//  }
-//
-//  def test2 = {
-//    updateFigField(findNextField(figureList.apply(0).position).head.id, figureList.apply(0))
-//  }
 
   /** PlayerStuff **/
   def initPlayer(): Unit = {
@@ -134,6 +110,7 @@ class gameController() extends TGameController with Publisher {
     }
   }
 
+  // kann vll
   def setPlayerName(inputNumber: Int, inputString: String): Unit = {
 
     var playerNo = 0
@@ -166,7 +143,7 @@ class gameController() extends TGameController with Publisher {
 //    print("Figur " + currentFig.playerFigNumber + " von " + currentFig.player.name + " ist am Zug")
 //  }
 
-  def changeCurrentPlayer() = {
+  def changeCurrentPlayer() : Unit = {
     val lastPlayer = playerList.apply(currentPlayer.playerId).copy(isActive = false)
     val nextPlayerNumber = if (currentPlayer.playerId == 3) 0 else currentPlayer.playerId + 1
 
@@ -175,11 +152,9 @@ class gameController() extends TGameController with Publisher {
     val nextPlayer = playerList.apply(nextPlayerNumber).copy(isActive = true)
     playerList.update(nextPlayerNumber, nextPlayer)
 
-    val currentPlayerIndex = playerList.indexWhere(_.isActive == true)
+    val currentPlayerIndex = playerList indexWhere (_.isActive == true)
 
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
-
-//    currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
 
 
     changeCurrentFigureNr()
@@ -199,7 +174,7 @@ class gameController() extends TGameController with Publisher {
 
   }
 
-  def updateFigPos(figure: Figure, newId: Int) = {
+  def updateFigPos(figure: Figure, newId: Int) : Unit = {
     val oldPos = figure.position
     val figNr = figure.playerFigNumber
     val field = fieldList.apply(newId)
@@ -207,18 +182,13 @@ class gameController() extends TGameController with Publisher {
     figureList.update(figNr, bufferFig)
   }
 
-  //  def changeCurrentFigureToNextPlayer() = {
-  //    val currentFigure = currentPlayer.playerId
-  //
-  //  }
-
   /** Field stuff **/
 
   def initFields(): Unit = {
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
-      val Array(id, property, color, figure, predecessorIds, successorIds, x , y) = line.split(";").map(_.trim())
+      val Array(id, property, color, predecessorIds, successorIds, x , y) = line.split(";").map(_.trim())
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
@@ -246,21 +216,6 @@ class gameController() extends TGameController with Publisher {
     publish(new UpdatePlayerLabels)
   }
 
-//  def findNextField(fieldId : Int, valueOfCard : Int): ListBuffer[Int] = {
-//    var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
-//    var NextFields = new ListBuffer[Int]
-//    for (x <- field.successorIds) {
-//      var nextField = fieldList.apply(fieldList.indexWhere(_.id == x))
-//      var choice = -1
-//      for (i <- 1 to valueOfCard) {
-//        choice = fieldList.apply(fieldList.indexWhere(_.id == x)).id
-//        nextField = fieldList.apply(fieldList.indexWhere(_.id == x))
-//      }
-//      NextFields += choice
-//    }
-//    NextFields
-//  }
-
   // TODO: Mehrere Wahlmöglichkeiten ermöglichen
   def findNextField(fieldId : Int, valueOfCard : Int): ListBuffer[Int] = {
     var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
@@ -276,7 +231,7 @@ class gameController() extends TGameController with Publisher {
     NextFields
   }
 
-  def updateFigField(fieldId: Int, figure: Figure) = {
+  def updateFigField(fieldId: Int, figure: Figure) : Unit = {
     // check noch einbauen
     val test1 = figure.position
     val test2 = fieldList.indexWhere(_.id == figure.position)
@@ -302,11 +257,6 @@ class gameController() extends TGameController with Publisher {
     fillCardDeck()
   }
 
-  //sample data
-  val card1 = Card(1, "Gelb", "Zwei", 1, "Eigeschaft1", isPlayed = false)
-  val card2 = Card(2, "Rot", "Zwei", 1, "Eigeschaft2", isPlayed = true)
-  val card3 = Card(3, "Blau", "Zwei", 1, "Eigeschaft3", isPlayed = true)
-
   def shuffleCards(): Unit = {
     cardList = scala.util.Random.shuffle(cardList)
   }
@@ -320,7 +270,6 @@ class gameController() extends TGameController with Publisher {
         cardBuffer += cardList.head
         cardList -= cardList.head
       }
-      //      val cardBufferList = cardBuffer.toList
       val filledCardDeck = CardDeck(a, decksize, cardBuffer)
       cardDecks += filledCardDeck
     }
@@ -345,8 +294,6 @@ class gameController() extends TGameController with Publisher {
 
   }
 
-  def refresh(): Unit = {
-  }
 
   def quitGame(): Unit = {
     sys.exit()

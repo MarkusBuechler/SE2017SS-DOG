@@ -40,5 +40,13 @@ trait TGameController extends Publisher {
 
   def quitGame(): Unit
   def initGame(): Unit
+  def initPlayer(): Unit
+  def initFigures(): Unit
+  def colorFigures() : Unit
+  def setPlayerName(inputNumber: Int, inputString: String): Unit
+
+  def showGameStatus(): Unit
+  def applyFigToField(): Unit
+  def removeCard(card: Card) : Unit
 
 }
