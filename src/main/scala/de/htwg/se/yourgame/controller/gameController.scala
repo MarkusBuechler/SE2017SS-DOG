@@ -6,6 +6,7 @@ import com.google.inject.Singleton
 import de.htwg.se.yourgame.model._
 
 import scala.collection.mutable.ListBuffer
+import scala.reflect.internal.util.Statistics.Counter
 import scala.swing.Publisher
 import scala.swing.event.Event
 
@@ -33,21 +34,44 @@ class gameController() extends TGameController with Publisher {
     printCurrentPlayer()
   }
 
-  def playerAction(cardFromDeckNumber: Int): Unit = {
+  def findNextField2(position: Int, valueOfCard : Int) : Unit =  {
+
+    for (i <- 1 to valueOfCard) {
+      val field = fieldList.apply(fieldList.indexWhere(_.id == position))
+      var NextFields = new ListBuffer[Field]
+      for (x <- field.successorIds) {
+        NextFields += fieldList.apply(fieldList.indexWhere(_.id == x))
+      }
+      NextFields
+    }
+  }
+
+  def playerActionPrep(cardFromDeckNumber: Int): Unit = {
 
     //    fieldController.movePosition(cardFromDeckNumber, figureNumber)
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
     val valueOfCard = playedCard.value
-    var possibleField = findNextField(figureList.apply((currentFigNr)).position).head.id
-    for (x <- 1 to valueOfCard) {
-      possibleField = findNextField(figureList.apply((currentFigNr)).position).head.id
-      //      updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
-    }
-    print("Mögliches Feld ist " + possibleField + "Willst du da hin ?")
-    updateFigField(possibleField, figureList.apply(currentFigNr))
+    var possibleField = new ListBuffer[Integer]
+//    possibleField += findNextField(figureList.apply((currentFigNr)).position).head.id
+//    for (x <- 0 to valueOfCard) {
+//      possibleField += findNextField(figureList.apply(currentFigNr).position).head.id
+////            updateFigField(findNextField(figureList.apply(figureNumber).position).head.id, figureList.apply(figureNumber))
+//    }
+    val a = findNextField(figureList(currentFigNr).position, valueOfCard)
+
+//    print("Mögliches Felder sind " + a + "Willst du da hin ?")
+//    val input = scala.io.StdIn.readLine()
+//    val selectedField = fieldList.apply(fieldList.indexWhere(_.id == a.apply(input.toInt))).id
+    val selectedField = fieldList.apply(fieldList.indexWhere(_.id == a.head)).id
+    print(selectedField)
+    updateFigField(fieldList.apply(selectedField).id, figureList.apply(currentFigNr))
     removeCard(playedCard)
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
+  }
+
+  def playerActionAfterDecision() : Unit = {
+
   }
 
   def applyFigToField(): Unit = {
@@ -64,16 +88,16 @@ class gameController() extends TGameController with Publisher {
     playedCards += card
   }
 
-  def test = {
-    val bufferFig = figureList.apply(0)
-    val bufferFigPos = figureList.apply(0).position
-
-    print(findNextField(bufferFigPos))
-  }
-
-  def test2 = {
-    updateFigField(findNextField(figureList.apply(0).position).head.id, figureList.apply(0))
-  }
+//  def test = {
+//    val bufferFig = figureList.apply(0)
+//    val bufferFigPos = figureList.apply(0).position
+//
+//    print(findNextField(bufferFigPos))
+//  }
+//
+//  def test2 = {
+//    updateFigField(findNextField(figureList.apply(0).position).head.id, figureList.apply(0))
+//  }
 
   /** PlayerStuff **/
   def initPlayer(): Unit = {
@@ -222,12 +246,33 @@ class gameController() extends TGameController with Publisher {
     publish(new UpdatePlayerLabels)
   }
 
-  def findNextField(fieldId: Int): ListBuffer[Field] = {
-    val field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
-    var NextFields = new ListBuffer[Field]
-    for (x <- field.successorIds) {
-      NextFields += fieldList.apply(fieldList.indexWhere(_.id == x))
+//  def findNextField(fieldId : Int, valueOfCard : Int): ListBuffer[Int] = {
+//    var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
+//    var NextFields = new ListBuffer[Int]
+//    for (x <- field.successorIds) {
+//      var nextField = fieldList.apply(fieldList.indexWhere(_.id == x))
+//      var choice = -1
+//      for (i <- 1 to valueOfCard) {
+//        choice = fieldList.apply(fieldList.indexWhere(_.id == x)).id
+//        nextField = fieldList.apply(fieldList.indexWhere(_.id == x))
+//      }
+//      NextFields += choice
+//    }
+//    NextFields
+//  }
+
+  // TODO: Mehrere Wahlmöglichkeiten ermöglichen
+  def findNextField(fieldId : Int, valueOfCard : Int): ListBuffer[Int] = {
+    var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
+    var NextFields = new ListBuffer[Int]
+    var choice = -1
+    for (i <- 1 to valueOfCard) {
+      for (x <- field.successorIds) {
+        choice = fieldList.apply(fieldList.indexWhere(_.id == x)).id
+        field = fieldList.apply(fieldList.indexWhere(_.id == x))
+      }
     }
+    NextFields += choice
     NextFields
   }
 

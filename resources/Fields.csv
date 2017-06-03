@@ -1,4 +1,4 @@
-0;„default“;„red“;false;63,70,71,72,73;1,74;354;564
+0;„default“;„red“;false;63,70,71,72,73;1;354;564
 1;„default“;„default“;false;0;2;324;564
 2;„default“;„default“;false;1;3;294;564
 3;„default“;„default“;false;2;4;263;564
@@ -14,7 +14,7 @@
 13;„default“;„default“;false;12;14;119;355
 14;„default“;„default“;false;13;15;89;355
 15;„default“;„default“;false;14;16;58;355
-16;„default“;„default“;false;15,80,81,82,83;17,84;28;355
+16;„default“;„default“;false;15,80,81,82,83;17;28;355
 17;„default“;„default“;false;16;18;28;324
 18;„default“;„default“;false;17;19;28;294
 19;„default“;„default“;false;18;20;28;264
@@ -30,7 +30,7 @@
 29;„default“;„default“;false;28;30;235;119
 30;„default“;„default“;false;29;31;235;89
 31;„default“;„default“;false;30;32;235;58
-32;„default“;„default“;false;31,90,91,92,93;33,94;235;27
+32;„default“;„default“;false;31,90,91,92,93;33;235;27
 33;„default“;„default“;false;32;34;266;26
 34;„default“;„default“;false;33;35;296;26
 35;„default“;„default“;false;34;36;326;26
@@ -46,7 +46,7 @@
 45;„default“;„default“;false;44;46;468;237
 46;„default“;„default“;false;45;47;499;237
 47;„default“;„default“;false;46;48;528;237
-48;„default“;„default“;false;47,100,101,102,103;49,104;559;237
+48;„default“;„default“;false;47,100,101,102,103;49;559;237
 49;„default“;„default“;false;48;50;558;267
 50;„default“;„default“;false;49;51;558;297
 51;„default“;„default“;false;50;52;558;326
