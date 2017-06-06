@@ -16,6 +16,7 @@ import scala.swing.event.Event
 
 class UpdatePlayerLabels() extends Event
 class UpdatePlayerCards() extends Event
+class UpdateToRepaint() extends Event
 
 
 @Singleton
@@ -157,13 +158,13 @@ class gameController() extends TGameController with Publisher {
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
 
 
-    changeCurrentFigureNr()
+    changeCurrentFigure()
     publish(new UpdatePlayerLabels)
 
 
   }
   //noinspection ScalaStyle
-  def changeCurrentFigureNr() : Unit = {
+  def changeCurrentFigure() : Unit = {
 
     currentFigNr match {
       case 0 | 1 | 2 | 3 => currentFigNr = 4
@@ -171,7 +172,18 @@ class gameController() extends TGameController with Publisher {
       case 8 | 9 | 10 | 11 => currentFigNr = 12
       case 12 | 13 | 14 | 15 => currentFigNr = 0
     }
+    publish(new UpdateToRepaint)
+  }
 
+  def changeCurrentFigureNr() : Unit = {
+
+    val buffer = currentFigNr % 4
+    buffer match {
+      case 0 | 1 | 2  => currentFigNr += 1
+      case 3  => currentFigNr -= 3
+    }
+    publish(new UpdateToRepaint)
+    print(currentPlayer)
   }
 
   def updateFigPos(figure: Figure, newId: Int) : Unit = {

@@ -12,6 +12,7 @@ import de.htwg.se.yourgame.controller._
 import de.htwg.se.yourgame.model.Figure
 
 import scala.collection.mutable.ListBuffer
+import scala.swing.event.ButtonClicked
 
 
 /**
@@ -23,7 +24,11 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   val SizeHeight = 700
   val SizeWidth = 1100
 
-  val myDimension = new Dimension(SizeWidth, SizeHeight)
+  val SizeWidthFlowPane = 450
+  val SizeHeigthFlowPane = 60
+  val myDimension = new Dimension(SizeWidth,SizeHeight)
+
+  val myDimensionFlowPane = new Dimension(SizeWidthFlowPane, SizeHeigthFlowPane)
 
   val darkRed = new java.awt.Color(0,0,0)
   val brightRed = new java.awt.Color(196, 102, 113)
@@ -31,17 +36,49 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   val normalBorder = Swing.BeveledBorder(Swing.Lowered)
   val highlightedBorder = Swing.BeveledBorder(Swing.Lowered, brightRed, brightRed, brightRed, brightRed)
 
-  var player1 = new FlowPanel() {
-    border = normalBorder
+  var player1FlowPanel = new FlowPanel() {
+    preferredSize = myDimensionFlowPane
   }
-  var player2 = new FlowPanel() {
-    border = normalBorder
+  var player2FlowPanel = new FlowPanel() {
+    preferredSize = myDimensionFlowPane
   }
-  var player3 = new FlowPanel() {
-    border = normalBorder
+  var player3FlowPanel = new FlowPanel() {
+    preferredSize = myDimensionFlowPane
   }
-  var player4 = new FlowPanel() {
-    border = normalBorder
+  var player4FlowPanel = new FlowPanel() {
+    preferredSize = myDimensionFlowPane
+  }
+  var buttonPlayer1 = new Button() {
+    text = "Click to change Figure"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+        refresh()
+    }
+  }
+  var buttonPlayer2 = new Button() {
+    text = "Click to change Figure"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+        refresh()
+    }
+  }
+  var buttonPlayer3 = new Button() {
+    text = "Click to change Figure"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+        refresh()
+    }
+  }
+  var buttonPlayer4 = new Button() {
+    text = "Click to change Figure"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+        refresh()
+    }
   }
 
   title = "DOG - THE GAME"
@@ -52,19 +89,19 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   // declare Components here, except menubar ...
   var labelPlayer1 = new Label {
-    text = "Player1"
+    text = "Player 1"
   }
 
   var labelPlayer2 = new Label {
-    text = "Player2"
+    text = "Player 2"
   }
 
   var labelPlayer3 = new Label {
-    text = "Player3"
+    text = "Player 3"
   }
 
   var labelPlayer4 = new Label {
-    text = "Player4"
+    text = "Player 4"
   }
 
   val mapPicture = new Label {
@@ -115,13 +152,56 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     card
   }
 
-  updateCardPics()
+  var HBoxPlayer1Labels = new BoxPanel(Orientation.Horizontal) {
+    contents += labelPlayer1
+    contents += buttonPlayer1
+  }
+
+  var HBoxPlayer2Labels = new BoxPanel(Orientation.Horizontal) {
+    contents += labelPlayer2
+    contents += buttonPlayer2
+  }
+
+  var HBoxPlayer3Labels = new BoxPanel(Orientation.Horizontal) {
+    contents += labelPlayer3
+    contents += buttonPlayer3
+  }
+
+  var HBoxPlayer4Labels = new BoxPanel(Orientation.Horizontal) {
+    contents += labelPlayer4
+    contents += buttonPlayer4
+  }
+
+  var HVoxPlayer1 = new BoxPanel(Orientation.Vertical) {
+    contents += player1FlowPanel
+    contents += HBoxPlayer1Labels
+    border = normalBorder
+
+  }
+
+  var HVoxPlayer2 = new BoxPanel(Orientation.Vertical) {
+    contents += player2FlowPanel
+    contents += HBoxPlayer2Labels
+    border = normalBorder
+  }
+
+  var HVoxPlayer3 = new BoxPanel(Orientation.Vertical) {
+    contents += player3FlowPanel
+    contents += HBoxPlayer3Labels
+    border = normalBorder
+  }
+
+  var HVoxPlayer4 = new BoxPanel(Orientation.Vertical) {
+    contents += player4FlowPanel
+    contents += HBoxPlayer4Labels
+    border = normalBorder
+  }
 
   var playerVBox = new BoxPanel(Orientation.Vertical) {
-    contents += player1
-    contents += player2
-    contents += player3
-    contents += player4
+    contents += HVoxPlayer1
+    contents += HVoxPlayer2
+    contents += HVoxPlayer3
+    contents += HVoxPlayer4
     resizable = false
   }
 
@@ -178,6 +258,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     case e: UpdatePlayerCards =>
       updateCardPics()
       print("Event Update Cards fired")
+    case e: UpdateToRepaint =>
+      repaint()
   }
 
 
@@ -185,55 +267,62 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   /* Helper functions */
   private def updateCardPics() : Unit = {
     /* Init Player */
-    player1.contents.clear()
-    player2.contents.clear()
-    player3.contents.clear()
-    player4.contents.clear()
-
-    player1.contents += labelPlayer1
-    player2.contents += labelPlayer2
-    player3.contents += labelPlayer3
-    player4.contents += labelPlayer4
+    player1FlowPanel.contents.clear()
+    player2FlowPanel.contents.clear()
+    player3FlowPanel.contents.clear()
+    player4FlowPanel.contents.clear()
 
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
-      player1.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
+      player1FlowPanel.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
     }
 
     for (x <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
-      player2.contents += cardPic(gameController.cardDecks.apply(1).cards.apply(x).value)
+      player2FlowPanel.contents += cardPic(gameController.cardDecks.apply(1).cards.apply(x).value)
     }
 
     for (x <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
-      player3.contents += cardPic(gameController.cardDecks.apply(2).cards.apply(x).value)
+      player3FlowPanel.contents += cardPic(gameController.cardDecks.apply(2).cards.apply(x).value)
     }
 
     for (x <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
-      player4.contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
+      player4FlowPanel.contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
     }
 
-    player1.border = if (gameController.currentPlayer.playerId.equals(0)) highlightedBorder else normalBorder
-    player2.border = if (gameController.currentPlayer.playerId.equals(1)) highlightedBorder else normalBorder
-    player3.border = if (gameController.currentPlayer.playerId.equals(2)) highlightedBorder else normalBorder
-    player4.border = if (gameController.currentPlayer.playerId.equals(3)) highlightedBorder else normalBorder
+    updateProperties
+
     refresh()
 
   }
+
+  private def updateProperties = {
+    buttonPlayer1.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
+    buttonPlayer2.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
+    buttonPlayer3.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
+    buttonPlayer4.visible = if (gameController.currentPlayer.playerId.equals(3)) true else false
+
+    HVoxPlayer1.border = if (gameController.currentPlayer.playerId.equals(0)) highlightedBorder else normalBorder
+    HVoxPlayer2.border = if (gameController.currentPlayer.playerId.equals(1)) highlightedBorder else normalBorder
+    HVoxPlayer3.border = if (gameController.currentPlayer.playerId.equals(2)) highlightedBorder else normalBorder
+    HVoxPlayer4.border = if (gameController.currentPlayer.playerId.equals(3)) highlightedBorder else normalBorder
+  }
+
+  updateCardPics()
 
   /**
    * Helper function to refresh and revalidate the playerCards
    */
   private def refresh() : Unit = {
 
-    player1.revalidate()
-    player2.revalidate()
-    player3.revalidate()
-    player4.revalidate()
+    player1FlowPanel.revalidate()
+    player2FlowPanel.revalidate()
+    player3FlowPanel.revalidate()
+    player4FlowPanel.revalidate()
 
-    player1.repaint()
-    player2.repaint()
-    player3.repaint()
-    player4.repaint()
+    player1FlowPanel.repaint()
+    player2FlowPanel.repaint()
+    player3FlowPanel.repaint()
+    player4FlowPanel.repaint()
   }
 
   visible = true
@@ -281,12 +370,11 @@ class Canvas  @Inject() (gameController: gameController) extends Panel with Reac
 
       if (figure.playerFigNumber.equals(gameController.currentFigNr))
         {
-          g.setColor(Color.ORANGE)
+          g.setColor(Color.BLACK)
         }
 
       g.fillOval(figure.x-deviation, figure.y-deviation, figureRadius, figureRadius)
     }
-
 
   }
   // Do this outside to avoid huge performance issues

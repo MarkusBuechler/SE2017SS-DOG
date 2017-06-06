@@ -60,11 +60,9 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
           printTui()
         }
       case "g" =>
-//        gameController.test
-        print("Standardmäßig wird die erste Figur genommen")
-//        gameController.test2
+        gameController.changeCurrentFigureNr()
         printTui()
-
+        printTui()
       case _ => print("False Eingabe\n"); print(info)
     }
     continue
