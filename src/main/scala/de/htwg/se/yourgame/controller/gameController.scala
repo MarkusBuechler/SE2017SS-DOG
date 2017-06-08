@@ -180,7 +180,7 @@ class gameController() extends TGameController with Publisher {
       case 3 => currentFigNr -= 3
     }
     publish(new UpdateToRepaint)
-//    print(currentPlayer)
+    //    print(currentPlayer)
   }
 
   def updateFigPos(figure: Figure, newId: Int): Unit = {
