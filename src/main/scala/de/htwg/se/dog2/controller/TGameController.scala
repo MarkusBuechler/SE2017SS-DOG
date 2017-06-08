@@ -1,8 +1,8 @@
-package de.htwg.se.yourgame.controller
+package de.htwg.se.dog2.controller
 
 import java.awt.Color
 
-import de.htwg.se.yourgame.model._
+import de.htwg.se.dog2.model._
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher

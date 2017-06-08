@@ -1,4 +1,4 @@
-package de.htwg.se.yourgame.view
+package de.htwg.se.dog2.view
 
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -8,8 +8,8 @@ import javax.swing.ImageIcon
 
 import scala.swing._
 import com.google.inject.Inject
-import de.htwg.se.yourgame.controller._
-import de.htwg.se.yourgame.model.Figure
+import de.htwg.se.dog2.controller._
+import de.htwg.se.dog2.model.Figure
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.event.ButtonClicked

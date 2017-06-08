@@ -1,6 +1,6 @@
-package de.htwg.se.yourgame.model.SpecTest
+package de.htwg.se.dog2.model.SpecTest
 
-import de.htwg.se.yourgame.model.{ Figure, Player }
+import de.htwg.se.dog2.model.{ Figure, Player }
 import org.junit.runner.RunWith
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._

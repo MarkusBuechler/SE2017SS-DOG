@@ -1,15 +1,14 @@
+package de.htwg.se.dog2
+
 /**
  * Created by margogo on 02.04.17.
  * Main Class for the scala application DOG
  */
 
 import com.google.inject.Guice
-import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.gameController
-import de.htwg.se.yourgame.view.{ DogGui, DogTui }
+import de.htwg.se.dog2.controller.gameController
+import de.htwg.se.dog2.view.{ DogGui, DogTui }
 import net.codingwell.scalaguice.InjectorExtensions._
-
-import scalafx.application.Platform
 
 object DogApplication extends App {
 

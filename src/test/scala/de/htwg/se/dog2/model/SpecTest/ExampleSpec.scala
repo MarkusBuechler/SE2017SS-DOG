@@ -1,4 +1,4 @@
-package de.htwg.se.yourgame.model.SpecTest
+package de.htwg.se.dog2.model.SpecTest
 
 import org.scalatest.{ FlatSpec, Matchers }
 

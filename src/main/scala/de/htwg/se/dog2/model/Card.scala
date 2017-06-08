@@ -1,4 +1,4 @@
-package de.htwg.se.yourgame.model
+package de.htwg.se.dog2.model
 
 /**
  * Created by margogo on 11.04.17.

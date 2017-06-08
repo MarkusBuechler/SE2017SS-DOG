@@ -1,8 +1,8 @@
-package de.htwg.se.yourgame.model.SpecTest
+package de.htwg.se.dog2.model.SpecTest
 
 import com.google.inject.Guice
-import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.gameController
+import de.htwg.se.dog2.DependencyModule
+import de.htwg.se.dog2.controller.gameController
 import org.scalatest.WordSpec
 
 /**

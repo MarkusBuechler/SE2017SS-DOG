@@ -1,10 +1,10 @@
-package de.htwg.se.yourgame.model.ScalaTest
+package de.htwg.se.dog2.model.ScalaTest
 
 import com.google.inject.Guice
-import de.htwg.se.yourgame.DependencyModule
-import de.htwg.se.yourgame.controller.gameController
+import de.htwg.se.dog2.DependencyModule
+import de.htwg.se.dog2.controller.gameController
 import org.junit.Test
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 /**
  * Created by margogo on 08.06.17.

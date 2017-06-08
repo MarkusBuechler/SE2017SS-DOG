@@ -1,4 +1,4 @@
-package de.htwg.se.yourgame.model
+package de.htwg.se.dog2.model
 
 import java.awt.Color
 

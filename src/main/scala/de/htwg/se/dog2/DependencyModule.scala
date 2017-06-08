@@ -1,8 +1,8 @@
-package de.htwg.se.yourgame
+package de.htwg.se.dog2
 
 import com.google.inject.AbstractModule
-import de.htwg.se.yourgame.controller.{ TGameController, gameController }
-import de.htwg.se.yourgame.view.{ DogGui, DogTui }
+import de.htwg.se.dog2.controller.{ TGameController, gameController }
+import de.htwg.se.dog2.view.{ DogGui, DogTui }
 import net.codingwell.scalaguice.ScalaModule
 
 /**
@@ -14,7 +14,5 @@ class DependencyModule extends AbstractModule with ScalaModule {
     bind[TGameController].to[gameController]
     bind[DogGui]
     bind[DogTui]
-    //    bind[TGameController]
-    //    bind[guiController]
   }
 }
