@@ -29,7 +29,7 @@ trait TGameController extends Publisher {
   val highNumber = 200
   val initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
-  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0,0, Color.BLACK)
+  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0, 0, Color.BLACK)
 
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)
@@ -42,11 +42,11 @@ trait TGameController extends Publisher {
   def initGame(): Unit
   def initPlayer(): Unit
   def initFigures(): Unit
-  def colorFigures() : Unit
+  def colorFigures(): Unit
   def setPlayerName(inputNumber: Int, inputString: String): Unit
 
   def showGameStatus(): Unit
   def applyFigToField(): Unit
-  def removeCard(card: Card) : Unit
+  def removeCard(card: Card): Unit
 
 }

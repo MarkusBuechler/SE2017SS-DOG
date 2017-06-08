@@ -14,10 +14,9 @@ import de.htwg.se.yourgame.model.Figure
 import scala.collection.mutable.ListBuffer
 import scala.swing.event.ButtonClicked
 
-
 /**
  * Created by margogo on 15.05.17.
-  * Dog Gui
+ * Dog Gui
  */
 class DogGui @Inject() (gameController: gameController) extends MainFrame with Reactor {
 
@@ -26,11 +25,11 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   val SizeWidthFlowPane = 450
   val SizeHeigthFlowPane = 60
-  val myDimension = new Dimension(SizeWidth,SizeHeight)
+  val myDimension = new Dimension(SizeWidth, SizeHeight)
 
   val myDimensionFlowPane = new Dimension(SizeWidthFlowPane, SizeHeigthFlowPane)
 
-  val darkRed = new java.awt.Color(0,0,0)
+  val darkRed = new java.awt.Color(0, 0, 0)
   val brightRed = new java.awt.Color(196, 102, 113)
 
   val normalBorder = Swing.BeveledBorder(Swing.Lowered)
@@ -52,7 +51,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Click to change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+      case ButtonClicked(me) =>
+        gameController.changeCurrentFigureNr()
         refresh()
     }
   }
@@ -60,7 +60,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Click to change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+      case ButtonClicked(me) =>
+        gameController.changeCurrentFigureNr()
         refresh()
     }
   }
@@ -68,7 +69,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Click to change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+      case ButtonClicked(me) =>
+        gameController.changeCurrentFigureNr()
         refresh()
     }
   }
@@ -76,7 +78,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Click to change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) => gameController.changeCurrentFigureNr()
+      case ButtonClicked(me) =>
+        gameController.changeCurrentFigureNr()
         refresh()
     }
   }
@@ -113,21 +116,20 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   val canvas = new Canvas(gameController) {
   }
 
-//  val map = new ImageIcon("resources/pictures/map600p.png")
-  lazy val pic1 : ImageIcon = new ImageIcon("resources/pictures/1.png")
-  lazy val pic2 : ImageIcon = new ImageIcon("resources/pictures/2.png")
-  lazy val pic3 : ImageIcon = new ImageIcon("resources/pictures/3.png")
-  lazy val pic4 : ImageIcon = new ImageIcon("resources/pictures/4.png")
-  lazy val pic5 : ImageIcon = new ImageIcon("resources/pictures/5.png")
-  lazy val pic6 : ImageIcon = new ImageIcon("resources/pictures/6.png")
-  lazy val pic7 : ImageIcon = new ImageIcon("resources/pictures/7.png")
-  lazy val pic8 : ImageIcon = new ImageIcon("resources/pictures/8.png")
-  lazy val pic9 : ImageIcon = new ImageIcon("resources/pictures/9.png")
-  lazy val pic10 : ImageIcon = new ImageIcon("resources/pictures/10.png")
-  lazy val pic12 : ImageIcon = new ImageIcon("resources/pictures/12.png")
-  lazy val pic13 : ImageIcon = new ImageIcon("resources/pictures/13.png")
-  lazy val picIdk : ImageIcon = new ImageIcon("resources/pictures/idk.png")
-
+  //  val map = new ImageIcon("resources/pictures/map600p.png")
+  lazy val pic1: ImageIcon = new ImageIcon("resources/pictures/1.png")
+  lazy val pic2: ImageIcon = new ImageIcon("resources/pictures/2.png")
+  lazy val pic3: ImageIcon = new ImageIcon("resources/pictures/3.png")
+  lazy val pic4: ImageIcon = new ImageIcon("resources/pictures/4.png")
+  lazy val pic5: ImageIcon = new ImageIcon("resources/pictures/5.png")
+  lazy val pic6: ImageIcon = new ImageIcon("resources/pictures/6.png")
+  lazy val pic7: ImageIcon = new ImageIcon("resources/pictures/7.png")
+  lazy val pic8: ImageIcon = new ImageIcon("resources/pictures/8.png")
+  lazy val pic9: ImageIcon = new ImageIcon("resources/pictures/9.png")
+  lazy val pic10: ImageIcon = new ImageIcon("resources/pictures/10.png")
+  lazy val pic12: ImageIcon = new ImageIcon("resources/pictures/12.png")
+  lazy val pic13: ImageIcon = new ImageIcon("resources/pictures/13.png")
+  lazy val picIdk: ImageIcon = new ImageIcon("resources/pictures/idk.png")
 
   //noinspection ScalaStyle
   def cardPic(int: Int): Label = {
@@ -262,16 +264,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       repaint()
   }
 
-
-
   /* Helper functions */
-  private def updateCardPics() : Unit = {
+  private def updateCardPics(): Unit = {
     /* Init Player */
     player1FlowPanel.contents.clear()
     player2FlowPanel.contents.clear()
     player3FlowPanel.contents.clear()
     player4FlowPanel.contents.clear()
-
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
       player1FlowPanel.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
@@ -312,7 +311,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   /**
    * Helper function to refresh and revalidate the playerCards
    */
-  private def refresh() : Unit = {
+  private def refresh(): Unit = {
 
     player1FlowPanel.revalidate()
     player2FlowPanel.revalidate()
@@ -342,57 +341,41 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
 case class FigureDraw(x: Int, y: Int, color: java.awt.Color)
 
-class Canvas  @Inject() (gameController: gameController) extends Panel with Reactor {
-
+class Canvas @Inject() (gameController: gameController) extends Panel with Reactor {
 
   val map: BufferedImage = ImageIO.read(new File("resources/pictures/map600p.png"))
   val deviation = 13
   val figureRadius = 25
   val dimSize = 600
-  val myDimension = new Dimension(dimSize,dimSize)
+  val myDimension = new Dimension(dimSize, dimSize)
 
   preferredSize = myDimension
 
-//  resizable = false
+  //  resizable = false
   var figures: ListBuffer[Figure] = gameController.figureList
-//  var currentFigur = gameController.currentFig
+  //  var currentFigur = gameController.currentFig
 
   override def paintComponent(g: Graphics2D) {
 
     // Start by erasing this Canvas
     g.clearRect(0, 0, size.width, size.height)
-    g.drawImage(map,0,0,map.getWidth, map.getHeight, 0, 0, map.getWidth, map.getHeight, null)
+    g.drawImage(map, 0, 0, map.getWidth, map.getHeight, 0, 0, map.getWidth, map.getHeight, null)
 
     // Draw things that change on top of background
     for (figure <- figures) {
 
       g.setColor(figure.color)
 
-      if (figure.playerFigNumber.equals(gameController.currentFigNr))
-        {
-          g.setColor(Color.BLACK)
-        }
+      if (figure.playerFigNumber.equals(gameController.currentFigNr)) {
+        g.setColor(Color.BLACK)
+      }
 
-      g.fillOval(figure.x-deviation, figure.y-deviation, figureRadius, figureRadius)
+      g.fillOval(figure.x - deviation, figure.y - deviation, figureRadius, figureRadius)
     }
 
   }
   // Do this outside to avoid huge performance issues
   this.revalidate()
   this.repaint()
-
-
-  /** Add a "dart" to list of things to display */
-  def throwDart(dart: Figure) : Unit = {
-    figures = figures :+ dart.copy(x = dart.x, y = dart.y)
-  }
-
-  /** Init Figures on map **/
-  def throwAllDarts() : Unit  = {
-    for (dart <- figures)
-      {
-        throwDart(dart)
-      }
-  }
 
 }

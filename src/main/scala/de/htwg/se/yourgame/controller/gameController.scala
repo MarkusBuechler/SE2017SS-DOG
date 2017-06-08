@@ -11,13 +11,12 @@ import scala.swing.event.Event
 
 /**
  * Created by margogo on 15.04.17.
-  * GameController
+ * GameController
  */
 
 class UpdatePlayerLabels() extends Event
 class UpdatePlayerCards() extends Event
 class UpdateToRepaint() extends Event
-
 
 @Singleton
 class gameController() extends TGameController with Publisher {
@@ -35,7 +34,7 @@ class gameController() extends TGameController with Publisher {
     printCurrentPlayer()
   }
 
-  def findNextField2(position: Int, valueOfCard : Int) : Unit =  {
+  def findNextField2(position: Int, valueOfCard: Int): Unit = {
 
     for (i <- 1 to valueOfCard) {
       val field = fieldList.apply(fieldList.indexWhere(_.id == position))
@@ -62,7 +61,7 @@ class gameController() extends TGameController with Publisher {
 
   }
 
-  def applyFigToField() : Unit = {
+  def applyFigToField(): Unit = {
     for (figure <- figureList) {
       val index = fieldList.indexWhere(_.id == figure.position)
       val bufferField = fieldList.apply(index).copy(figure = figure)
@@ -70,7 +69,7 @@ class gameController() extends TGameController with Publisher {
     }
   }
 
-  def removeCard(card: Card) : Unit = {
+  def removeCard(card: Card): Unit = {
     val cardInSet = cardDecks.apply(currentPlayer.playerId).cards.indexWhere(_.id == card.id)
     cardDecks.apply(currentPlayer.playerId).cards.remove(cardInSet)
     playedCards += card
@@ -90,7 +89,7 @@ class gameController() extends TGameController with Publisher {
     figureList.clear
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
-      val Array(player, playerFigNumber, role, property, position,x,y) = line.split(";").map(_.trim())
+      val Array(player, playerFigNumber, role, property, position, x, y) = line.split(";").map(_.trim())
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, Color.BLACK)
       figureList += bufferFig
     }
@@ -99,14 +98,14 @@ class gameController() extends TGameController with Publisher {
     colorFigures()
   }
 
-  def colorFigures() : Unit = {
+  def colorFigures(): Unit = {
     for (figur <- figureList) {
       val playerID = figur.player.playerId
       playerID match {
-        case 0 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.BLUE))
-        case 1 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.GREEN))
-        case 2 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.YELLOW))
-        case 3 => figureList.update(figureList.indexOf(figur),figur.copy(color = Color.RED))
+        case 0 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.BLUE))
+        case 1 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.GREEN))
+        case 2 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.YELLOW))
+        case 3 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.RED))
       }
     }
   }
@@ -140,11 +139,11 @@ class gameController() extends TGameController with Publisher {
     print(currentPlayer.name + " ist am Zug")
   }
 
-//  def printCurrentFigure(): Unit = {
-//    print("Figur " + currentFig.playerFigNumber + " von " + currentFig.player.name + " ist am Zug")
-//  }
+  //  def printCurrentFigure(): Unit = {
+  //    print("Figur " + currentFig.playerFigNumber + " von " + currentFig.player.name + " ist am Zug")
+  //  }
 
-  def changeCurrentPlayer() : Unit = {
+  def changeCurrentPlayer(): Unit = {
     val lastPlayer = playerList.apply(currentPlayer.playerId).copy(isActive = false)
     val nextPlayerNumber = if (currentPlayer.playerId == 3) 0 else currentPlayer.playerId + 1
 
@@ -157,14 +156,12 @@ class gameController() extends TGameController with Publisher {
 
     currentPlayer = playerList.apply(currentPlayerIndex).copy(isActive = true)
 
-
     changeCurrentFigure()
     publish(new UpdatePlayerLabels)
 
-
   }
   //noinspection ScalaStyle
-  def changeCurrentFigure() : Unit = {
+  def changeCurrentFigure(): Unit = {
 
     currentFigNr match {
       case 0 | 1 | 2 | 3 => currentFigNr = 4
@@ -175,18 +172,18 @@ class gameController() extends TGameController with Publisher {
     publish(new UpdateToRepaint)
   }
 
-  def changeCurrentFigureNr() : Unit = {
+  def changeCurrentFigureNr(): Unit = {
 
     val buffer = currentFigNr % 4
     buffer match {
-      case 0 | 1 | 2  => currentFigNr += 1
-      case 3  => currentFigNr -= 3
+      case 0 | 1 | 2 => currentFigNr += 1
+      case 3 => currentFigNr -= 3
     }
     publish(new UpdateToRepaint)
-    print(currentPlayer)
+//    print(currentPlayer)
   }
 
-  def updateFigPos(figure: Figure, newId: Int) : Unit = {
+  def updateFigPos(figure: Figure, newId: Int): Unit = {
     val oldPos = figure.position
     val figNr = figure.playerFigNumber
     val field = fieldList.apply(newId)
@@ -200,7 +197,7 @@ class gameController() extends TGameController with Publisher {
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
-      val Array(id, property, color, predecessorIds, successorIds, x , y) = line.split(";").map(_.trim())
+      val Array(id, property, color, predecessorIds, successorIds, x, y) = line.split(";").map(_.trim())
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
@@ -229,7 +226,7 @@ class gameController() extends TGameController with Publisher {
   }
 
   // TODO: Mehrere Wahlmöglichkeiten ermöglichen
-  def findNextField(fieldId : Int, valueOfCard : Int): ListBuffer[Int] = {
+  def findNextField(fieldId: Int, valueOfCard: Int): ListBuffer[Int] = {
     var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
     var NextFields = new ListBuffer[Int]
     var choice = -1
@@ -243,7 +240,7 @@ class gameController() extends TGameController with Publisher {
     NextFields
   }
 
-  def updateFigField(fieldId: Int, figure: Figure) : Unit = {
+  def updateFigField(fieldId: Int, figure: Figure): Unit = {
     // check noch einbauen
     val test1 = figure.position
     val test2 = fieldList.indexWhere(_.id == figure.position)
@@ -305,7 +302,6 @@ class gameController() extends TGameController with Publisher {
     print("Current Figur :" + figureList.apply(currentFigNr) + "\n")
 
   }
-
 
   def quitGame(): Unit = {
     sys.exit()
