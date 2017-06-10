@@ -1,33 +1,58 @@
 package de.htwg.se.dog2.model.SpecTest
 
-import com.google.inject.Guice
-import de.htwg.se.dog2.DependencyModule
-import de.htwg.se.dog2.controller.gameController
+import de.htwg.se.dog2.model.Card
 import org.scalatest.WordSpec
+import org.scalatest.Matchers._
 
 /**
  * Created by margogo on 10.05.17.
+ * Useless test ...
  */
 class cardControllerSpecTest extends WordSpec {
 
-  val injector = Guice.createInjector(new DependencyModule)
+  val card = Card(1, "Black", "Sample Description", 2, "Property1", false)
+  val card2 = Card(1, "Black", "Sample Description", 2, "Property1", false)
 
-  var cardController = injector.getInstance(classOf[gameController])
-
-  print(cardController)
-
-  "Controller" should {
-    "not be null" in {
+  "CardTest" should {
+    "equal to" in {
+      card shouldBe a[Card]
     }
   }
 
-  //  cardController.initCards()
+  "id" in {
+    card.id should be(1)
+  }
 
-  /* wie soll man denn gescheit testen ? */
-  "Decksize" should {
-    "be greater than" in (
-      1000
-    )
+  "color" in {
+    card.color should be("Black")
+  }
+
+  "description" in {
+    card.description should be("Sample Description")
+  }
+
+  "value" in {
+    card.value should be(2)
+  }
+
+  "property" in {
+    card.property should be("Property1")
+  }
+
+  "isPlayed" in {
+    card.isPlayed should be(false)
+  }
+
+  "Equals" in {
+    card should be equals card2
+  }
+
+  "To String" in {
+    card.toString shouldBe ("Card(1,Black,Sample Description,2,Property1,false)")
+  }
+
+  "Hashcode" in {
+    card.hashCode() shouldBe (-280135522)
   }
 
 }

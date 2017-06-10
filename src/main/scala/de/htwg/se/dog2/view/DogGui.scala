@@ -18,6 +18,7 @@ import scala.swing.event.ButtonClicked
  * Created by margogo on 15.05.17.
  * Dog Gui
  */
+// $COVERAGE-OFF$Disabling highlighting by default until scala swing integration test franework is found.
 class DogGui @Inject() (gameController: gameController) extends MainFrame with Reactor {
 
   val SizeHeight = 700
@@ -377,5 +378,5 @@ class Canvas @Inject() (gameController: gameController) extends Panel with React
   // Do this outside to avoid huge performance issues
   this.revalidate()
   this.repaint()
-
 }
+// $COVERAGE-ON$

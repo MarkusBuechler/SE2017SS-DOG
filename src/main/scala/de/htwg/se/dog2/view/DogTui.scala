@@ -8,6 +8,7 @@ import scala.swing.Reactor
 /**
  * Created by margogo on 02.04.17.
  */
+// $COVERAGE-OFF$Disabling highlighting by default until scala swing integration test franework is found.
 class DogTui @Inject() (var gameController: gameController) extends Reactor {
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
   var continue = true
@@ -74,3 +75,4 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
   }
 
 }
+// $COVERAGE-ON$
