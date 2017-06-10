@@ -1,7 +1,8 @@
 package de.htwg.se.dog2.view
 
 import com.google.inject.Inject
-import de.htwg.se.dog2.controller.{ TGameController, gameController }
+import de.htwg.se.dog2.controller.gameController
+import org.apache.logging.log4j.LogManager
 
 import scala.swing.Reactor
 
@@ -10,17 +11,19 @@ import scala.swing.Reactor
  */
 // $COVERAGE-OFF$Disabling highlighting by default until scala swing integration test franework is found.
 class DogTui @Inject() (var gameController: gameController) extends Reactor {
+
+  var logger = LogManager.getLogger(DogTui.this)
+
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
   var continue = true
   def update(): Unit = printTui()
 
   def printTui(): Unit = {
-    print(info)
+    logger.info(info)
     gameController.showGameStatus()
 
   }
 
-  //  gameController.initGame()
   printTui()
 
   def processInputLine(input: String): Boolean = {
@@ -70,6 +73,7 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
 
   def gameLogic() = {
     if (false) {
+      logger.info("Exit game")
       sys.exit()
     }
   }

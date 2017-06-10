@@ -26,14 +26,12 @@ class gameController() extends TGameController with Publisher {
   var logger = LogManager.getLogger(gameController.this)
 
   def initGame(): Unit = {
+    logger.debug("Initializing game...");
     initFields()
     initCards()
     initPlayer()
     applyFigToField()
-
-    logger.debug("Debug log");
-    logger.info("Info log");
-    logger.error("Error log");
+    logger.debug("Finished initializing game.");
   }
 
   def showGameStatus(): Unit = {
@@ -61,7 +59,7 @@ class gameController() extends TGameController with Publisher {
     val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
     val selectedField = fieldList.apply(fieldList.indexWhere(_.id == possibleField.head)).id
 
-    print(selectedField)
+    logger.info(selectedField)
     updateFigField(fieldList.apply(selectedField).id, figureList.apply(currentFigNr))
     removeCard(playedCard)
     changeCurrentPlayer()
@@ -70,30 +68,37 @@ class gameController() extends TGameController with Publisher {
   }
 
   def applyFigToField(): Unit = {
+    logger.debug("Applying figures to field...");
     for (figure <- figureList) {
       val index = fieldList.indexWhere(_.id == figure.position)
       val bufferField = fieldList.apply(index).copy(figure = figure)
       fieldList.update(index, bufferField)
     }
+    logger.debug("Finished applying figures to field.");
   }
 
   def removeCard(card: Card): Unit = {
+    logger.debug("Removing card...");
     val cardInSet = cardDecks.apply(currentPlayer.playerId).cards.indexWhere(_.id == card.id)
     cardDecks.apply(currentPlayer.playerId).cards.remove(cardInSet)
     playedCards += card
+    logger.debug("Finished removing card.");
   }
 
   /** PlayerStuff **/
   def initPlayer(): Unit = {
+    logger.debug("Initializing player...");
     for (x <- 0 to 3) {
       val bufferPlayer = Player("Player " + (x + 1), x, isActive = false)
       playerList += bufferPlayer
     }
     playerList.update(0, Player("Player 1", 0, isActive = true))
     initFigures()
+    logger.debug("Finished initializing player.");
   }
 
   def initFigures(): Unit = {
+    logger.debug("Initializing figures...");
     figureList.clear
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
@@ -104,18 +109,21 @@ class gameController() extends TGameController with Publisher {
     figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70, 476, 467, Color.BLACK))
     currentFigNr = 0
     colorFigures()
+    logger.debug("Finished unitializing figures.");
   }
 
   def colorFigures(): Unit = {
-    for (figur <- figureList) {
-      val playerID = figur.player.playerId
+    logger.debug("Coloring figures...");
+    for (figure <- figureList) {
+      val playerID = figure.player.playerId
       playerID match {
-        case 0 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.BLUE))
-        case 1 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.GREEN))
-        case 2 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.YELLOW))
-        case 3 => figureList.update(figureList.indexOf(figur), figur.copy(color = Color.RED))
+        case 0 => figureList.update(figureList.indexOf(figure), figure.copy(color = Color.BLUE))
+        case 1 => figureList.update(figureList.indexOf(figure), figure.copy(color = Color.GREEN))
+        case 2 => figureList.update(figureList.indexOf(figure), figure.copy(color = Color.YELLOW))
+        case 3 => figureList.update(figureList.indexOf(figure), figure.copy(color = Color.RED))
       }
     }
+    logger.debug("Finished coloring figures.");
   }
 
   // kann vll
@@ -124,32 +132,29 @@ class gameController() extends TGameController with Publisher {
     var playerNo = 0
     inputNumber match {
       case 1 =>
-        print("Player 1 wurde ausgewählt !\n"); playerNo = 0
+        logger.info("Player 1 was selected !\n"); playerNo = 0
       case 2 =>
-        print("Player 2 wurde ausgewählt !\n"); playerNo = 1
+        logger.info("Player 2 was selected !\n"); playerNo = 1
       case 3 =>
-        print("Player 3 wurde ausgewählt !\n"); playerNo = 2
+        logger.info("Player 3 was selected !\n"); playerNo = 2
       case 4 =>
-        print("Player 4 wurde ausgewählt !\n"); playerNo = 3
-      case _ => print("False Eingabe! Player 1 wurde ausgewählt !\n"); playerNo = 0
+        logger.info("Player 4 was selected !\n"); playerNo = 3
+      case _ => logger.info("Wrong input! Player 1 was selected !\n"); playerNo = 0
     }
     inputString match {
       case _ =>
         val insertNumber = playerNo + 1
         val currentPlayer = Player(inputString, insertNumber, isActive = false)
-        print(inputString + " wurde eingeben und Player " + insertNumber + " zugewiesen ")
+        logger.info(inputString + " was entered und applied to Player " + insertNumber)
         playerList.update(playerNo, currentPlayer)
     }
-    print(playerList.toString())
+    logger.info(playerList.toString())
   }
 
   def printCurrentPlayer(): Unit = {
-    print(currentPlayer.name + " ist am Zug")
+    logger.info(currentPlayer.name + " ist am Zug")
   }
 
-  //  def printCurrentFigure(): Unit = {
-  //    print("Figur " + currentFig.playerFigNumber + " von " + currentFig.player.name + " ist am Zug")
-  //  }
 
   def changeCurrentPlayer(): Unit = {
     val lastPlayer = playerList.apply(currentPlayer.playerId).copy(isActive = false)
@@ -188,7 +193,6 @@ class gameController() extends TGameController with Publisher {
       case 3 => currentFigNr -= 3
     }
     publish(new UpdateToRepaint)
-    //    print(currentPlayer)
   }
 
   def updateFigPos(figure: Figure, newId: Int): Unit = {
@@ -202,6 +206,7 @@ class gameController() extends TGameController with Publisher {
   /** Field stuff **/
 
   def initFields(): Unit = {
+    logger.debug("Initializing fields...");
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
@@ -214,6 +219,7 @@ class gameController() extends TGameController with Publisher {
       val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId, x.toInt, y.toInt)
       fieldList += bufferField
     }
+    logger.debug("Finished initializing fields");
   }
 
   def printFields(): Unit = {
@@ -229,7 +235,7 @@ class gameController() extends TGameController with Publisher {
 
       string += ", "
     }
-    print(string + "\n")
+    logger.info(string + "\n")
     publish(new UpdatePlayerLabels)
   }
 
@@ -262,6 +268,7 @@ class gameController() extends TGameController with Publisher {
   /** Card Stuff **/
 
   def initCards(): Unit = {
+    logger.debug("Initializing cards...");
     cardList.clear
     playedCards.clear
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
@@ -272,6 +279,7 @@ class gameController() extends TGameController with Publisher {
     }
     shuffleCards()
     fillCardDeck()
+    logger.debug("Finished initializing cards.");
   }
 
   def shuffleCards(): Unit = {
@@ -294,7 +302,7 @@ class gameController() extends TGameController with Publisher {
   }
 
   def printCardDecks(): Unit = {
-    var string = ""
+    var string = "CardDeck:\n"
     for (x <- 0 until cardDecks.size) {
       string += "Player [" + cardDecks.apply(x).cards.size + "] "
       string += cardDecks.apply(x).PlayerId + ": "
@@ -303,15 +311,16 @@ class gameController() extends TGameController with Publisher {
       }
       string += "\n"
     }
-    print(string + "\n")
-    print("Gespielte Karten :" + playedCards + "\n")
+    logger.info(string + "\n")
+    logger.info("Played Cards :" + playedCards + "\n")
     publish(new UpdatePlayerLabels)
-    print("Current Player:" + currentPlayer + "\n")
-    print("Current Figur :" + figureList.apply(currentFigNr) + "\n")
+    logger.info("Current Player:" + currentPlayer + "\n")
+    logger.info("Current Figure :" + figureList.apply(currentFigNr) + "\n")
 
   }
 
   def quitGame(): Unit = {
+    logger.info("Exit game")
     sys.exit()
   }
 
@@ -331,12 +340,10 @@ class gameController() extends TGameController with Publisher {
   }
 
   def saveGame() = {
-    val sg = this.toXml()
+    val save = this.toXml()
     val file = new File("savedgame.txt")
-    val bw = new BufferedWriter(new FileWriter(file))
-    bw.write(fromXml(sg))
-    bw.close()
+    val bufferedWriter = new BufferedWriter(new FileWriter(file))
+    bufferedWriter.write(fromXml(save))
+    bufferedWriter.close()
   }
-
-
 }
