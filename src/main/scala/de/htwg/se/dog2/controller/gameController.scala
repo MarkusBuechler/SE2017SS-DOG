@@ -9,6 +9,7 @@ import de.htwg.se.dog2.model._
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Created by margogo on 15.04.17.
@@ -22,11 +23,17 @@ class UpdateToRepaint() extends Event
 @Singleton
 class gameController() extends TGameController with Publisher {
 
+  var logger = LogManager.getLogger(gameController.this)
+
   def initGame(): Unit = {
     initFields()
     initCards()
     initPlayer()
     applyFigToField()
+
+    logger.debug("Debug log");
+    logger.info("Info log");
+    logger.error("Error log");
   }
 
   def showGameStatus(): Unit = {
