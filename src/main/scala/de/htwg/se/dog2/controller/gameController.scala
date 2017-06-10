@@ -1,6 +1,7 @@
 package de.htwg.se.dog2.controller
 
 import java.awt.Color
+import java.io.{BufferedWriter, File, FileWriter}
 
 import com.google.inject.Singleton
 import de.htwg.se.dog2.model._
@@ -306,5 +307,29 @@ class gameController() extends TGameController with Publisher {
   def quitGame(): Unit = {
     sys.exit()
   }
+
+  def toXml() : scala.xml.Node = {
+    <game>
+      <playerList>{playerList}</playerList>
+      <figureList>{figureList}</figureList>
+      <fieldList>{fieldList}</fieldList>
+      <cardList>{cardList}</cardList>
+      <cardDecks>{cardDecks}</cardDecks>
+      <playedCards>{playedCards}</playedCards>
+    </game>
+  }
+
+  def fromXml (node: scala.xml.Node): String = {
+    node.text
+  }
+
+  def saveGame() = {
+    val sg = this.toXml()
+    val file = new File("savedgame.txt")
+    val bw = new BufferedWriter(new FileWriter(file))
+    bw.write(fromXml(sg))
+    bw.close()
+  }
+
 
 }

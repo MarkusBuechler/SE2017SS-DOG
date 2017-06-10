@@ -223,7 +223,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   menuBar = new MenuBar {
     contents += new Menu("File") {
-      contents += new MenuItem(Action("Save Game") { notYetImplemted() })
+      contents += new MenuItem(Action("Save Game") {saveApplication()})
       contents += new MenuItem(Action("Quit") { closeApplication() })
     }
     contents += new Menu("Game") {
@@ -242,6 +242,17 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     if (res == Dialog.Result.Ok) {
       sys.exit(0)
     }
+  }
+
+  def saveApplication() {
+    gameController.saveGame()
+    val savedGame = io.Source.fromFile("savedgame.txt")
+    Dialog.showConfirmation(
+      contents.head,
+      if (savedGame.nonEmpty) "Saved game successful" else "Saving game failed",
+      optionType = Dialog.Options.Default,
+      title = title
+    )
   }
 
   def notYetImplemted() {
