@@ -114,31 +114,6 @@ class gameController() extends TGameController with Publisher {
     logger.debug("Finished coloring figures.")
   }
 
-  // kann vll
-  def setPlayerName(inputNumber: Int, inputString: String): Unit = {
-
-    var playerNo = 0
-    inputNumber match {
-      case 1 =>
-        logger.info("Player 1 was selected !\n"); playerNo = 0
-      case 2 =>
-        logger.info("Player 2 was selected !\n"); playerNo = 1
-      case 3 =>
-        logger.info("Player 3 was selected !\n"); playerNo = 2
-      case 4 =>
-        logger.info("Player 4 was selected !\n"); playerNo = 3
-      case _ => logger.info("Wrong input! Player 1 was selected !\n"); playerNo = 0
-    }
-    inputString match {
-      case _ =>
-        val insertNumber = playerNo + 1
-        val currentPlayer = Player(inputString, insertNumber, isActive = false)
-        logger.info(inputString + " was entered und applied to Player " + insertNumber)
-        playerList.update(playerNo, currentPlayer)
-    }
-    logger.info(playerList.toString())
-  }
-
   def printCurrentPlayer(): Unit = {
     logger.info(currentPlayer.name + " ist am Zug")
   }
