@@ -1,7 +1,7 @@
 package de.htwg.se.dog2.controller
 
 import java.awt.Color
-import java.io.{BufferedWriter, File, FileWriter}
+import java.io.{ BufferedWriter, File, FileWriter }
 
 import com.google.inject.Singleton
 import de.htwg.se.dog2.model._
@@ -9,7 +9,7 @@ import de.htwg.se.dog2.model._
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager
 
 /**
  * Created by margogo on 15.04.17.
@@ -26,12 +26,12 @@ class gameController() extends TGameController with Publisher {
   var logger = LogManager.getLogger(gameController.this)
 
   def initGame(): Unit = {
-    logger.debug("Initializing game...");
+    logger.debug("Initializing game...")
     initFields()
     initCards()
     initPlayer()
     applyFigToField()
-    logger.debug("Finished initializing game.");
+    logger.debug("Finished initializing game.")
   }
 
   def showGameStatus(): Unit = {
@@ -40,65 +40,53 @@ class gameController() extends TGameController with Publisher {
     printCurrentPlayer()
   }
 
-  def findNextField2(position: Int, valueOfCard: Int): Unit = {
-
-    for (i <- 1 to valueOfCard) {
-      val field = fieldList.apply(fieldList.indexWhere(_.id == position))
-      var NextFields = new ListBuffer[Field]
-      for (x <- field.successorIds) {
-        NextFields += fieldList.apply(fieldList.indexWhere(_.id == x))
-      }
-      NextFields
-    }
-  }
-
-  def playerActionPrep(cardFromDeckNumber: Int): Unit = {
-
+  def playerAction(cardFromDeckNumber: Int): Unit = {
+    logger.debug("Player is actioning...")
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
     val valueOfCard = playedCard.value
     val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
     val selectedField = fieldList.apply(fieldList.indexWhere(_.id == possibleField.head)).id
 
-    logger.info(selectedField)
+    logger.info("Selected field was :" + selectedField)
     updateFigField(fieldList.apply(selectedField).id, figureList.apply(currentFigNr))
     removeCard(playedCard)
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
-
+    logger.debug("Finished player action.")
   }
 
   def applyFigToField(): Unit = {
-    logger.debug("Applying figures to field...");
+    logger.debug("Applying figures to field...")
     for (figure <- figureList) {
       val index = fieldList.indexWhere(_.id == figure.position)
       val bufferField = fieldList.apply(index).copy(figure = figure)
       fieldList.update(index, bufferField)
     }
-    logger.debug("Finished applying figures to field.");
+    logger.debug("Finished applying figures to field.")
   }
 
   def removeCard(card: Card): Unit = {
-    logger.debug("Removing card...");
+    logger.debug("Removing card...")
     val cardInSet = cardDecks.apply(currentPlayer.playerId).cards.indexWhere(_.id == card.id)
     cardDecks.apply(currentPlayer.playerId).cards.remove(cardInSet)
     playedCards += card
-    logger.debug("Finished removing card.");
+    logger.debug("Finished removing card.")
   }
 
   /** PlayerStuff **/
   def initPlayer(): Unit = {
-    logger.debug("Initializing player...");
+    logger.debug("Initializing player...")
     for (x <- 0 to 3) {
       val bufferPlayer = Player("Player " + (x + 1), x, isActive = false)
       playerList += bufferPlayer
     }
     playerList.update(0, Player("Player 1", 0, isActive = true))
     initFigures()
-    logger.debug("Finished initializing player.");
+    logger.debug("Finished initializing player.")
   }
 
   def initFigures(): Unit = {
-    logger.debug("Initializing figures...");
+    logger.debug("Initializing figures...")
     figureList.clear
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
@@ -109,11 +97,11 @@ class gameController() extends TGameController with Publisher {
     figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70, 476, 467, Color.BLACK))
     currentFigNr = 0
     colorFigures()
-    logger.debug("Finished unitializing figures.");
+    logger.debug("Finished unitializing figures.")
   }
 
   def colorFigures(): Unit = {
-    logger.debug("Coloring figures...");
+    logger.debug("Coloring figures...")
     for (figure <- figureList) {
       val playerID = figure.player.playerId
       playerID match {
@@ -123,7 +111,7 @@ class gameController() extends TGameController with Publisher {
         case 3 => figureList.update(figureList.indexOf(figure), figure.copy(color = Color.RED))
       }
     }
-    logger.debug("Finished coloring figures.");
+    logger.debug("Finished coloring figures.")
   }
 
   // kann vll
@@ -155,8 +143,8 @@ class gameController() extends TGameController with Publisher {
     logger.info(currentPlayer.name + " ist am Zug")
   }
 
-
   def changeCurrentPlayer(): Unit = {
+    logger.debug("Changing current Player...")
     val lastPlayer = playerList.apply(currentPlayer.playerId).copy(isActive = false)
     val nextPlayerNumber = if (currentPlayer.playerId == 3) 0 else currentPlayer.playerId + 1
 
@@ -171,11 +159,13 @@ class gameController() extends TGameController with Publisher {
 
     changeCurrentFigure()
     publish(new UpdatePlayerLabels)
+    logger.debug("Finished changing current Player.")
+
 
   }
   //noinspection ScalaStyle
   def changeCurrentFigure(): Unit = {
-
+    logger.debug("Changing current figure...")
     currentFigNr match {
       case 0 | 1 | 2 | 3 => currentFigNr = 4
       case 4 | 5 | 6 | 7 => currentFigNr = 8
@@ -183,30 +173,34 @@ class gameController() extends TGameController with Publisher {
       case 12 | 13 | 14 | 15 => currentFigNr = 0
     }
     publish(new UpdateToRepaint)
+    logger.debug("Finished changing current figure.")
   }
 
   def changeCurrentFigureNr(): Unit = {
-
+    logger.debug("Changing current figure nr...")
     val buffer = currentFigNr % 4
     buffer match {
       case 0 | 1 | 2 => currentFigNr += 1
       case 3 => currentFigNr -= 3
     }
     publish(new UpdateToRepaint)
+    logger.debug("Finished changing current figure nr.")
   }
 
   def updateFigPos(figure: Figure, newId: Int): Unit = {
+    logger.debug("Updating figure position.")
     val oldPos = figure.position
     val figNr = figure.playerFigNumber
     val field = fieldList.apply(newId)
     val bufferFig = figureList.apply(figureList.indexWhere(_.position == oldPos)).copy(position = newId, x = field.x, y = field.y)
     figureList.update(figNr, bufferFig)
+    logger.debug("Finished updating figure position.")
   }
 
   /** Field stuff **/
 
   def initFields(): Unit = {
-    logger.debug("Initializing fields...");
+    logger.debug("Initializing fields...")
     fieldList.clear
     val bufferedSource = io.Source.fromFile("resources/Fields.csv")
     for (line <- bufferedSource.getLines()) {
@@ -219,7 +213,7 @@ class gameController() extends TGameController with Publisher {
       val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId, x.toInt, y.toInt)
       fieldList += bufferField
     }
-    logger.debug("Finished initializing fields");
+    logger.debug("Finished initializing fields")
   }
 
   def printFields(): Unit = {
@@ -256,7 +250,6 @@ class gameController() extends TGameController with Publisher {
 
   def updateFigField(fieldId: Int, figure: Figure): Unit = {
     // check noch einbauen
-    val test1 = figure.position
     val test2 = fieldList.indexWhere(_.id == figure.position)
     val oldField = fieldList.apply(test2).copy(figure = emptyFig)
     val newField = fieldList.apply(fieldId).copy(figure = figure)
@@ -268,7 +261,7 @@ class gameController() extends TGameController with Publisher {
   /** Card Stuff **/
 
   def initCards(): Unit = {
-    logger.debug("Initializing cards...");
+    logger.debug("Initializing cards...")
     cardList.clear
     playedCards.clear
     val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
@@ -279,15 +272,18 @@ class gameController() extends TGameController with Publisher {
     }
     shuffleCards()
     fillCardDeck()
-    logger.debug("Finished initializing cards.");
+    logger.debug("Finished initializing cards.")
   }
 
   def shuffleCards(): Unit = {
+    logger.debug("Shuffling cards...")
     cardList = scala.util.Random.shuffle(cardList)
+    logger.debug("Finished shuffling cards.")
+
   }
 
   def fillCardDeck(): Unit = {
-
+    logger.debug("Filling card deck...")
     cardDecks.clear
     for (a <- 1 to 4) {
       var cardBuffer = new ListBuffer[Card]
@@ -298,7 +294,7 @@ class gameController() extends TGameController with Publisher {
       val filledCardDeck = CardDeck(a, decksize, cardBuffer)
       cardDecks += filledCardDeck
     }
-
+    logger.debug("Finished filling card deck.")
   }
 
   def printCardDecks(): Unit = {
@@ -324,22 +320,22 @@ class gameController() extends TGameController with Publisher {
     sys.exit()
   }
 
-  def toXml() : scala.xml.Node = {
+  def toXml(): scala.xml.Node = {
     <game>
-      <playerList>{playerList}</playerList>
-      <figureList>{figureList}</figureList>
-      <fieldList>{fieldList}</fieldList>
-      <cardList>{cardList}</cardList>
-      <cardDecks>{cardDecks}</cardDecks>
-      <playedCards>{playedCards}</playedCards>
+      <playerList>{ playerList }</playerList>
+      <figureList>{ figureList }</figureList>
+      <fieldList>{ fieldList }</fieldList>
+      <cardList>{ cardList }</cardList>
+      <cardDecks>{ cardDecks }</cardDecks>
+      <playedCards>{ playedCards }</playedCards>
     </game>
   }
 
-  def fromXml (node: scala.xml.Node): String = {
+  def fromXml(node: scala.xml.Node): String = {
     node.text
   }
 
-  def saveGame() = {
+  def saveGame() : Unit = {
     val save = this.toXml()
     val file = new File("savedgame.txt")
     val bufferedWriter = new BufferedWriter(new FileWriter(file))

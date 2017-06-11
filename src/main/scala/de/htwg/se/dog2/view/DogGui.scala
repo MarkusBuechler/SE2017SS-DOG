@@ -223,7 +223,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   menuBar = new MenuBar {
     contents += new Menu("File") {
-      contents += new MenuItem(Action("Save Game") {saveApplication()})
+      contents += new MenuItem(Action("Save Game") { saveApplication() })
       contents += new MenuItem(Action("Quit") { closeApplication() })
     }
     contents += new Menu("Game") {

@@ -60,7 +60,7 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
           print("Falsche Eingabe!\n")
           print(info)
         } else {
-          gameController.playerActionPrep(tokens(0).toInt)
+          gameController.playerAction(tokens(0).toInt)
           printTui()
         }
       case "g" =>
