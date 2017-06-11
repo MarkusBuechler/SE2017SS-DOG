@@ -229,6 +229,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     contents += new Menu("Game") {
       contents += new MenuItem(Action("Undo") { notYetImplemted() })
       contents += new MenuItem(Action("New Game") { notYetImplemted() })
+      contents += new MenuItem(Action("Rename Player") { notYetImplemted() })
+
     }
   }
 
@@ -344,7 +346,6 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   Gui verschönern
 
   Later:
-  Figuren wechseln innerhalb player
   Figuren auf Map anzeigen und anklickbar machen
   Allgemeine Funktionalität erhöhen
   */

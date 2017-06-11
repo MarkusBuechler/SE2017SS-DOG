@@ -161,7 +161,6 @@ class gameController() extends TGameController with Publisher {
     publish(new UpdatePlayerLabels)
     logger.debug("Finished changing current Player.")
 
-
   }
   //noinspection ScalaStyle
   def changeCurrentFigure(): Unit = {
@@ -335,7 +334,7 @@ class gameController() extends TGameController with Publisher {
     node.text
   }
 
-  def saveGame() : Unit = {
+  def saveGame(): Unit = {
     val save = this.toXml()
     val file = new File("savedgame.txt")
     val bufferedWriter = new BufferedWriter(new FileWriter(file))
