@@ -52,6 +52,7 @@ class gameController() extends TGameController with Publisher {
     removeCard(playedCard)
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
+    saveForRedo()
     logger.debug("Finished player action.")
   }
 
@@ -209,6 +210,7 @@ class gameController() extends TGameController with Publisher {
 
   // TODO: Mehrere Wahlmöglichkeiten ermöglichen
   def findNextField(fieldId: Int, valueOfCard: Int): ListBuffer[Int] = {
+    logger.debug("Searching next field...")
     var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
     var NextFields = new ListBuffer[Int]
     var choice = -1
@@ -219,17 +221,21 @@ class gameController() extends TGameController with Publisher {
       }
     }
     NextFields += choice
+    logger.debug("Finished searching and returning next field.")
     NextFields
   }
 
   def updateFigField(fieldId: Int, figure: Figure): Unit = {
     // check noch einbauen
+    logger.debug("Updating figure on field...")
     val test2 = fieldList.indexWhere(_.id == figure.position)
     val oldField = fieldList.apply(test2).copy(figure = emptyFig)
     val newField = fieldList.apply(fieldId).copy(figure = figure)
     updateFigPos(figure, newField.id)
     fieldList.update(test2, oldField)
     fieldList.update(fieldId, newField)
+    logger.debug("Finished updating figure on field.")
+
   }
 
   /** Card Stuff **/
@@ -310,10 +316,29 @@ class gameController() extends TGameController with Publisher {
   }
 
   def saveGame(): Unit = {
+    logger.debug("Saving game data...")
     val save = this.toXml()
     val file = new File("savedgame.txt")
     val bufferedWriter = new BufferedWriter(new FileWriter(file))
     bufferedWriter.write(fromXml(save))
     bufferedWriter.close()
+    logger.debug("Finished saving game data.")
   }
+
+  def saveForRedo(): Unit = {
+
+    /** Save data **/
+    var R_figureList = figureList
+    var R_playerList = playerList
+    var R_fieldList = fieldList
+    var R_cardList = cardList
+    var R_cardDecks = cardDecks
+    var R_playedCards = playedCards
+
+    var R_currentPlayer = currentPlayer
+    var R_currentFigNr = currentFigNr
+    var R_currentFig = currentFig
+    var R_decksize = decksize
+  }
+
 }

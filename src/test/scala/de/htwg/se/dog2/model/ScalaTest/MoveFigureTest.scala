@@ -4,11 +4,11 @@ import com.google.inject.Guice
 import de.htwg.se.dog2.DependencyModule
 import de.htwg.se.dog2.controller.gameController
 import org.junit.Test
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 /**
-  * Created by margogo on 11.06.17.
-  */
+ * Created by margogo on 11.06.17.
+ */
 @Test
 class MoveFigureTest extends FlatSpec with Matchers {
 
