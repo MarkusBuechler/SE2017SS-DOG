@@ -38,6 +38,23 @@ trait TGameController extends Publisher {
   //  var currentFigNr =
   var decksize = initDeckSize
 
+  /** Val and Vars **/
+
+  /** Lists **/
+  var R_figureList = new ListBuffer[Figure]
+  var R_playerList = new ListBuffer[Player]
+  var R_fieldList = new ListBuffer[Field]
+  var R_cardList = new ListBuffer[Card]
+  var R_cardDecks = new ListBuffer[CardDeck]
+  var R_playedCards = new ListBuffer[Card]
+
+  /** Vars **/
+  var R_currentPlayer = currentPlayer
+  var R_currentFigNr = 0
+  var R_currentFig = currentFig
+  //  var currentFigNr =
+  var R_decksize = initDeckSize
+
   def quitGame(): Unit
   def initGame(): Unit
   def initPlayer(): Unit

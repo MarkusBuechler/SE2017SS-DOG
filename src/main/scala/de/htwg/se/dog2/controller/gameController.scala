@@ -10,6 +10,7 @@ import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
 import org.apache.logging.log4j.LogManager
+import de.htwg.se.dog2.util.UndoManager
 
 /**
  * Created by margogo on 15.04.17.
@@ -42,6 +43,7 @@ class gameController() extends TGameController with Publisher {
 
   def playerAction(cardFromDeckNumber: Int): Unit = {
     logger.debug("Player is actioning...")
+    saveForRedo()
     val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
     val valueOfCard = playedCard.value
     val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
@@ -52,7 +54,6 @@ class gameController() extends TGameController with Publisher {
     removeCard(playedCard)
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
-    saveForRedo()
     logger.debug("Finished player action.")
   }
 
@@ -302,6 +303,7 @@ class gameController() extends TGameController with Publisher {
 
   def toXml(): scala.xml.Node = {
     <game>
+      <currentPlayer>{ currentPlayer }</currentPlayer>
       <playerList>{ playerList }</playerList>
       <figureList>{ figureList }</figureList>
       <fieldList>{ fieldList }</fieldList>
@@ -318,7 +320,7 @@ class gameController() extends TGameController with Publisher {
   def saveGame(): Unit = {
     logger.debug("Saving game data...")
     val save = this.toXml()
-    val file = new File("savedgame.txt")
+    val file = new File("savedgame.xml")
     val bufferedWriter = new BufferedWriter(new FileWriter(file))
     bufferedWriter.write(fromXml(save))
     bufferedWriter.close()
@@ -327,18 +329,38 @@ class gameController() extends TGameController with Publisher {
 
   def saveForRedo(): Unit = {
 
-    /** Save data **/
-    var R_figureList = figureList
-    var R_playerList = playerList
-    var R_fieldList = fieldList
-    var R_cardList = cardList
-    var R_cardDecks = cardDecks
-    var R_playedCards = playedCards
+    //    /** Save data **/
+    //    R_playerList = playerList.clone().map(_.copy())
+    //    R_fieldList = fieldList.clone().map(_.copy())
+    //    R_cardList = cardList.clone()
+    //    R_cardDecks = cardDecks.clone()
+    //    R_playedCards = playedCards.clone().map(_.copy())
+    //
+    //    R_currentPlayer = currentPlayer.copy()
+    //    R_currentFigNr = currentFigNr
+    //    R_currentFig = currentFig.copy()
+    //    R_decksize = decksize
+    //
+    //    print("SAve for redo" + currentPlayer)
+    //    UndoManager.reo
+  }
 
-    var R_currentPlayer = currentPlayer
-    var R_currentFigNr = currentFigNr
-    var R_currentFig = currentFig
-    var R_decksize = decksize
+  def redo(): Unit = {
+    //    // The whole point of using immutable types is to avoid exactly this kind of construct.
+    //    figureList = R_figureList.clone()
+    //    playerList = R_playerList.clone()
+    //    fieldList = R_fieldList.clone()
+    //    cardList = R_cardList.clone()
+    //    cardDecks = R_cardDecks.clone()
+    //    playedCards = R_playedCards.clone()
+    //
+    //    currentPlayer = R_currentPlayer.copy()
+    //    currentFigNr = R_currentFigNr
+    //    currentFig = R_currentFig.copy()
+    //    decksize = R_decksize
+    //
+    //    print("redo" + currentPlayer)
+    //    showGameStatus()
   }
 
 }

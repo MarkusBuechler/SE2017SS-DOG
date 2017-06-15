@@ -248,7 +248,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   def saveApplication() {
     gameController.saveGame()
-    val savedGame = io.Source.fromFile("savedgame.txt")
+    val savedGame = io.Source.fromFile("savedgame.xml")
     Dialog.showConfirmation(
       contents.head,
       if (savedGame.nonEmpty) "Saved game successful" else "Saving game failed",
