@@ -276,6 +276,9 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       print("Event Update Cards fired")
     case e: UpdateToRepaint =>
       repaint()
+    case e: newPlayerCards =>
+      updateCardPics()
+      print("Event new Cardsfired")
   }
 
   /* Helper functions */

@@ -10,7 +10,6 @@ import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
 import org.apache.logging.log4j.LogManager
-import de.htwg.se.dog2.util.UndoManager
 
 /**
  * Created by margogo on 15.04.17.
@@ -20,6 +19,7 @@ import de.htwg.se.dog2.util.UndoManager
 class UpdatePlayerLabels() extends Event
 class UpdatePlayerCards() extends Event
 class UpdateToRepaint() extends Event
+class newPlayerCards() extends Event
 
 @Singleton
 class gameController() extends TGameController with Publisher {
@@ -55,6 +55,20 @@ class gameController() extends TGameController with Publisher {
     changeCurrentPlayer()
     publish(new UpdatePlayerCards)
     logger.debug("Finished player action.")
+    checkStatus()
+  }
+
+  def checkStatus(): Unit = {
+    // check if someone won the game
+
+    // check if cards needs to be shuffled
+    // Beste abfrage
+    if (cardDecks.head.cards.isEmpty && cardDecks.apply(1).cards.isEmpty && cardDecks.apply(2).cards.isEmpty && cardDecks.apply(3).cards.isEmpty) {
+      updateDeckSize()
+      initCards()
+      publish(new newPlayerCards)
+    }
+
   }
 
   def applyFigToField(): Unit = {
@@ -363,4 +377,14 @@ class gameController() extends TGameController with Publisher {
     //    showGameStatus()
   }
 
+  //noinspection ScalaStyle
+  override def updateDeckSize(): Unit = {
+    decksize match {
+      case 7 | 6 | 5 => decksize -= 1
+      case 4 => decksize = 7
+      case _ =>
+        decksize = 7
+        logger.debug("deckSize was not between 4 and 7 ! ")
+    }
+  }
 }
