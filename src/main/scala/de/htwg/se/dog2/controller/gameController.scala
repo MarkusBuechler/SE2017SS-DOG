@@ -1,7 +1,7 @@
 package de.htwg.se.dog2.controller
 
 import java.awt.Color
-import java.io.{ BufferedWriter, File, FileWriter }
+import java.io.{BufferedWriter, File, FileWriter}
 
 import com.google.inject.Singleton
 import de.htwg.se.dog2.model._
@@ -9,7 +9,7 @@ import de.htwg.se.dog2.model._
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
-import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.{LogManager, Logger}
 
 /**
  * Created by margogo on 15.04.17.
@@ -25,7 +25,7 @@ class CardNotInRange() extends Event
 @Singleton
 class gameController() extends TGameController with Publisher {
 
-  var logger = LogManager.getLogger(gameController.this)
+  var logger : Logger = LogManager.getLogger(gameController.this)
 
   def initGame(): Unit = {
     logger.debug("Initializing game...")
@@ -121,7 +121,7 @@ class gameController() extends TGameController with Publisher {
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, Color.BLACK)
       figureList += bufferFig
     }
-    figureList.update(0, Figure(playerList.apply(0), 0, "defaultRole", "default", 70, 476, 467, Color.BLACK))
+    figureList.update(0, Figure(playerList.head, 0, "defaultRole", "default", 70, 476, 467, Color.BLACK))
     currentFigNr = 0
     colorFigures()
     logger.debug("Finished unitializing figures.")
@@ -305,10 +305,10 @@ class gameController() extends TGameController with Publisher {
 
   def printCardDecks(): Unit = {
     var string = "CardDeck:\n"
-    for (x <- 0 until cardDecks.size) {
+    for (x <- cardDecks.indices) {
       string += "Player [" + cardDecks.apply(x).cards.size + "] "
       string += cardDecks.apply(x).PlayerId + ": "
-      for (y <- 0 until cardDecks.apply(x).cards.size) {
+      for (y <- cardDecks.apply(x).cards.indices) {
         string += cardDecks.apply(x).cards.apply(y).description.toString + " ,"
       }
       string += "\n"

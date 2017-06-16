@@ -6,10 +6,10 @@ import de.htwg.se.dog2.model._
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
-import scala.swing.event.Event
 
 /**
  * Created by margogo on 15.05.17.
+  * Interface for gameController
  */
 trait TGameController extends Publisher {
 
@@ -36,7 +36,7 @@ trait TGameController extends Publisher {
   var currentFigNr = 0
   var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
   //  var currentFigNr =
-  var decksize = initDeckSize
+  var decksize : Int  = initDeckSize
 
   /** Val and Vars **/
 
@@ -49,11 +49,11 @@ trait TGameController extends Publisher {
   var R_playedCards = new ListBuffer[Card]
 
   /** Vars **/
-  var R_currentPlayer = currentPlayer
+  var R_currentPlayer : Player = currentPlayer
   var R_currentFigNr = 0
-  var R_currentFig = currentFig
+  var R_currentFig : Figure = currentFig
   //  var currentFigNr =
-  var R_decksize = initDeckSize
+  var R_decksize : Int = initDeckSize
 
   def quitGame(): Unit
   def initGame(): Unit

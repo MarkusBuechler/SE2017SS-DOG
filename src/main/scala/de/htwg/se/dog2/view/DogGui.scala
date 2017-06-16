@@ -223,65 +223,36 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     card
   }
 
-  var HBoxPlayer1Labels = new BoxPanel(Orientation.Horizontal) {
-    contents += labelPlayer1
-    contents += buttonPlayer1Figure
-    contents += cardLabel1
-    contents += textfield1
-    contents += buttonPlayer1Fire
-
+  def hBoxPlayerLabels(label1: Label, button1: Button, label2: Label, textField: TextField, button2: Button) : BoxPanel = {
+    val box = new BoxPanel(Orientation.Horizontal) {
+      contents += label1
+      contents += button1
+      contents += label2
+      contents += textField
+      contents += button2
+    }
+    box
   }
 
-  var HBoxPlayer2Labels = new BoxPanel(Orientation.Horizontal) {
-    contents += labelPlayer2
-    contents += buttonPlayer2Figure
-    contents += cardLabel2
-    contents += textfield2
-    contents += buttonPlayer2Fire
+  def vBoxPlayer(flowPanel: FlowPanel, boxPanel: BoxPanel) : BoxPanel = {
+    val box = new BoxPanel(Orientation.Vertical) {
+      contents += flowPanel
+      contents += boxPanel
+      border = normalBorder
+    }
+    box
   }
 
-  var HBoxPlayer3Labels = new BoxPanel(Orientation.Horizontal) {
-    contents += labelPlayer3
-    contents += buttonPlayer3Figure
-    contents += cardLabel3
-    contents += textfield3
-    contents += buttonPlayer3Fire
+  var HBoxPlayer1Labels : BoxPanel = hBoxPlayerLabels(labelPlayer1,buttonPlayer1Figure, cardLabel1, textfield1,buttonPlayer1Fire)
+  var HBoxPlayer2Labels : BoxPanel = hBoxPlayerLabels(labelPlayer2,buttonPlayer2Figure, cardLabel2, textfield2,buttonPlayer2Fire)
+  var HBoxPlayer3Labels : BoxPanel = hBoxPlayerLabels(labelPlayer3,buttonPlayer3Figure, cardLabel3, textfield3,buttonPlayer3Fire)
+  var HBoxPlayer4Labels : BoxPanel = hBoxPlayerLabels(labelPlayer4,buttonPlayer4Figure, cardLabel4, textfield4,buttonPlayer4Fire)
 
-  }
+  var HVoxPlayer1 : BoxPanel = vBoxPlayer(player1FlowPanel, HBoxPlayer1Labels)
+  var HVoxPlayer2 : BoxPanel = vBoxPlayer(player2FlowPanel, HBoxPlayer2Labels)
+  var HVoxPlayer3 : BoxPanel = vBoxPlayer(player3FlowPanel, HBoxPlayer3Labels)
+  var HVoxPlayer4 : BoxPanel = vBoxPlayer(player4FlowPanel, HBoxPlayer4Labels)
 
-  var HBoxPlayer4Labels = new BoxPanel(Orientation.Horizontal) {
-    contents += labelPlayer4
-    contents += buttonPlayer4Figure
-    contents += cardLabel4
-    contents += textfield4
-    contents += buttonPlayer4Fire
-
-  }
-
-  var HVoxPlayer1 = new BoxPanel(Orientation.Vertical) {
-    contents += player1FlowPanel
-    contents += HBoxPlayer1Labels
-    border = normalBorder
-
-  }
-
-  var HVoxPlayer2 = new BoxPanel(Orientation.Vertical) {
-    contents += player2FlowPanel
-    contents += HBoxPlayer2Labels
-    border = normalBorder
-  }
-
-  var HVoxPlayer3 = new BoxPanel(Orientation.Vertical) {
-    contents += player3FlowPanel
-    contents += HBoxPlayer3Labels
-    border = normalBorder
-  }
-
-  var HVoxPlayer4 = new BoxPanel(Orientation.Vertical) {
-    contents += player4FlowPanel
-    contents += HBoxPlayer4Labels
-    border = normalBorder
-  }
 
   var playerVBox = new BoxPanel(Orientation.Vertical) {
     contents += HVoxPlayer1
