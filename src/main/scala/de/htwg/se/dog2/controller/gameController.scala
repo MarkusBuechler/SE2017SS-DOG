@@ -61,6 +61,7 @@ class gameController() extends TGameController with Publisher {
   def checkStatus(): Unit = {
     // check if someone won the game
 
+
     // check if cards needs to be shuffled
     // Beste abfrage
     if (cardDecks.head.cards.isEmpty && cardDecks.apply(1).cards.isEmpty && cardDecks.apply(2).cards.isEmpty && cardDecks.apply(3).cards.isEmpty) {
@@ -387,4 +388,10 @@ class gameController() extends TGameController with Publisher {
         logger.debug("deckSize was not between 4 and 7 ! ")
     }
   }
+
+//  def checkFigureInField() : Unit = {
+//    for (figure <- figureList) {
+//
+//    }
+//  }
 }

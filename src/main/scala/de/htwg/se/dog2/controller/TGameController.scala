@@ -64,5 +64,6 @@ trait TGameController extends Publisher {
   def applyFigToField(): Unit
   def removeCard(card: Card): Unit
   def updateDeckSize(): Unit
+  def playerAction(int: Int) : Unit
 
 }

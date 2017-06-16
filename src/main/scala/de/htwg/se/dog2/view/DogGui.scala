@@ -26,7 +26,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   val SizeWidthFlowPane = 450
   val SizeHeigthFlowPane = 60
+
+  val SizeWidthTextArea = 40
+  val SizeHeigthTextArea = 20
+
   val myDimension = new Dimension(SizeWidth, SizeHeight)
+
+  val myTextFieldDimension = new Dimension(SizeWidthTextArea, SizeHeigthTextArea)
 
   val myDimensionFlowPane = new Dimension(SizeWidthFlowPane, SizeHeigthFlowPane)
 
@@ -48,8 +54,37 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   var player4FlowPanel = new FlowPanel() {
     preferredSize = myDimensionFlowPane
   }
-  var buttonPlayer1 = new Button() {
-    text = "Click to change Figure"
+  var cardLabel1 = new Label("Card: ")
+  var cardLabel2 = new Label("Card: ")
+  var cardLabel3 = new Label("Card: ")
+  var cardLabel4 = new Label("Card: ")
+
+  var textfield1 = new TextField {
+    text = "1"
+    preferredSize = myTextFieldDimension
+    maximumSize = myTextFieldDimension
+  }
+
+  var textfield2 = new TextField {
+    text = "1"
+    preferredSize = myTextFieldDimension
+    maximumSize = myTextFieldDimension
+  }
+
+  var textfield3 = new TextField {
+    text = "1"
+    preferredSize = myTextFieldDimension
+    maximumSize = myTextFieldDimension
+  }
+
+  var textfield4 = new TextField {
+    text = "1"
+    preferredSize = myTextFieldDimension
+    maximumSize = myTextFieldDimension
+  }
+
+  var buttonPlayer1Figure = new Button() {
+    text = "Change Figure"
     listenTo(this)
     reactions += {
       case ButtonClicked(me) =>
@@ -57,8 +92,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
         refresh()
     }
   }
-  var buttonPlayer2 = new Button() {
-    text = "Click to change Figure"
+  var buttonPlayer2Figure = new Button() {
+    text = "Change Figure"
     listenTo(this)
     reactions += {
       case ButtonClicked(me) =>
@@ -66,8 +101,9 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
         refresh()
     }
   }
-  var buttonPlayer3 = new Button() {
-    text = "Click to change Figure"
+
+  var buttonPlayer3Figure = new Button() {
+    text = "Change Figure"
     listenTo(this)
     reactions += {
       case ButtonClicked(me) =>
@@ -75,12 +111,52 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
         refresh()
     }
   }
-  var buttonPlayer4 = new Button() {
-    text = "Click to change Figure"
+  var buttonPlayer4Figure = new Button() {
+    text = "Change Figure"
     listenTo(this)
     reactions += {
       case ButtonClicked(me) =>
         gameController.changeCurrentFigureNr()
+        refresh()
+    }
+  }
+
+  var buttonPlayer1Fire = new Button() {
+    text = "Fire"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) =>
+        gameController.playerAction(textfield1.text.toInt)
+        refresh()
+    }
+  }
+
+  var buttonPlayer2Fire = new Button() {
+    text = "Fire"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) =>
+        gameController.playerAction(textfield2.text.toInt)
+        refresh()
+    }
+  }
+
+  var buttonPlayer3Fire = new Button() {
+    text = "Fire"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) =>
+        gameController.playerAction(textfield3.text.toInt)
+        refresh()
+    }
+  }
+
+  var buttonPlayer4Fire = new Button() {
+    text = "Fire"
+    listenTo(this)
+    reactions += {
+      case ButtonClicked(me) =>
+        gameController.playerAction(textfield4.text.toInt)
         refresh()
     }
   }
@@ -92,21 +168,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   resizable = false
 
   // declare Components here, except menubar ...
-  var labelPlayer1 = new Label {
-    text = "Player 1"
-  }
+  var labelPlayer1 = new Label("Player 1 ")
 
-  var labelPlayer2 = new Label {
-    text = "Player 2"
-  }
+  var labelPlayer2 = new Label("Player 2 ")
 
-  var labelPlayer3 = new Label {
-    text = "Player 3"
-  }
+  var labelPlayer3 = new Label("Player 3 ")
 
-  var labelPlayer4 = new Label {
-    text = "Player 4"
-  }
+  var labelPlayer4 = new Label("Player 4 ")
 
   val mapPicture = new Label {
     icon = new ImageIcon("resources/pictures/map600p.png")
@@ -152,27 +220,49 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       }
 
     }
+//    listenTo(this)
+//    reactions += {
+//      case event.MousePressed =>
+//        gameController.playerAction(int)
+//        print("fuck"+ int)
+//        refresh()
+//    }
     card
   }
 
   var HBoxPlayer1Labels = new BoxPanel(Orientation.Horizontal) {
     contents += labelPlayer1
-    contents += buttonPlayer1
+    contents += buttonPlayer1Figure
+    contents += cardLabel1
+    contents += textfield1
+    contents += buttonPlayer1Fire
+
   }
 
   var HBoxPlayer2Labels = new BoxPanel(Orientation.Horizontal) {
     contents += labelPlayer2
-    contents += buttonPlayer2
+    contents += buttonPlayer2Figure
+    contents += cardLabel2
+    contents += textfield2
+    contents += buttonPlayer2Fire
   }
 
   var HBoxPlayer3Labels = new BoxPanel(Orientation.Horizontal) {
     contents += labelPlayer3
-    contents += buttonPlayer3
+    contents += buttonPlayer3Figure
+    contents += cardLabel3
+    contents += textfield3
+    contents += buttonPlayer3Fire
+
   }
 
   var HBoxPlayer4Labels = new BoxPanel(Orientation.Horizontal) {
     contents += labelPlayer4
-    contents += buttonPlayer4
+    contents += buttonPlayer4Figure
+    contents += cardLabel4
+    contents += textfield4
+    contents += buttonPlayer4Fire
+
   }
 
   var HVoxPlayer1 = new BoxPanel(Orientation.Vertical) {
@@ -205,7 +295,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     contents += HVoxPlayer2
     contents += HVoxPlayer3
     contents += HVoxPlayer4
-    resizable = false
+    resizable = true
   }
 
   contents = new BoxPanel(Orientation.Horizontal) {
@@ -268,6 +358,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   // specify which Components produce events of interest
   listenTo(gameController)
+  listenTo(cardPic(1))
 
   // react to events
   reactions += {
@@ -288,6 +379,8 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player2FlowPanel.contents.clear()
     player3FlowPanel.contents.clear()
     player4FlowPanel.contents.clear()
+
+//    player1FlowPanel.maximumSize = new Dimension(90, 300)
 
     for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
       player1FlowPanel.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
@@ -311,11 +404,27 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   }
 
+  //noinspection ScalaStyle
   private def updateProperties = {
-    buttonPlayer1.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
-    buttonPlayer2.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
-    buttonPlayer3.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
-    buttonPlayer4.visible = if (gameController.currentPlayer.playerId.equals(3)) true else false
+    buttonPlayer1Figure.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
+    buttonPlayer2Figure.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
+    buttonPlayer3Figure.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
+    buttonPlayer4Figure.visible = if (gameController.currentPlayer.playerId.equals(3)) true else false
+
+    textfield1.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
+    textfield2.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
+    textfield3.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
+    textfield4.visible = if (gameController.currentPlayer.playerId.equals(3)) true else false
+
+    cardLabel1.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
+    cardLabel2.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
+    cardLabel3.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
+    cardLabel4.visible = if (gameController.currentPlayer.playerId.equals(3)) true else false
+
+    buttonPlayer1Fire.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
+    buttonPlayer2Fire.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
+    buttonPlayer3Fire.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
+    buttonPlayer4Fire.visible = if (gameController.currentPlayer.playerId.equals(3)) true else false
 
     HVoxPlayer1.border = if (gameController.currentPlayer.playerId.equals(0)) highlightedBorder else normalBorder
     HVoxPlayer2.border = if (gameController.currentPlayer.playerId.equals(1)) highlightedBorder else normalBorder
