@@ -39,7 +39,6 @@ class DogTui @Inject() (var gameController: gameController) extends Reactor {
         continue = true
       case "y" =>
         print("Welche Karte soll mit welcher Figur gespielt werden?\n")
-        // todo: prüfungen einbauen
         val input = scala.io.StdIn.readLine()
         val tokens = input.split(" ")
         if (tokens.length != 1) {

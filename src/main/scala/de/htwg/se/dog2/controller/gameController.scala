@@ -20,6 +20,7 @@ class UpdatePlayerLabels() extends Event
 class UpdatePlayerCards() extends Event
 class UpdateToRepaint() extends Event
 class newPlayerCards() extends Event
+class CardNotInRange() extends Event
 
 @Singleton
 class gameController() extends TGameController with Publisher {
@@ -43,19 +44,28 @@ class gameController() extends TGameController with Publisher {
 
   def playerAction(cardFromDeckNumber: Int): Unit = {
     logger.debug("Player is actioning...")
-    saveForRedo()
-    val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
-    val valueOfCard = playedCard.value
-    val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
-    val selectedField = fieldList.apply(fieldList.indexWhere(_.id == possibleField.head)).id
 
-    logger.info("Selected field was :" + selectedField)
-    updateFigField(fieldList.apply(selectedField).id, figureList.apply(currentFigNr))
-    removeCard(playedCard)
-    changeCurrentPlayer()
-    publish(new UpdatePlayerCards)
-    logger.debug("Finished player action.")
-    checkStatus()
+    if (cardFromDeckNumber > cardDecks.apply(currentPlayer.playerId).cards.size)
+      {
+        logger.debug("Card is not in range!")
+        publish(new CardNotInRange)
+      }
+    else
+    {
+      saveForRedo()
+      val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
+      val valueOfCard = playedCard.value
+      val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
+      val selectedField = fieldList.apply(fieldList.indexWhere(_.id == possibleField.head)).id
+
+      logger.info("Selected field was :" + selectedField)
+      updateFigField(fieldList.apply(selectedField).id, figureList.apply(currentFigNr))
+      removeCard(playedCard)
+      changeCurrentPlayer()
+      publish(new UpdatePlayerCards)
+      logger.debug("Finished player action.")
+      checkStatus()
+    }
   }
 
   def checkStatus(): Unit = {

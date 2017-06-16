@@ -87,7 +87,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.changeCurrentFigureNr()
         refresh()
     }
@@ -96,7 +96,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.changeCurrentFigureNr()
         refresh()
     }
@@ -106,7 +106,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.changeCurrentFigureNr()
         refresh()
     }
@@ -115,7 +115,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Change Figure"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.changeCurrentFigureNr()
         refresh()
     }
@@ -125,7 +125,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Fire"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.playerAction(textfield1.text.toInt)
         refresh()
     }
@@ -135,7 +135,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Fire"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.playerAction(textfield2.text.toInt)
         refresh()
     }
@@ -145,7 +145,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Fire"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.playerAction(textfield3.text.toInt)
         refresh()
     }
@@ -155,7 +155,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     text = "Fire"
     listenTo(this)
     reactions += {
-      case ButtonClicked(me) =>
+      case ButtonClicked(_) =>
         gameController.playerAction(textfield4.text.toInt)
         refresh()
     }
@@ -220,13 +220,6 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       }
 
     }
-//    listenTo(this)
-//    reactions += {
-//      case event.MousePressed =>
-//        gameController.playerAction(int)
-//        print("fuck"+ int)
-//        refresh()
-//    }
     card
   }
 
@@ -356,20 +349,30 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     )
   }
 
+  def notInRange() {
+    Dialog.showConfirmation(
+      contents.head,
+      "Selected Card is not in range! Please retry!",
+      optionType = Dialog.Options.Default,
+      title = title
+    )
+  }
+
   // specify which Components produce events of interest
   listenTo(gameController)
-  listenTo(cardPic(1))
 
   // react to events
   reactions += {
-    case e: UpdatePlayerCards =>
+    case _: UpdatePlayerCards =>
       updateCardPics()
       print("Event Update Cards fired")
-    case e: UpdateToRepaint =>
+    case _: UpdateToRepaint =>
       repaint()
-    case e: newPlayerCards =>
+    case _: newPlayerCards =>
       updateCardPics()
       print("Event new Cardsfired")
+    case _: CardNotInRange =>
+      notInRange()
   }
 
   /* Helper functions */
@@ -380,32 +383,31 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     player3FlowPanel.contents.clear()
     player4FlowPanel.contents.clear()
 
-//    player1FlowPanel.maximumSize = new Dimension(90, 300)
-
-    for (x <- 0 to gameController.cardDecks.apply(0).cards.size - 1) {
-      player1FlowPanel.contents += cardPic(gameController.cardDecks.apply(0).cards.apply(x).value)
+    for (x <- gameController.cardDecks.head.cards.indices) {
+      player1FlowPanel.contents += cardPic(gameController.cardDecks.head.cards.apply(x).value)
     }
 
-    for (x <- 0 to gameController.cardDecks.apply(1).cards.size - 1) {
+    for (x <- gameController.cardDecks.apply(1).cards.indices) {
       player2FlowPanel.contents += cardPic(gameController.cardDecks.apply(1).cards.apply(x).value)
     }
 
-    for (x <- 0 to gameController.cardDecks.apply(2).cards.size - 1) {
+    for (x <- gameController.cardDecks.apply(2).cards.indices) {
       player3FlowPanel.contents += cardPic(gameController.cardDecks.apply(2).cards.apply(x).value)
     }
 
-    for (x <- 0 to gameController.cardDecks.apply(3).cards.size - 1) {
+    for (x <- gameController.cardDecks.apply(3).cards.indices) {
       player4FlowPanel.contents += cardPic(gameController.cardDecks.apply(3).cards.apply(x).value)
     }
 
-    updateProperties
-
+    updateProperties()
     refresh()
 
   }
 
   //noinspection ScalaStyle
-  private def updateProperties = {
+  // property binding would be cool here
+  private def updateProperties() : Unit = {
+
     buttonPlayer1Figure.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
     buttonPlayer2Figure.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
     buttonPlayer3Figure.visible = if (gameController.currentPlayer.playerId.equals(2)) true else false
@@ -453,13 +455,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
   visible = true
 
   /*TODO:
-  click auf karten ermöglichen
-  HoverListener auf die Karten
-  Gui verschönern
-
-  Later:
-  Figuren auf Map anzeigen und anklickbar machen
-  Allgemeine Funktionalität erhöhen
+  Exception bei eingabe von fehlerhaften eingaben der textfelder
   */
 
 }
