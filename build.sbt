@@ -2,7 +2,7 @@ name := "htwg-scala-seed"
 organization := "de.htwg.se"
 version := "0.0.1"
 scalaVersion := "2.11.8"
-scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8", "-Ylog-classpath")
 //sbtPlugin := true
 
 resolvers += Resolver.jcenterRepo
@@ -15,8 +15,8 @@ libraryDependencies ++= {
     "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % "test",
     "org.scala-lang" % "scala-swing" % "2.11.0-M7",
     "org.apache.logging.log4j" %  "log4j-api" % "2.8.2",
-    "org.apache.logging.log4j" %  "log4j-core" % "2.8.2",
-    "org.joda" % "joda-convert" % "1.8.1"
+    "org.apache.logging.log4j" %  "log4j-core" % "2.8.2"
+//    "org.joda" % "joda-convert" % "1.8.1"
   )
 }
 
