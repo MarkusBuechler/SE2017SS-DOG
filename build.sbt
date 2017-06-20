@@ -15,7 +15,8 @@ libraryDependencies ++= {
     "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % "test",
     "org.scala-lang" % "scala-swing" % "2.11.0-M7",
     "org.apache.logging.log4j" %  "log4j-api" % "2.8.2",
-    "org.apache.logging.log4j" %  "log4j-core" % "2.8.2"
+    "org.apache.logging.log4j" %  "log4j-core" % "2.8.2",
+    "org.joda" % "joda-convert" % "1.8.1"
   )
 }
 

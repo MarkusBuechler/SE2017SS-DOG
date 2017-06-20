@@ -1,6 +1,5 @@
 package de.htwg.se.dog2.controller
 
-import java.awt.Color
 import java.io.{ BufferedWriter, File, FileWriter }
 
 import com.google.inject.Singleton
@@ -12,7 +11,6 @@ import scala.swing.event.Event
 import org.apache.logging.log4j.{ LogManager, Logger }
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import play.api.libs.json.Json
 
 /**
  * Created by margogo on 15.04.17.
