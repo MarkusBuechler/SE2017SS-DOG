@@ -9,8 +9,8 @@ import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
 import org.apache.logging.log4j.{ LogManager, Logger }
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+//import play.api.libs.json._
+//import play.api.libs.functional.syntax._
 
 /**
  * Created by margogo on 15.04.17.
@@ -395,52 +395,52 @@ class gameController() extends TGameController with Publisher {
     }
   }
 
-  //noinspection ScalaStyle
-  def testFormat = {
-    //////////// JSON FORMATTER ////////////////////
-    implicit val playerFormatter: Format[Player] = (
-      (__ \ "name").format[String] and
-      (__ \ "playerId").format[Int] and
-      (__ \ "isActive").format[Boolean]
-    )(Player.apply, unlift(Player.unapply))
-
-    implicit val cardFormatter: Format[Card] = (
-      (__ \ "id").format[Int] and
-      (__ \ "color").format[String] and
-      (__ \ "description").format[String] and
-      (__ \ "value").format[Int] and
-      (__ \ "property").format[String] and
-      (__ \ "isPlayed").format[Boolean]
-    )(Card.apply, unlift(Card.unapply))
-
-    implicit val cardDeckFormatter: Format[CardDeck] = (
-      (__ \ "playerId").format[Int] and
-      (__ \ "numberOfCards").format[Int] and
-      (__ \ "cards").format[ListBuffer[Card]]
-    )(CardDeck.apply, unlift(CardDeck.unapply))
-
-    implicit val figureFormatter: Format[Figure] = (
-      (__ \ "player").format[Player] and
-      (__ \ "playerFigNumber").format[Int] and
-      (__ \ "role").format[String] and
-      (__ \ "property").format[String] and
-      (__ \ "position").format[Int] and
-      (__ \ "x").format[Int] and
-      (__ \ "y").format[Int] and
-      (__ \ "Color").format[String]
-    )(Figure.apply, unlift(Figure.unapply))
-
-    implicit val fieldFormatter: Format[Field] = (
-      (__ \ "id").format[Int] and
-      (__ \ "property").format[String] and
-      (__ \ "color").format[String] and
-      (__ \ "figure").format[Figure] and
-      (__ \ "predecessorIds").format[Array[Int]] and
-      (__ \ "successorIds").format[Array[Int]] and
-      (__ \ "x").format[Int] and
-      (__ \ "y").format[Int]
-    )(Field.apply, unlift(Field.unapply))
-
-  }
+  //  //noinspection ScalaStyle
+  //  def testFormat = {
+  //    //////////// JSON FORMATTER ////////////////////
+  //    implicit val playerFormatter: Format[Player] = (
+  //      (__ \ "name").format[String] and
+  //      (__ \ "playerId").format[Int] and
+  //      (__ \ "isActive").format[Boolean]
+  //    )(Player.apply, unlift(Player.unapply))
+  //
+  //    implicit val cardFormatter: Format[Card] = (
+  //      (__ \ "id").format[Int] and
+  //      (__ \ "color").format[String] and
+  //      (__ \ "description").format[String] and
+  //      (__ \ "value").format[Int] and
+  //      (__ \ "property").format[String] and
+  //      (__ \ "isPlayed").format[Boolean]
+  //    )(Card.apply, unlift(Card.unapply))
+  //
+  //    implicit val cardDeckFormatter: Format[CardDeck] = (
+  //      (__ \ "playerId").format[Int] and
+  //      (__ \ "numberOfCards").format[Int] and
+  //      (__ \ "cards").format[ListBuffer[Card]]
+  //    )(CardDeck.apply, unlift(CardDeck.unapply))
+  //
+  //    implicit val figureFormatter: Format[Figure] = (
+  //      (__ \ "player").format[Player] and
+  //      (__ \ "playerFigNumber").format[Int] and
+  //      (__ \ "role").format[String] and
+  //      (__ \ "property").format[String] and
+  //      (__ \ "position").format[Int] and
+  //      (__ \ "x").format[Int] and
+  //      (__ \ "y").format[Int] and
+  //      (__ \ "Color").format[String]
+  //    )(Figure.apply, unlift(Figure.unapply))
+  //
+  //    implicit val fieldFormatter: Format[Field] = (
+  //      (__ \ "id").format[Int] and
+  //      (__ \ "property").format[String] and
+  //      (__ \ "color").format[String] and
+  //      (__ \ "figure").format[Figure] and
+  //      (__ \ "predecessorIds").format[Array[Int]] and
+  //      (__ \ "successorIds").format[Array[Int]] and
+  //      (__ \ "x").format[Int] and
+  //      (__ \ "y").format[Int]
+  //    )(Field.apply, unlift(Field.unapply))
+  //
+  //  }
 
 }
