@@ -1,7 +1,5 @@
 package de.htwg.se.dog2.controller
 
-import java.awt.Color
-
 import de.htwg.se.dog2.model._
 
 import scala.collection.mutable.ListBuffer
@@ -9,7 +7,7 @@ import scala.swing.Publisher
 
 /**
  * Created by margogo on 15.05.17.
-  * Interface for gameController
+ * Interface for gameController
  */
 trait TGameController extends Publisher {
 
@@ -29,14 +27,14 @@ trait TGameController extends Publisher {
   val highNumber = 200
   val initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
-  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0, 0, "Black"/*Color.BLACK*/)
+  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0, 0, "Black" /*Color.BLACK*/ )
 
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)
   var currentFigNr = 0
-  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, "Black"/*Color.BLACK*/)
+  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, "Black" /*Color.BLACK*/ )
   //  var currentFigNr =
-  var decksize : Int  = initDeckSize
+  var decksize: Int = initDeckSize
 
   /** Val and Vars **/
 
@@ -49,11 +47,11 @@ trait TGameController extends Publisher {
   var R_playedCards = new ListBuffer[Card]
 
   /** Vars **/
-  var R_currentPlayer : Player = currentPlayer
+  var R_currentPlayer: Player = currentPlayer
   var R_currentFigNr = 0
-  var R_currentFig : Figure = currentFig
+  var R_currentFig: Figure = currentFig
   //  var currentFigNr =
-  var R_decksize : Int = initDeckSize
+  var R_decksize: Int = initDeckSize
 
   def quitGame(): Unit
   def initGame(): Unit
@@ -64,6 +62,6 @@ trait TGameController extends Publisher {
   def applyFigToField(): Unit
   def removeCard(card: Card): Unit
   def updateDeckSize(): Unit
-  def playerAction(int: Int) : Unit
+  def playerAction(int: Int): Unit
 
 }

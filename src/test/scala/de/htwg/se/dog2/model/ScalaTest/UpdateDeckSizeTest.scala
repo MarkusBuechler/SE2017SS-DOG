@@ -4,13 +4,13 @@ import com.google.inject.Guice
 import de.htwg.se.dog2.DependencyModule
 import de.htwg.se.dog2.controller.gameController
 import org.junit.Test
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 /**
-  * Created by margogo on 15.06.17.
-  */
+ * Created by margogo on 15.06.17.
+ */
 @Test
-class UpdateDeckSizeTestA extends FlatSpec with Matchers{
+class UpdateDeckSizeTestA extends FlatSpec with Matchers {
 
   val injector = Guice.createInjector(new DependencyModule)
 
@@ -39,7 +39,7 @@ class UpdateDeckSizeTestA extends FlatSpec with Matchers{
 
 }
 @Test
-class UpdateDeckSizeTestB extends FlatSpec with Matchers{
+class UpdateDeckSizeTestB extends FlatSpec with Matchers {
 
   val injector = Guice.createInjector(new DependencyModule)
 

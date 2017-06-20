@@ -7,11 +7,11 @@ import play.api.libs.functional.syntax._
  */
 case class Player(name: String, playerId: Int, isActive: Boolean) {
 
-//object Player {
-//  implicit val reads: Reads[Player] = (
-//    (JsPath \ "name").read[String] and
-//      (JsPath \ "playerId").read[Int] and
-//      (JsPath \ "isActive").read[Boolean]
-//    )(Player.apply _)
+  //object Player {
+  //  implicit val reads: Reads[Player] = (
+  //    (JsPath \ "name").read[String] and
+  //      (JsPath \ "playerId").read[Int] and
+  //      (JsPath \ "isActive").read[Boolean]
+  //    )(Player.apply _)
 
 }

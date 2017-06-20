@@ -2,18 +2,18 @@ package de.htwg.se.dog2.view
 
 import com.google.inject.Inject
 import de.htwg.se.dog2.controller.gameController
-import org.apache.logging.log4j.{LogManager, Logger}
+import org.apache.logging.log4j.{ LogManager, Logger }
 
 import scala.swing.Reactor
 
 /**
  * Created by margogo on 02.04.17.
-  * Dog TUI Class
+ * Dog TUI Class
  */
 // $COVERAGE-OFF$Disabling highlighting by default until scala swing integration test franework is found.
 class DogTui @Inject() (var gameController: gameController) extends Reactor {
 
-  var logger : Logger = LogManager.getLogger(DogTui.this)
+  var logger: Logger = LogManager.getLogger(DogTui.this)
 
   val info = "Enter command: q-Quit; m - TestCard ; g - init cards/field ; s - setup player ; n-New Game ; i-Information\n"
   var continue = true

@@ -1,7 +1,7 @@
 package de.htwg.se.dog2.controller
 
 import java.awt.Color
-import java.io.{BufferedWriter, File, FileWriter}
+import java.io.{ BufferedWriter, File, FileWriter }
 
 import com.google.inject.Singleton
 import de.htwg.se.dog2.model._
@@ -9,7 +9,7 @@ import de.htwg.se.dog2.model._
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
-import org.apache.logging.log4j.{LogManager, Logger}
+import org.apache.logging.log4j.{ LogManager, Logger }
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Json
@@ -28,7 +28,7 @@ class CardNotInRange() extends Event
 @Singleton
 class gameController() extends TGameController with Publisher {
 
-  var logger : Logger = LogManager.getLogger(gameController.this)
+  var logger: Logger = LogManager.getLogger(gameController.this)
 
   def initGame(): Unit = {
     logger.debug("Initializing game...")
@@ -48,13 +48,10 @@ class gameController() extends TGameController with Publisher {
   def playerAction(cardFromDeckNumber: Int): Unit = {
     logger.debug("Player is actioning...")
 
-    if (cardFromDeckNumber > cardDecks.apply(currentPlayer.playerId).cards.size)
-      {
-        logger.debug("Card is not in range!")
-        publish(new CardNotInRange)
-      }
-    else
-    {
+    if (cardFromDeckNumber > cardDecks.apply(currentPlayer.playerId).cards.size) {
+      logger.debug("Card is not in range!")
+      publish(new CardNotInRange)
+    } else {
       saveForRedo()
       val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
       val valueOfCard = playedCard.value
@@ -73,7 +70,6 @@ class gameController() extends TGameController with Publisher {
 
   def checkStatus(): Unit = {
     // check if someone won the game
-
 
     // check if cards needs to be shuffled
     // Beste abfrage
@@ -121,10 +117,10 @@ class gameController() extends TGameController with Publisher {
     val bufferedSource = io.Source.fromFile("resources/Figures.csv")
     for (line <- bufferedSource.getLines()) {
       val Array(player, playerFigNumber, role, property, position, x, y) = line.split(";").map(_.trim())
-      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, "Black"/*Color.BLACK*/)
+      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, "Black" /*Color.BLACK*/ )
       figureList += bufferFig
     }
-    figureList.update(0, Figure(playerList.head, 0, "defaultRole", "default", 70, 476, 467, "Black"/*Color.BLACK*/))
+    figureList.update(0, Figure(playerList.head, 0, "defaultRole", "default", 70, 476, 467, "Black" /*Color.BLACK*/ ))
     currentFigNr = 0
     colorFigures()
     logger.debug("Finished unitializing figures.")
@@ -135,10 +131,10 @@ class gameController() extends TGameController with Publisher {
     for (figure <- figureList) {
       val playerID = figure.player.playerId
       playerID match {
-        case 0 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Blue"/*Color.BLUE)*/))
-        case 1 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Green"/*Color.GREEN)*/))
-        case 2 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Yellow"/*Color.YELLOW)*/))
-        case 3 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Red"/*Color.RED)*/))
+        case 0 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Blue" /*Color.BLUE)*/ ))
+        case 1 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Green" /*Color.GREEN)*/ ))
+        case 2 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Yellow" /*Color.YELLOW)*/ ))
+        case 3 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Red" /*Color.RED)*/ ))
       }
     }
     logger.debug("Finished coloring figures.")
@@ -212,7 +208,7 @@ class gameController() extends TGameController with Publisher {
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
-      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0, 0, 0, "Black"/*Color.getColor(Color.BLACK)*/)
+      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0, 0, 0, "Black" /*Color.getColor(Color.BLACK)*/ )
 
       val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId, x.toInt, y.toInt)
       fieldList += bufferField
@@ -406,97 +402,81 @@ class gameController() extends TGameController with Publisher {
     //////////// JSON FORMATTER ////////////////////
     implicit val playerFormatter: Format[Player] = (
       (__ \ "name").format[String] and
-        (__ \ "playerId").format[Int] and
-        (__ \ "isActive").format[Boolean]
-      ) (Player.apply, unlift(Player.unapply))
+      (__ \ "playerId").format[Int] and
+      (__ \ "isActive").format[Boolean]
+    )(Player.apply, unlift(Player.unapply))
 
     implicit val cardFormatter: Format[Card] = (
       (__ \ "id").format[Int] and
-        (__ \ "color").format[String] and
-        (__ \ "description").format[String] and
-        (__ \ "value").format[Int] and
-        (__ \ "property").format[String] and
-        (__ \ "isPlayed").format[Boolean]
-      ) (Card.apply, unlift(Card.unapply))
+      (__ \ "color").format[String] and
+      (__ \ "description").format[String] and
+      (__ \ "value").format[Int] and
+      (__ \ "property").format[String] and
+      (__ \ "isPlayed").format[Boolean]
+    )(Card.apply, unlift(Card.unapply))
 
     implicit val cardDeckFormatter: Format[CardDeck] = (
       (__ \ "playerId").format[Int] and
-        (__ \ "numberOfCards").format[Int] and
-        (__ \ "cards").format[ListBuffer[Card]]
-      ) (CardDeck.apply, unlift(CardDeck.unapply))
+      (__ \ "numberOfCards").format[Int] and
+      (__ \ "cards").format[ListBuffer[Card]]
+    )(CardDeck.apply, unlift(CardDeck.unapply))
 
     implicit val figureFormatter: Format[Figure] = (
       (__ \ "player").format[Player] and
-        (__ \ "playerFigNumber").format[Int] and
-        (__ \ "role").format[String] and
-        (__ \ "property").format[String] and
-        (__ \ "position").format[Int] and
-        (__ \ "x").format[Int] and
-        (__ \ "y").format[Int] and
-        (__ \ "Color").format[String]
-      ) (Figure.apply, unlift(Figure.unapply))
+      (__ \ "playerFigNumber").format[Int] and
+      (__ \ "role").format[String] and
+      (__ \ "property").format[String] and
+      (__ \ "position").format[Int] and
+      (__ \ "x").format[Int] and
+      (__ \ "y").format[Int] and
+      (__ \ "Color").format[String]
+    )(Figure.apply, unlift(Figure.unapply))
 
     implicit val fieldFormatter: Format[Field] = (
       (__ \ "id").format[Int] and
-        (__ \ "property").format[String] and
-        (__ \ "color").format[String] and
-        (__ \ "figure").format[Figure] and
-        (__ \ "predecessorIds").format[Array[Int]] and
-        (__ \ "successorIds").format[Array[Int]] and
-        (__ \ "x").format[Int] and
-        (__ \ "y").format[Int]
-      ) (Field.apply, unlift(Field.unapply))
+      (__ \ "property").format[String] and
+      (__ \ "color").format[String] and
+      (__ \ "figure").format[Figure] and
+      (__ \ "predecessorIds").format[Array[Int]] and
+      (__ \ "successorIds").format[Array[Int]] and
+      (__ \ "x").format[Int] and
+      (__ \ "y").format[Int]
+    )(Field.apply, unlift(Field.unapply))
 
-    //convert the Player instance to a JSON String
-    val myPlayer = playerList.apply(1)
-    val testPlayer = Json.toJson(myPlayer).toString()
-
-    //convert a JSON String to a Player instance
-    val jsonPlayer: Player = Json.parse(testPlayer).as[Player]
-
-    println(testPlayer)
-    println(jsonPlayer)
-
-    //convert the Card instance to a JSON String
-    val myCard = cardList.apply(1)
-    val testCard = Json.toJson(myCard).toString()
-
-    //convert a JSON String to a Card instance
-    val jsonCard: Card = Json.parse(testCard).as[Card]
-
-    println(testCard)
-    println(jsonCard)
-
-    //convert the CardDeck instance to a JSON String
-    val myCardDeck = cardDecks.apply(1)
-    val testCardDeck = Json.toJson(myCardDeck).toString()
-
-    //convert a JSON String to a CardDeck instance
-    val jsonCardDeck: CardDeck = Json.parse(testCardDeck).as[CardDeck]
-
-    println(testCardDeck)
-    println(jsonCardDeck)
-
-    //convert the Field instance to a JSON String
-    val myField = fieldList.apply(1)
-    val testField = Json.toJson(myField).toString()
-
-    //convert a JSON String to a Field instance
-    val jsonField: Field = Json.parse(testField).as[Field]
-
-    println(testField)
-    println(jsonField)
-
-    //convert the Figure instance to a JSON String
-    val myFigure = figureList.apply(1)
-    val testFigure = Json.toJson(myFigure).toString()
-
-    //convert a JSON String to a Figure instance
-    val jsonFigure: Figure = Json.parse(testFigure).as[Figure]
-
-    println(testFigure)
-    println(jsonFigure)
-
+    //    //convert the Player instance to a JSON String
+    //    val myPlayer = playerList.apply(1)
+    //    val testPlayer = Json.toJson(myPlayer).toString()
+    //
+    //    //convert a JSON String to a Player instance
+    //    val jsonPlayer: Player = Json.parse(testPlayer).as[Player]
+    //
+    //    //convert the Card instance to a JSON String
+    //    val myCard = cardList.apply(1)
+    //    val testCard = Json.toJson(myCard).toString()
+    //
+    //    //convert a JSON String to a Card instance
+    //    val jsonCard: Card = Json.parse(testCard).as[Card]
+    //
+    //    //convert the CardDeck instance to a JSON String
+    //    val myCardDeck = cardDecks.apply(1)
+    //    val testCardDeck = Json.toJson(myCardDeck).toString()
+    //
+    //    //convert a JSON String to a CardDeck instance
+    //    val jsonCardDeck: CardDeck = Json.parse(testCardDeck).as[CardDeck]
+    //
+    //    //convert the Field instance to a JSON String
+    //    val myField = fieldList.apply(1)
+    //    val testField = Json.toJson(myField).toString()
+    //
+    //    //convert a JSON String to a Field instance
+    //    val jsonField: Field = Json.parse(testField).as[Field]
+    //
+    //    //convert the Figure instance to a JSON String
+    //    val myFigure = figureList.apply(1)
+    //    val testFigure = Json.toJson(myFigure).toString()
+    //
+    //    //convert a JSON String to a Figure instance
+    //    val jsonFigure: Figure = Json.parse(testFigure).as[Figure]
 
   }
 

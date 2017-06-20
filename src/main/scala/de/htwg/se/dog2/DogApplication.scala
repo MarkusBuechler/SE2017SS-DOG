@@ -17,12 +17,12 @@ object DogApplication extends App {
   var gameController = injector.instance[gameController]
   gameController.initGame()
 
-//  var gui = injector.instance[DogGui]
-//  var tui = injector.instance[DogTui]
+    var gui = injector.instance[DogGui]
+    var tui = injector.instance[DogTui]
 
   gameController.testFormat
 
-//  while (tui.processInputLine(scala.io.StdIn.readLine())) {}
+    while (tui.processInputLine(scala.io.StdIn.readLine())) {}
 
 }
 

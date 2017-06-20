@@ -223,7 +223,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     card
   }
 
-  def hBoxPlayerLabels(label1: Label, button1: Button, label2: Label, textField: TextField, button2: Button) : BoxPanel = {
+  def hBoxPlayerLabels(label1: Label, button1: Button, label2: Label, textField: TextField, button2: Button): BoxPanel = {
     val box = new BoxPanel(Orientation.Horizontal) {
       contents += label1
       contents += button1
@@ -234,7 +234,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     box
   }
 
-  def vBoxPlayer(flowPanel: FlowPanel, boxPanel: BoxPanel) : BoxPanel = {
+  def vBoxPlayer(flowPanel: FlowPanel, boxPanel: BoxPanel): BoxPanel = {
     val box = new BoxPanel(Orientation.Vertical) {
       contents += flowPanel
       contents += boxPanel
@@ -243,16 +243,15 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     box
   }
 
-  var HBoxPlayer1Labels : BoxPanel = hBoxPlayerLabels(labelPlayer1,buttonPlayer1Figure, cardLabel1, textfield1,buttonPlayer1Fire)
-  var HBoxPlayer2Labels : BoxPanel = hBoxPlayerLabels(labelPlayer2,buttonPlayer2Figure, cardLabel2, textfield2,buttonPlayer2Fire)
-  var HBoxPlayer3Labels : BoxPanel = hBoxPlayerLabels(labelPlayer3,buttonPlayer3Figure, cardLabel3, textfield3,buttonPlayer3Fire)
-  var HBoxPlayer4Labels : BoxPanel = hBoxPlayerLabels(labelPlayer4,buttonPlayer4Figure, cardLabel4, textfield4,buttonPlayer4Fire)
+  var HBoxPlayer1Labels: BoxPanel = hBoxPlayerLabels(labelPlayer1, buttonPlayer1Figure, cardLabel1, textfield1, buttonPlayer1Fire)
+  var HBoxPlayer2Labels: BoxPanel = hBoxPlayerLabels(labelPlayer2, buttonPlayer2Figure, cardLabel2, textfield2, buttonPlayer2Fire)
+  var HBoxPlayer3Labels: BoxPanel = hBoxPlayerLabels(labelPlayer3, buttonPlayer3Figure, cardLabel3, textfield3, buttonPlayer3Fire)
+  var HBoxPlayer4Labels: BoxPanel = hBoxPlayerLabels(labelPlayer4, buttonPlayer4Figure, cardLabel4, textfield4, buttonPlayer4Fire)
 
-  var HVoxPlayer1 : BoxPanel = vBoxPlayer(player1FlowPanel, HBoxPlayer1Labels)
-  var HVoxPlayer2 : BoxPanel = vBoxPlayer(player2FlowPanel, HBoxPlayer2Labels)
-  var HVoxPlayer3 : BoxPanel = vBoxPlayer(player3FlowPanel, HBoxPlayer3Labels)
-  var HVoxPlayer4 : BoxPanel = vBoxPlayer(player4FlowPanel, HBoxPlayer4Labels)
-
+  var HVoxPlayer1: BoxPanel = vBoxPlayer(player1FlowPanel, HBoxPlayer1Labels)
+  var HVoxPlayer2: BoxPanel = vBoxPlayer(player2FlowPanel, HBoxPlayer2Labels)
+  var HVoxPlayer3: BoxPanel = vBoxPlayer(player3FlowPanel, HBoxPlayer3Labels)
+  var HVoxPlayer4: BoxPanel = vBoxPlayer(player4FlowPanel, HBoxPlayer4Labels)
 
   var playerVBox = new BoxPanel(Orientation.Vertical) {
     contents += HVoxPlayer1
@@ -377,7 +376,7 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   //noinspection ScalaStyle
   // property binding would be cool here
-  private def updateProperties() : Unit = {
+  private def updateProperties(): Unit = {
 
     buttonPlayer1Figure.visible = if (gameController.currentPlayer.playerId.equals(0)) true else false
     buttonPlayer2Figure.visible = if (gameController.currentPlayer.playerId.equals(1)) true else false
@@ -456,7 +455,7 @@ class Canvas @Inject() (gameController: gameController) extends Panel with React
     // Draw things that change on top of background
     for (figure <- figures) {
 
-//      g.setColor(figure.color)
+      //      g.setColor(figure.color)
       //TODO: set color from string
 
       if (figure.playerFigNumber.equals(gameController.currentFigNr)) {
