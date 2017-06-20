@@ -397,6 +397,7 @@ class gameController() extends TGameController with Publisher {
   }
 
   //  //noinspection ScalaStyle
+  // import or export later game state
     def testFormat = {
       //////////// JSON FORMATTER ////////////////////
       implicit val playerFormatter: Format[Player] = (

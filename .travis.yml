@@ -2,6 +2,7 @@ language: scala
 scala:
 - 2.11.8
 
+# jdk is necessary for Scala Play Json ...
 jdk:
   - oraclejdk8
 

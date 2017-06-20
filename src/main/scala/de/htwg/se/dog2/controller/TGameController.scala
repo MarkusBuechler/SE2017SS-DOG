@@ -11,8 +11,6 @@ import scala.swing.Publisher
  */
 trait TGameController extends Publisher {
 
-  // change current fig
-
   /** Val and Vars **/
 
   /** Lists **/
