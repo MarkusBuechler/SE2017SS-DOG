@@ -10,6 +10,9 @@ import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
 import org.apache.logging.log4j.{LogManager, Logger}
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Json
 
 /**
  * Created by margogo on 15.04.17.
@@ -353,7 +356,6 @@ class gameController() extends TGameController with Publisher {
   }
 
   def saveForRedo(): Unit = {
-
     //    /** Save data **/
     //    R_playerList = playerList.clone().map(_.copy())
     //    R_fieldList = fieldList.clone().map(_.copy())
@@ -399,9 +401,19 @@ class gameController() extends TGameController with Publisher {
     }
   }
 
-//  def checkFigureInField() : Unit = {
-//    for (figure <- figureList) {
-//
-//    }
-//  }
+
+//////////// JSON FORMATTER ////////////////////
+  implicit val playerFormatter: Format[Player] = (
+    (__ \ "name").format[String] and
+      (__ \ "playerId").format[Int] and
+      (__ \ "isActive").format[Boolean]
+    ) (Player.apply, unlift(Player.unapply))
+
+  //convert the Player instance to a JSON String
+  val myPlayer = Player(name = "markus", playerId = 1, isActive = true)
+  val test = Json.toJson(myPlayer).toString()
+
+  //convert a JSON String to a Player instance
+  val json2 : Player = Json.parse(test).as[Player]
+
 }
