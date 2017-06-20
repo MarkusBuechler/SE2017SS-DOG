@@ -20,6 +20,8 @@ object DogApplication extends App {
 //  var gui = injector.instance[DogGui]
 //  var tui = injector.instance[DogTui]
 
+  gameController.testFormat
+
 //  while (tui.processInputLine(scala.io.StdIn.readLine())) {}
 
 }

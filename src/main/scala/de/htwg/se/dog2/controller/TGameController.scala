@@ -29,12 +29,12 @@ trait TGameController extends Publisher {
   val highNumber = 200
   val initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
-  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0, 0, Color.BLACK)
+  val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0, 0, "Black"/*Color.BLACK*/)
 
   /** Vars **/
   var currentPlayer = Player("Player 1", 0, isActive = true)
   var currentFigNr = 0
-  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, Color.BLACK)
+  var currentFig = Figure(currentPlayer, 0, "BufferFig", "EmptyProp", 70, 0, 0, "Black"/*Color.BLACK*/)
   //  var currentFigNr =
   var decksize : Int  = initDeckSize
 

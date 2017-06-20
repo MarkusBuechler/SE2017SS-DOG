@@ -456,7 +456,8 @@ class Canvas @Inject() (gameController: gameController) extends Panel with React
     // Draw things that change on top of background
     for (figure <- figures) {
 
-      g.setColor(figure.color)
+//      g.setColor(figure.color)
+      //TODO: set color from string
 
       if (figure.playerFigNumber.equals(gameController.currentFigNr)) {
         g.setColor(Color.BLACK)
