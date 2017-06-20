@@ -443,41 +443,6 @@ class gameController() extends TGameController with Publisher {
       (__ \ "y").format[Int]
     )(Field.apply, unlift(Field.unapply))
 
-    //    //convert the Player instance to a JSON String
-    //    val myPlayer = playerList.apply(1)
-    //    val testPlayer = Json.toJson(myPlayer).toString()
-    //
-    //    //convert a JSON String to a Player instance
-    //    val jsonPlayer: Player = Json.parse(testPlayer).as[Player]
-    //
-    //    //convert the Card instance to a JSON String
-    //    val myCard = cardList.apply(1)
-    //    val testCard = Json.toJson(myCard).toString()
-    //
-    //    //convert a JSON String to a Card instance
-    //    val jsonCard: Card = Json.parse(testCard).as[Card]
-    //
-    //    //convert the CardDeck instance to a JSON String
-    //    val myCardDeck = cardDecks.apply(1)
-    //    val testCardDeck = Json.toJson(myCardDeck).toString()
-    //
-    //    //convert a JSON String to a CardDeck instance
-    //    val jsonCardDeck: CardDeck = Json.parse(testCardDeck).as[CardDeck]
-    //
-    //    //convert the Field instance to a JSON String
-    //    val myField = fieldList.apply(1)
-    //    val testField = Json.toJson(myField).toString()
-    //
-    //    //convert a JSON String to a Field instance
-    //    val jsonField: Field = Json.parse(testField).as[Field]
-    //
-    //    //convert the Figure instance to a JSON String
-    //    val myFigure = figureList.apply(1)
-    //    val testFigure = Json.toJson(myFigure).toString()
-    //
-    //    //convert a JSON String to a Figure instance
-    //    val jsonFigure: Figure = Json.parse(testFigure).as[Figure]
-
   }
 
 }

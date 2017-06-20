@@ -104,4 +104,7 @@ class JsonFormatterTest extends FlatSpec with Matchers {
   //convert a JSON String to a Figure instance
   val jsonFigure: Figure = Json.parse(testFigure).as[Figure]
 
+  //same as
+  gameController.testFormat
+
 }
