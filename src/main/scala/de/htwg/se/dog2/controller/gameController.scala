@@ -1,17 +1,15 @@
 package de.htwg.se.dog2.controller
 
-import java.io.{BufferedWriter, File, FileWriter}
-
-import com.google.inject.Singleton
+import com.google.inject.{Guice, Singleton}
+import de.htwg.se.dog2.DependencyModule
 import de.htwg.se.dog2.model._
+import de.htwg.se.dog2.util.TFileIO
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.Publisher
 import scala.swing.event.Event
 import org.apache.logging.log4j.{LogManager, Logger}
-import play.api.libs.json.Format
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import net.codingwell.scalaguice.InjectorExtensions._
 
 /**
  * Created by margogo on 15.04.17.
@@ -26,6 +24,9 @@ class CardNotInRange() extends Event
 
 @Singleton
 class gameController() extends TGameController with Publisher {
+
+  val injector = Guice.createInjector(new DependencyModule)
+  val fileIo = injector.instance[TFileIO]
 
   var logger: Logger = LogManager.getLogger(gameController.this)
 
@@ -324,30 +325,9 @@ class gameController() extends TGameController with Publisher {
     sys.exit()
   }
 
-  def toXml(): scala.xml.Node = {
-    <game>
-      <currentPlayer>{ currentPlayer }</currentPlayer>
-      <playerList>{ playerList }</playerList>
-      <figureList>{ figureList }</figureList>
-      <fieldList>{ fieldList }</fieldList>
-      <cardList>{ cardList }</cardList>
-      <cardDecks>{ cardDecks }</cardDecks>
-      <playedCards>{ playedCards }</playedCards>
-    </game>
-  }
-
-  def fromXml(node: scala.xml.Node): String = {
-    node.text
-  }
-
   def saveGame(): Unit = {
-    logger.debug("Saving game data...")
-    val save = this.toXml()
-    val file = new File("savedgame.xml")
-    val bufferedWriter = new BufferedWriter(new FileWriter(file))
-    bufferedWriter.write(fromXml(save))
-    bufferedWriter.close()
-    logger.debug("Finished saving game data.")
+    val game = new Game(figureList, playerList, fieldList, cardList, cardDecks, playedCards, currentPlayer, currentFig, currentFigNr, decksize)
+    fileIo.save(game)
   }
 
   def saveForRedo(): Unit = {
@@ -395,54 +375,4 @@ class gameController() extends TGameController with Publisher {
         logger.debug("deckSize was not between 4 and 7 ! ")
     }
   }
-
-  //  //noinspection ScalaStyle
-  // import or export later game state
-    def testFormat = {
-      //////////// JSON FORMATTER ////////////////////
-      implicit val playerFormatter: Format[Player] = (
-        (__ \ "name").format[String] and
-        (__ \ "playerId").format[Int] and
-        (__ \ "isActive").format[Boolean]
-      )(Player.apply, unlift(Player.unapply))
-
-      implicit val cardFormatter: Format[Card] = (
-        (__ \ "id").format[Int] and
-        (__ \ "color").format[String] and
-        (__ \ "description").format[String] and
-        (__ \ "value").format[Int] and
-        (__ \ "property").format[String] and
-        (__ \ "isPlayed").format[Boolean]
-      )(Card.apply, unlift(Card.unapply))
-
-      implicit val cardDeckFormatter: Format[CardDeck] = (
-        (__ \ "playerId").format[Int] and
-        (__ \ "numberOfCards").format[Int] and
-        (__ \ "cards").format[ListBuffer[Card]]
-      )(CardDeck.apply, unlift(CardDeck.unapply))
-
-      implicit val figureFormatter: Format[Figure] = (
-        (__ \ "player").format[Player] and
-        (__ \ "playerFigNumber").format[Int] and
-        (__ \ "role").format[String] and
-        (__ \ "property").format[String] and
-        (__ \ "position").format[Int] and
-        (__ \ "x").format[Int] and
-        (__ \ "y").format[Int] and
-        (__ \ "Color").format[String]
-      )(Figure.apply, unlift(Figure.unapply))
-
-      implicit val fieldFormatter: Format[Field] = (
-        (__ \ "id").format[Int] and
-        (__ \ "property").format[String] and
-        (__ \ "color").format[String] and
-        (__ \ "figure").format[Figure] and
-        (__ \ "predecessorIds").format[Array[Int]] and
-        (__ \ "successorIds").format[Array[Int]] and
-        (__ \ "x").format[Int] and
-        (__ \ "y").format[Int]
-      )(Field.apply, unlift(Field.unapply))
-
-    }
-
 }

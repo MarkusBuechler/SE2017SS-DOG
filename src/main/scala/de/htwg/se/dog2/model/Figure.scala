@@ -1,7 +1,5 @@
 package de.htwg.se.dog2.model
 
-import java.awt.Color
-
 /**
  * Created by margogo on 24.04.17.
  */
