@@ -13,12 +13,10 @@ class FileIO extends TFileIO {
 
   var logger: Logger = LogManager.getLogger(FileIO.this)
 
-
   def save(game: Game): Unit = {
-
-    logger.debug("Saving game data...")
+    logger.debug("Saving game data in XML...")
     val save = this.toXml(game: Game)
-    val file = new File("savedgame.xml")
+    val file = new File("savedGame.xml")
     val bufferedWriter = new BufferedWriter(new FileWriter(file))
     bufferedWriter.write(fromXml(save))
     bufferedWriter.close()
