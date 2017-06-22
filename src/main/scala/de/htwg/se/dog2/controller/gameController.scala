@@ -54,7 +54,6 @@ class gameController() extends TGameController with Publisher {
       logger.debug("Card is not in range!")
       publish(new CardNotInRange)
     } else {
-      saveForRedo()
       val playedCard = cardDecks.apply(currentPlayer.playerId).cards.apply(cardFromDeckNumber - 1)
       val valueOfCard = playedCard.value
       val possibleField = findNextField(figureList(currentFigNr).position, valueOfCard)
@@ -330,41 +329,6 @@ class gameController() extends TGameController with Publisher {
   def saveGame(): Unit = {
     val game = new Game(figureList, playerList, fieldList, cardList, cardDecks, playedCards, currentPlayer, currentFig, currentFigNr, decksize)
     fileIo.save(game)
-  }
-
-  def saveForRedo(): Unit = {
-    //    /** Save data **/
-    //    R_playerList = playerList.clone().map(_.copy())
-    //    R_fieldList = fieldList.clone().map(_.copy())
-    //    R_cardList = cardList.clone()
-    //    R_cardDecks = cardDecks.clone()
-    //    R_playedCards = playedCards.clone().map(_.copy())
-    //
-    //    R_currentPlayer = currentPlayer.copy()
-    //    R_currentFigNr = currentFigNr
-    //    R_currentFig = currentFig.copy()
-    //    R_decksize = decksize
-    //
-    //    print("SAve for redo" + currentPlayer)
-    //    UndoManager.reo
-  }
-
-  def redo(): Unit = {
-    //    // The whole point of using immutable types is to avoid exactly this kind of construct.
-    //    figureList = R_figureList.clone()
-    //    playerList = R_playerList.clone()
-    //    fieldList = R_fieldList.clone()
-    //    cardList = R_cardList.clone()
-    //    cardDecks = R_cardDecks.clone()
-    //    playedCards = R_playedCards.clone()
-    //
-    //    currentPlayer = R_currentPlayer.copy()
-    //    currentFigNr = R_currentFigNr
-    //    currentFig = R_currentFig.copy()
-    //    decksize = R_decksize
-    //
-    //    print("redo" + currentPlayer)
-    //    showGameStatus()
   }
 
   //noinspection ScalaStyle

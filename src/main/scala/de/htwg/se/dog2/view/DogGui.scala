@@ -268,12 +268,6 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
 
   visible = true
 
-  //  contents = new BoxPanel(Orientation.Horizontal) {
-  //    contents += menuBar
-  //    contents += label
-  //    Dialog.showMessage(contents.head, "Welcome to DOG - The Game \nPress enter to start the game!")
-  //  }
-
   menuBar = new MenuBar {
     contents += new Menu("File") {
       contents += new MenuItem(Action("Save Game") { saveApplication() })

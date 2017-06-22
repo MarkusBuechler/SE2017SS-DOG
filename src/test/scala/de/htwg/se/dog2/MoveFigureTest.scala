@@ -24,7 +24,7 @@ class MoveFigureTest extends FlatSpec with Matchers {
   assert(gameController.currentFigNr == 0)
   assert(gameController.currentPlayer == gameController.playerList.head)
 
-  // Playing the second card
+  // Playing the first card
   gameController.playerAction(1)
 
   assert(gameController.playedCards.size == 1)
