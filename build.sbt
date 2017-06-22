@@ -23,7 +23,7 @@ libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.3.4"
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.5.15"
 
 // Fork a new JVM for 'run' and 'test:run', to avoid JavaFX double initialization problems
 fork := true
