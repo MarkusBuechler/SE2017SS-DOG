@@ -10,6 +10,8 @@ import scala.swing.Publisher
 import scala.swing.event.Event
 import org.apache.logging.log4j.{LogManager, Logger}
 import net.codingwell.scalaguice.InjectorExtensions._
+import scala.io.Source
+
 
 /**
  * Created by margogo on 15.04.17.
@@ -114,7 +116,7 @@ class gameController() extends TGameController with Publisher {
   def initFigures(): Unit = {
     logger.debug("Initializing figures...")
     figureList.clear
-    val bufferedSource = io.Source.fromFile("resources/Figures.csv")
+    val bufferedSource = Source.fromURL(getClass.getResource("/Figures.csv"))
     for (line <- bufferedSource.getLines()) {
       val Array(player, playerFigNumber, role, property, position, x, y) = line.split(";").map(_.trim())
       val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, "Black" /*Color.BLACK*/ )
@@ -202,7 +204,7 @@ class gameController() extends TGameController with Publisher {
   def initFields(): Unit = {
     logger.debug("Initializing fields...")
     fieldList.clear
-    val bufferedSource = io.Source.fromFile("resources/Fields.csv")
+    val bufferedSource = Source.fromURL(getClass.getResource("/Fields.csv"))
     for (line <- bufferedSource.getLines()) {
       val Array(id, property, color, predecessorIds, successorIds, x, y) = line.split(";").map(_.trim())
 
@@ -269,7 +271,7 @@ class gameController() extends TGameController with Publisher {
     logger.debug("Initializing cards...")
     cardList.clear
     playedCards.clear
-    val bufferedSource = io.Source.fromFile("resources/CardsSmall.csv")
+    val bufferedSource = Source.fromURL(getClass.getResource("/CardsSmall.csv"))
     for (line <- bufferedSource.getLines()) {
       val Array(id, color, description, value, property, isPlayed) = line.split(";").map(_.trim())
       val tempCard = Card(id.toInt, color, description, value.toInt, property, isPlayed.toBoolean)

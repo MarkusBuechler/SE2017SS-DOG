@@ -1,14 +1,18 @@
-package de.htwg.se.dog2.model.SpecTest
+package de.htwg.se.dog2
 
 import de.htwg.se.dog2.model.Card
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.scalatest.WordSpec
 import org.scalatest.Matchers._
-
+import org.scalatest.junit.JUnitRunner
 /**
  * Created by margogo on 10.05.17.
  * Useless test ...
  */
-class cardControllerSpecTest extends WordSpec {
+@Test
+@RunWith(classOf[JUnitRunner])
+class CardControllerSpecTest extends WordSpec {
 
   val card = Card(1, "Black", "Sample Description", 2, "Property1", false)
   val card2 = Card(1, "Black", "Sample Description", 2, "Property1", false)
@@ -56,4 +60,3 @@ class cardControllerSpecTest extends WordSpec {
   }
 
 }
-

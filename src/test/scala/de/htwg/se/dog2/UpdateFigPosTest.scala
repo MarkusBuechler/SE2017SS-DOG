@@ -1,15 +1,17 @@
-package de.htwg.se.dog2.model.ScalaTest
+package de.htwg.se.dog2
 
 import com.google.inject.Guice
-import de.htwg.se.dog2.DependencyModule
 import de.htwg.se.dog2.controller.gameController
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{ FlatSpec, Matchers }
 
 /**
  * Created by margogo on 08.06.17.
  */
 @Test
+@RunWith(classOf[JUnitRunner])
 class UpdateFigPosTest extends FlatSpec with Matchers {
 
   val injector = Guice.createInjector(new DependencyModule)

@@ -1,23 +1,23 @@
-package de.htwg.se.dog2.model.ScalaTest
+package de.htwg.se.dog2
 
 import com.google.inject.Guice
-import de.htwg.se.dog2.DependencyModule
 import de.htwg.se.dog2.controller.gameController
-import org.junit.Test
-import org.scalatest.{ FlatSpec, Matchers }
-import play.api.libs.json.Json
-
 import de.htwg.se.dog2.model._
-import play.api.libs.functional.syntax.unlift
-import play.api.libs.json.{ Format, __ }
-import play.api.libs.functional.syntax._
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.{ FlatSpec, Matchers }
+import play.api.libs.functional.syntax.{ unlift, _ }
+import play.api.libs.json.{ Format, Json, __ }
+
 import scala.collection.mutable.ListBuffer
 
 /**
  * Created by margogo on 20.06.17.
  */
 @Test
-class JsonFormatterTest extends FlatSpec with Matchers {
+@RunWith(classOf[JUnitRunner])
+class JsonTest extends FlatSpec with Matchers {
 
   val injector = Guice.createInjector(new DependencyModule)
 
@@ -71,16 +71,16 @@ class JsonFormatterTest extends FlatSpec with Matchers {
 
   implicit val gameFormatter: Format[Game] = (
     (__ \ "figureList").format[ListBuffer[Figure]] and
-      (__ \ "playerList").format[ListBuffer[Player]] and
-      (__ \ "fieldList").format[ListBuffer[Field]] and
-      (__ \ "cardList").format[ListBuffer[Card]] and
-      (__ \ "cardDeck").format[ListBuffer[CardDeck]] and
-      (__ \ "playedCards").format[ListBuffer[Card]] and
-      (__ \ "currentPlayer").format[Player] and
-      (__ \ "currentFIGURE").format[Figure] and
-      (__ \ "currentFigNr").format[Int] and
-      (__ \ "deckSize").format[Int]
-    )(Game.apply, unlift(Game.unapply))
+    (__ \ "playerList").format[ListBuffer[Player]] and
+    (__ \ "fieldList").format[ListBuffer[Field]] and
+    (__ \ "cardList").format[ListBuffer[Card]] and
+    (__ \ "cardDeck").format[ListBuffer[CardDeck]] and
+    (__ \ "playedCards").format[ListBuffer[Card]] and
+    (__ \ "currentPlayer").format[Player] and
+    (__ \ "currentFIGURE").format[Figure] and
+    (__ \ "currentFigNr").format[Int] and
+    (__ \ "deckSize").format[Int]
+  )(Game.apply, unlift(Game.unapply))
 
   //convert the Player instance to a JSON String
   val myPlayer: Player = gameController.playerList.apply(1)
@@ -119,13 +119,10 @@ class JsonFormatterTest extends FlatSpec with Matchers {
 
   //convert the Figure instance to a JSON String
   val myGame: Game = Game(gameController.figureList, gameController.playerList, gameController.fieldList, gameController.cardList, gameController.cardDecks, gameController.playedCards,
-  gameController.currentPlayer, gameController.currentFig, gameController.currentFigNr, gameController.decksize)
+    gameController.currentPlayer, gameController.currentFig, gameController.currentFigNr, gameController.decksize)
   val testGame = Json.toJson(myGame).toString()
 
   //convert a JSON String to a Figure instance
   val jsonGame: Game = Json.parse(testGame).as[Game]
-
-  print(testGame)
-  print(jsonGame)
 
 }

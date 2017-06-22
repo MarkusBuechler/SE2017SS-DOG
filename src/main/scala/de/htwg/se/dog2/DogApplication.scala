@@ -6,9 +6,8 @@ package de.htwg.se.dog2
  */
 
 import com.google.inject.Guice
-import de.htwg.se.dog2.controller.{TGameController, gameController}
-import de.htwg.se.dog2.util.TFileIO
-import de.htwg.se.dog2.view.{DogGui, DogTui}
+import de.htwg.se.dog2.controller.gameController
+import de.htwg.se.dog2.view.{ DogGui, DogTui }
 import net.codingwell.scalaguice.InjectorExtensions._
 
 object DogApplication extends App {
@@ -20,8 +19,6 @@ object DogApplication extends App {
 
   var gui = injector.instance[DogGui]
   var tui = injector.instance[DogTui]
-
-  //  gameController.testFormat
 
   while (tui.processInputLine(scala.io.StdIn.readLine())) {}
 
