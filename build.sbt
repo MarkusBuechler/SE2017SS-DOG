@@ -1,6 +1,6 @@
-name := "htwg-scala-seed"
+name := "DOG2"
 organization := "de.htwg.se"
-version := "0.0.1"
+version := "1.0.0"
 scalaVersion := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 //sbtPlugin := true
