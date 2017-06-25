@@ -274,14 +274,14 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
       contents += new MenuItem(Action("Quit") { closeApplication() })
     }
     contents += new Menu("Game") {
-      contents += new MenuItem(Action("Undo") { notYetImplemted() })
-      contents += new MenuItem(Action("New Game") { notYetImplemted() })
-      contents += new MenuItem(Action("Rename Player") { notYetImplemted() })
+//      contents += new MenuItem(Action("Undo") { notYetImplemted() })
+      contents += new MenuItem(Action("New Game") { newGame() })
+//      contents += new MenuItem(Action("Rename Player") { notYetImplemted() })
 
     }
   }
 
-  def closeApplication() {
+  def closeApplication(): Unit = {
     val res = Dialog.showConfirmation(
       contents.head,
       "Do you really want to quit?",
@@ -293,9 +293,19 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     }
   }
 
+  def newGame(): Unit = {
+    gameController.newGame()
+    Dialog.showConfirmation(
+      contents.head,
+      "New game started!",
+      optionType = Dialog.Options.Default,
+      title = title
+    )
+  }
+
   def saveApplication() {
     gameController.saveGame()
-    val savedGame = io.Source.fromFile("savedgame.xml")
+    val savedGame = io.Source.fromFile("savedGame.json")
     Dialog.showConfirmation(
       contents.head,
       if (savedGame.nonEmpty) "Saved game successful" else "Saving game failed",
@@ -449,8 +459,12 @@ class Canvas @Inject() (gameController: gameController) extends Panel with React
     // Draw things that change on top of background
     for (figure <- figures) {
 
-      //      g.setColor(figure.color)
-      //TODO: set color from string
+      figure.color match {
+        case "Blue" => g.setColor(Color.BLUE)
+        case "Green" => g.setColor(Color.GREEN)
+        case "Yellow" => g.setColor(Color.YELLOW)
+        case "Red" => g.setColor(Color.RED)
+      }
 
       if (figure.playerFigNumber.equals(gameController.currentFigNr)) {
         g.setColor(Color.BLACK)

@@ -42,8 +42,4 @@ class FileIO extends TFileIO {
     node.text
   }
 
-  override def load(): Unit = {
-
-  }
-
 }

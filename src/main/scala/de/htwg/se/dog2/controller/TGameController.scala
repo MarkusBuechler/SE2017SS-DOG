@@ -23,7 +23,7 @@ trait TGameController extends Publisher {
 
   /** Buffer Vals **/
   val highNumber = 200
-  val initDeckSize = 7
+  var initDeckSize = 7
   val emptyPlayer = Player("", highNumber, isActive = false)
   val emptyFig = Figure(emptyPlayer, highNumber, "", "", highNumber, 0, 0, "Black" /*Color.BLACK*/ )
 

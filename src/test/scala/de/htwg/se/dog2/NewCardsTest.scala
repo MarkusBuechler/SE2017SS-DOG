@@ -18,7 +18,7 @@ class NewCardsTest extends FlatSpec with Matchers {
 
   var gameController = injector.getInstance(classOf[gameController])
 
-  gameController.decksize = 1
+  gameController.initDeckSize = 1
 
   gameController.initGame()
 

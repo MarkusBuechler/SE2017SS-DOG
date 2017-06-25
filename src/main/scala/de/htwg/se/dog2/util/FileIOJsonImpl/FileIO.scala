@@ -12,6 +12,7 @@ import scala.xml.PrettyPrinter
 
 /**
  * Created by margogo on 21.06.17.
+  * FileIO implementation with Play JSON
  */
 class FileIO extends TFileIO {
 
@@ -82,9 +83,5 @@ class FileIO extends TFileIO {
     printer.write(testGame)
     printer.close()
     logger.debug("Finished saving game data.")
-  }
-
-  override def load(): Unit = {
-
   }
 }

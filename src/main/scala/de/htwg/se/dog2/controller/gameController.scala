@@ -34,6 +34,7 @@ class gameController() extends TGameController with Publisher {
 
   def initGame(): Unit = {
     logger.debug("Initializing game...")
+    decksize = initDeckSize
     initFields()
     initCards()
     initPlayer()
@@ -322,7 +323,7 @@ class gameController() extends TGameController with Publisher {
   }
 
   def quitGame(): Unit = {
-    logger.info("Exit game")
+    logger.info("Exit game...")
     sys.exit()
   }
 
@@ -340,5 +341,11 @@ class gameController() extends TGameController with Publisher {
         decksize = 7
         logger.debug("deckSize was not between 4 and 7 ! ")
     }
+  }
+
+  def newGame(): Unit = {
+    logger.info("New game...")
+    initGame()
+    publish(new UpdatePlayerCards)
   }
 }

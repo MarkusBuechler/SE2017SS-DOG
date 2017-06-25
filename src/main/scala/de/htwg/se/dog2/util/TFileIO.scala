@@ -8,6 +8,5 @@ import de.htwg.se.dog2.model.Game
 trait TFileIO {
 
   def save(game: Game): Unit
-  def load(): Unit
 
 }
