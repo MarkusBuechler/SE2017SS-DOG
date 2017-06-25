@@ -126,8 +126,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     listenTo(this)
     reactions += {
       case ButtonClicked(_) =>
-        gameController.playerAction(textfield1.text.toInt)
-        refresh()
+        try {
+          gameController.playerAction(textfield1.text.toInt)
+          refresh()
+        }
+        catch {
+          case e: Exception => notInRange()
+        }
     }
   }
 
@@ -136,8 +141,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     listenTo(this)
     reactions += {
       case ButtonClicked(_) =>
-        gameController.playerAction(textfield2.text.toInt)
-        refresh()
+        try {
+          gameController.playerAction(textfield2.text.toInt)
+          refresh()
+        }
+        catch {
+          case e: Exception => notInRange()
+        }
     }
   }
 
@@ -146,8 +156,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     listenTo(this)
     reactions += {
       case ButtonClicked(_) =>
-        gameController.playerAction(textfield3.text.toInt)
-        refresh()
+        try {
+          gameController.playerAction(textfield3.text.toInt)
+          refresh()
+        }
+        catch {
+          case e: Exception => notInRange()
+        }
     }
   }
 
@@ -156,8 +171,13 @@ class DogGui @Inject() (gameController: gameController) extends MainFrame with R
     listenTo(this)
     reactions += {
       case ButtonClicked(_) =>
-        gameController.playerAction(textfield4.text.toInt)
-        refresh()
+        try {
+          gameController.playerAction(textfield4.text.toInt)
+          refresh()
+        }
+        catch {
+          case e: Exception => notInRange()
+        }
     }
   }
 

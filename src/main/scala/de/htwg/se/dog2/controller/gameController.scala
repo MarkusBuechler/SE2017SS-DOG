@@ -34,7 +34,6 @@ class gameController() extends TGameController with Publisher {
 
   def initGame(): Unit = {
     logger.debug("Initializing game...")
-    decksize = initDeckSize
     initFields()
     initCards()
     initPlayer()
@@ -51,7 +50,7 @@ class gameController() extends TGameController with Publisher {
   def playerAction(cardFromDeckNumber: Int): Unit = {
     logger.debug("Player is actioning...")
 
-    if (cardFromDeckNumber > cardDecks.apply(currentPlayer.playerId).cards.size) {
+    if (cardFromDeckNumber > cardDecks.apply(currentPlayer.playerId).cards.size || cardFromDeckNumber <= 0) {
       logger.debug("Card is not in range!")
       publish(new CardNotInRange)
     } else {
@@ -345,7 +344,13 @@ class gameController() extends TGameController with Publisher {
 
   def newGame(): Unit = {
     logger.info("New game...")
+    decksize = initDeckSize
+    figureList.clear()
     initGame()
+    currentPlayer = playerList.apply(0)
+    currentFig = figureList.apply(0)
+    currentFigNr = 0
     publish(new UpdatePlayerCards)
+    publish(new UpdateToRepaint)
   }
 }
