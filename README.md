@@ -23,14 +23,9 @@ Project represents [DOG](https://boardgamegeek.com/boardgame/2633/dog) game.
 * Implementation of several design patterns
 
 ##Used desgin patterns
-* 1 TODO: Update all
+* 1 
 * 2
 * 3
 
-##New topic
-* Has a folder structure prepared for a MVC-style application
-* Has *ScalaTest* and *ScalaMock* at their latest versions as dependencies.
-* Has *sbt-scalariform*, *sbt-scapegoat*, *scalastyle-sbt-plugin* and *sbt-scoverage* sbt plugins
-* Has .gitignore defaults
 
 # SE2017SS-DOG2
