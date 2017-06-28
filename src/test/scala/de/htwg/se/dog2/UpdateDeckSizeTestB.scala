@@ -12,38 +12,7 @@ import org.scalatest.{ FlatSpec, Matchers }
  */
 @Test
 @RunWith(classOf[JUnitRunner])
-class UpdateDeckSizeTest_A extends FlatSpec with Matchers {
-
-  val injector = Guice.createInjector(new DependencyModule)
-
-  var gameController = injector.getInstance(classOf[gameController])
-
-  // normal way
-  gameController.initGame()
-  assert(gameController.decksize == 7)
-
-  gameController.updateDeckSize()
-  assert(gameController.decksize == 6)
-
-  gameController.updateDeckSize()
-  assert(gameController.decksize == 5)
-
-  gameController.updateDeckSize()
-  assert(gameController.decksize == 4)
-
-  gameController.updateDeckSize()
-  assert(gameController.decksize == 7)
-
-  // for test or error
-  gameController.decksize = 1
-  gameController.updateDeckSize()
-  assert(gameController.decksize == 7)
-
-}
-
-@Test
-@RunWith(classOf[JUnitRunner])
-class UpdateDeckSizeTest_B extends FlatSpec with Matchers {
+class UpdateDeckSizeTestB extends FlatSpec with Matchers {
 
   val injector = Guice.createInjector(new DependencyModule)
 

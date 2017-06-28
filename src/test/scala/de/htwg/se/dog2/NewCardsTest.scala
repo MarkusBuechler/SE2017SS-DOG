@@ -4,12 +4,12 @@ import com.google.inject.Guice
 import de.htwg.se.dog2.controller.gameController
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 import org.scalatest.junit.JUnitRunner
 
 /**
-  * Created by margogo on 22.06.17.
-  */
+ * Created by margogo on 22.06.17.
+ */
 @Test
 @RunWith(classOf[JUnitRunner])
 class NewCardsTest extends FlatSpec with Matchers {
@@ -18,23 +18,13 @@ class NewCardsTest extends FlatSpec with Matchers {
 
   var gameController = injector.getInstance(classOf[gameController])
 
-  gameController.initDeckSize = 1
-
   gameController.initGame()
 
-  // Playing the first card
-  gameController.playerAction(1)
-  assert(gameController.cardDecks.head.cards.size == 0)
-  gameController.playerAction(1)
-  gameController.playerAction(1)
-  gameController.playerAction(1)
-
-  // Checking game Status -> Reset tp 7 Cards
+  // Check init card sizes
   assert(gameController.cardDecks.head.cards.size == 7)
   assert(gameController.cardDecks.apply(1).cards.size == 7)
   assert(gameController.cardDecks.apply(2).cards.size == 7)
   assert(gameController.cardDecks.apply(3).cards.size == 7)
-
 
   // DeckSize is now 7
   // Play 4x7 Cards
@@ -44,7 +34,6 @@ class NewCardsTest extends FlatSpec with Matchers {
   // Checking game Status -> Reset tp 6 Cards
   assert(gameController.decksize == 6)
 
-
   // DeckSize is now 6
   // Play 4x6 Cards
   for (i <- 1 to 24) {
@@ -53,7 +42,6 @@ class NewCardsTest extends FlatSpec with Matchers {
   // Checking game Status -> Reset tp 5 Cards
   assert(gameController.decksize == 5)
 
-
   // DeckSize is now 5
   // Play 4x6 Cards
   for (i <- 1 to 20) {
@@ -61,7 +49,6 @@ class NewCardsTest extends FlatSpec with Matchers {
   }
   // Checking game Status -> Reset tp 4 Cards
   assert(gameController.decksize == 4)
-
 
   // DeckSize is now 7
   // Play 4x6 Cards
