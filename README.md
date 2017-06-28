@@ -23,9 +23,8 @@ Project represents [DOG](https://boardgamegeek.com/boardgame/2633/dog) game.
 * Implementation of several design patterns
 
 ##Used desgin patterns
-* 1 
-* 2
-* 3
-
+* 1 Singleton Pattern
+* 2 Observer Pattern
+* 3 Strategy Pattern
 
 # SE2017SS-DOG2

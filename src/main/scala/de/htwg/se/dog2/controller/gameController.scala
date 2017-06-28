@@ -70,10 +70,6 @@ class gameController() extends TGameController with Publisher {
   }
 
   def checkStatus(): Unit = {
-    // check if someone won the game
-
-    // check if cards needs to be shuffled
-    // Beste abfrage
     if (cardDecks.head.cards.isEmpty && cardDecks.apply(1).cards.isEmpty && cardDecks.apply(2).cards.isEmpty && cardDecks.apply(3).cards.isEmpty) {
       updateDeckSize()
       initCards()
@@ -118,10 +114,10 @@ class gameController() extends TGameController with Publisher {
     val bufferedSource = Source.fromURL(getClass.getResource("/Figures.csv"))
     for (line <- bufferedSource.getLines()) {
       val Array(player, playerFigNumber, role, property, position, x, y) = line.split(";").map(_.trim())
-      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, "Black" /*Color.BLACK*/ )
+      val bufferFig = Figure(playerList.apply(player.toInt), playerFigNumber.toInt, role, property, position.toInt, x.toInt, y.toInt, "Black")
       figureList += bufferFig
     }
-    figureList.update(0, Figure(playerList.head, 0, "defaultRole", "default", 70, 476, 467, "Black" /*Color.BLACK*/ ))
+    figureList.update(0, Figure(playerList.head, 0, "defaultRole", "default", 70, 476, 467, "Black" ))
     currentFigNr = 0
     colorFigures()
     logger.debug("Finished unitializing figures.")
@@ -132,10 +128,10 @@ class gameController() extends TGameController with Publisher {
     for (figure <- figureList) {
       val playerID = figure.player.playerId
       playerID match {
-        case 0 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Blue" /*Color.BLUE)*/ ))
-        case 1 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Green" /*Color.GREEN)*/ ))
-        case 2 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Yellow" /*Color.YELLOW)*/ ))
-        case 3 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Red" /*Color.RED)*/ ))
+        case 0 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Blue" ))
+        case 1 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Green" ))
+        case 2 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Yellow" ))
+        case 3 => figureList.update(figureList.indexOf(figure), figure.copy(color = "Red" ))
       }
     }
     logger.debug("Finished coloring figures.")
@@ -209,7 +205,7 @@ class gameController() extends TGameController with Publisher {
 
       val intArraypredecessorId = predecessorIds.split(",").map(_.toInt)
       val intArraySucessorId = successorIds.split(",").map(_.toInt)
-      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0, 0, 0, "Black" /*Color.getColor(Color.BLACK)*/ )
+      val tempFigure = Figure(emptyPlayer, highNumber, "EmptyRole", "EmptyProp", 0, 0, 0, "Black" )
 
       val bufferField = Field(id.toInt, property, color, tempFigure, intArraypredecessorId, intArraySucessorId, x.toInt, y.toInt)
       fieldList += bufferField
@@ -234,7 +230,6 @@ class gameController() extends TGameController with Publisher {
     publish(new UpdatePlayerLabels)
   }
 
-  // TODO: Mehrere Wahlmöglichkeiten ermöglichen
   def findNextField(fieldId: Int, valueOfCard: Int): ListBuffer[Int] = {
     logger.debug("Searching next field...")
     var field = fieldList.apply(fieldList.indexWhere(_.id == fieldId))
@@ -347,8 +342,8 @@ class gameController() extends TGameController with Publisher {
     decksize = initDeckSize
     figureList.clear()
     initGame()
-    currentPlayer = playerList.apply(0)
-    currentFig = figureList.apply(0)
+    currentPlayer = playerList.head
+    currentFig = figureList.head
     currentFigNr = 0
     publish(new UpdatePlayerCards)
     publish(new UpdateToRepaint)
